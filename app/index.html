@@ -1,0 +1,13 @@
+<main data-ng-controller("showController")>
+  <form action="" data-ng-submit="submitForm(show)">
+    <label for="showTitle">Show Title</label>
+    <input id="showTitle" type="text" data-ng-model="show.showTitle">
+    <button type="submit">New Show</button>
+  </form>
+  <ul>
+    <li data-ng-repeat("show in shows")></li>
+      <h3>
+        Show Listing: {{shows.params.showTitle}}
+      </h3>
+  </ul>
+</main>

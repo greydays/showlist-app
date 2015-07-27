@@ -53,7 +53,7 @@ module.exports = function(router) {
           return res.status(500).json({msg: err});
         }
         if (venue) {
-          venue.reomve();
+          venue.remove();
           res.json({msg: venueName + ' was deleted'});
         } else {
           res.status(404).json({msg: 'Unable to locate ' + venueName});

@@ -1,9 +1,9 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var Schema = require('mongoose').Schema;
 
-var venueSchema = mongoose.Schema({
+var venueSchema = Schema({
   name: String,
   location: String,
   shows: [{type: Schema.Types.ObjectId, ref: 'Show'}],

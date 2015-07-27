@@ -33,18 +33,20 @@ var port = 'localhost:3000';
 // 	})
 // })
 
-describe('show/:venue/shows/:show', function() {
-	it('should respond to a get request', function(done) {
-		chai.request(port)
-		.get('/show/55b69043f2ae087702bde66c/shows/test')
-		.end(function(err,res) {
-			expect(err).to.be.null;
-			expect(res).to.have.status(200);
-			expect(res).to.be.a('object');
-			done();
-		})
-	})
-})
+// describe('show/:venue/shows/:show', function() {
+// 	it('should respond to a get request', function(done) {
+// 		chai.request(port)
+// 		.get('/show/55b69043f2ae087702bde66c/shows/test')
+// 		.end(function(err,res) {
+// 			expect(err).to.be.null;
+// 			expect(res).to.have.status(200);
+// 			expect(res).to.be.a('object');
+// 			done();
+// 		})
+// 	})
+// })
+
+
 
 // describe('show/shows', function() {
 // 	it('should respond to a post request', function(done) {
@@ -88,6 +90,33 @@ describe('show/:venue/shows/:show', function() {
 // 		})
 // 	})
 // })
+
+// describe('show/:venue/shows/:show', function() {
+// 	it('should respond to a put request', function(done) {
+// 		chai.request(port)
+// 		.patch('/show/55b69043f2ae087702bde66c/shows/test')
+// 		.send({
+// 			showTitle: 'changed through patch'
+// 		})
+// 		.end(function(err,res) {
+// 			expect(err).to.be.null;
+// 			expect(res).to.have.status(200);
+// 			done();
+// 		})
+// 	})
+// })
+
+describe('show/:venue/shows/:show', function() {
+	it('should respond to a delete request', function(done) {
+		chai.request(port)
+		.delete('/show/55b69043f2ae087702bde66c/shows/test')
+		.end(function(err,res) {
+			expect(err).to.be.null;
+			expect(res).to.have.status(200);
+			done();
+		})
+	})
+})
 
 
 

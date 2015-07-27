@@ -113,21 +113,15 @@ module.exports = function(router) {
      console.log(doc.shows);
      for(var i = 0; i < doc.shows.length; i ++) {
       if(doc.shows[i].showTitle === showRequest) {
-        Show.find({name: showRequest}).remove(function(err,res) {
-          if(err) {
-            res.status(500).json(err)
-          }
-          res.json({msg: 'show deleted'});
-        })
+        Show.find({name: showRequest}).remove();
       }
      }
      console.log(showArray);
       res.json(showArray);
     })
-
   })
 
-  .update(function(req,res) {
+  .patch(function(req,res) {
     var showData = req.body;
     var id = req.params.venue;
     var showRequest = req.params.show;
@@ -141,14 +135,15 @@ module.exports = function(router) {
      console.log(doc.shows);
      for(var i = 0; i < doc.shows.length; i ++) {
       if(doc.shows[i].showTitle === showRequest) {
-        Shows.findOneAndUpdate(name: showRequest, showData, function(err,res) {
+        Show.findOneAndUpdate({name: showRequest}, showData, function(err,doc) {
           if(err) {
             res.status(500).json(err)
           }
-          res.json(msg: "show udpated");
+          console.log(doc);
+          res.json(doc);
         })
       }
-     }
+     }     
     })
   })
 }

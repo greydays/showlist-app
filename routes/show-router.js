@@ -40,17 +40,24 @@ module.exports = function(router) {
 	})
   
   router.route('/:venue/shows')
+  
+
   .get(function(req,res) {
-  	var venueName = req.params.venue;
-  	Venue.findOne({name: venueName})
-  	.populate('Shows')
+  	var id = req.params.venue;
+  	Venue.findById(id)
+  	.populate('shows')
   	.exec(function(err,doc) {
+    if(err) {
+      res.status(500).json(err);
+    } 
+     
   		res.json(doc);
   	})
   })
 
   .post(function(req, res) {
   	var show = new Show(req.body)
+    console.log(req.body)
   	show.save(function(err,data) {
   		if (err) {
   			res.status(500).json({msg: 'Internal server error'})
@@ -60,7 +67,7 @@ module.exports = function(router) {
   				res.status(500).json(err);
   			}
   			venue.shows.push(data)
-  			user.save(function(err,data) {
+  			venue.save(function(err,data) {
   				if(err) {
   					res.status(500).json(err)
   				}
@@ -69,15 +76,87 @@ module.exports = function(router) {
   			})
   		})
   	})
-
-
   })
 
   router.route('/:venue/shows/:show')
   .get(function(req,res) {
-  	var venueName = req.params.venue;
-  	var showName = req.params.show;
-  	Venue.findOne()
+    var id = req.params.venue;
+    var showRequest = req.params.show;
+    var showArray = [];
+    Venue.findById(id)
+    .populate('shows')
+    .exec(function(err,doc) {
+    if(err) {
+      res.status(500).json(err);
+    } 
+     console.log(doc.shows);
+     for(var i = 0; i < doc.shows.length; i ++) {
+      if(doc.shows[i].showTitle === showRequest) {
+        showArray.push(doc.shows[i])
+      }
+     }
+     console.log(showArray);
+      res.json(showArray);
+    })
   })
 
+  .delete(function(req,res) {
+    var id = req.params.venue;
+    var showRequest = req.params.show;
+    var showArray = [];
+    Venue.findById(id)
+    .populate('shows')
+    .exec(function(err,doc) {
+    if(err) {
+      res.status(500).json(err);
+    } 
+     console.log(doc.shows);
+     for(var i = 0; i < doc.shows.length; i ++) {
+      if(doc.shows[i].showTitle === showRequest) {
+        Show.find({name: showRequest}).remove(function(err,res) {
+          if(err) {
+            res.status(500).json(err)
+          }
+          res.json({msg: 'show deleted'});
+        })
+      }
+     }
+     console.log(showArray);
+      res.json(showArray);
+    })
+
+  })
+
+  .update(function(req,res) {
+    var showData = req.body;
+    var id = req.params.venue;
+    var showRequest = req.params.show;
+    var showArray = [];
+    Venue.findById(id)
+    .populate('shows')
+    .exec(function(err,doc) {
+    if(err) {
+      res.status(500).json(err);
+    } 
+     console.log(doc.shows);
+     for(var i = 0; i < doc.shows.length; i ++) {
+      if(doc.shows[i].showTitle === showRequest) {
+        Shows.findOneAndUpdate(name: showRequest, showData, function(err,res) {
+          if(err) {
+            res.status(500).json(err)
+          }
+          res.json(msg: "show udpated");
+        })
+      }
+     }
+    })
+  })
 }
+
+
+
+
+
+
+
+

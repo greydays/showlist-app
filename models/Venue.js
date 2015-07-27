@@ -28,3 +28,20 @@ venueSchema.methods.checkPassword = function(password) {
 };
 
 module.exports = mongoose.model('Venue', venueSchema);
+
+
+// var venue = new Venue ({
+//   name: 'test venue',
+//   location: 'test location',
+//   website: 'test',
+//   social: 'test',
+//   address: 'test',
+//   image: 'test',
+//   contact: 'test',
+// })
+
+
+
+
+
+

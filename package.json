@@ -7,12 +7,16 @@
   },
   "dependencies": {
     "angular-route": "^1.4.3",
+    "bcrypt-nodejs": "latest",
     "body-parser": "^1.13.2",
     "debug": "~2.2.0",
+    "eat": "^0.1.1",
     "express": "^4.13.1",
     "mongoose": "^4.1.0",
     "morgan": "~1.6.1",
-    "node-sass": "^3.2.0"
+    "node-sass": "^3.2.0",
+    "passport": "^0.2.2",
+    "passport-http": "^0.2.2"
   },
   "devDependencies": {
     "angular": "^1.4.3",

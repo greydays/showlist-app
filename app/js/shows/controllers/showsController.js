@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('showController', ['$scope', '$http', function($scope, $http) {
+  app.controller('showsController', ['$scope', '$http', function($scope, $http) {
 
     //set up get request to backend
     var getAll = function() {

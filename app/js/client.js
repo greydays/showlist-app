@@ -5,7 +5,7 @@ require('angular-route');
 require('angular-cookies');
 require('angular-base64');
 
-var settingsApp = angular.module('showlistApp', ['ngRoute', 'ngCookies', 'base64']);
+var showlistApp = angular.module('showlistApp', ['ngRoute', 'ngCookies', 'base64']);
 
 //services
 // require('./services/copy')(showlistApp);
@@ -27,13 +27,13 @@ showlistApp.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'templates/views/shows_view.html',
       controller: 'showsController'
     })
-    .when('/login', {
-      templateUrl: 'templates/views/loginForm.html',
-      controller: 'authController'
-    })
-    .when('/newShow', {
-      templateUrl: 'templates/views/newShow.html',
-      controller: 'authController'
+    // .when('/login', {
+    //   templateUrl: 'templates/views/login_form.html',
+    //   controller: 'authController'
+    // })
+    .when('/new-show', {
+      templateUrl: 'templates/directives/new_show_form.html',
+      controller: 'showsController'
     })
     .when('/', {
       redirectTo: '/shows'

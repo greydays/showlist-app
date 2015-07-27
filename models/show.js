@@ -12,7 +12,7 @@ var showSchema = mongoose.Schema({
   time: Date,
   age: Boolean,
   image: String,
-  social: [String]
+  social: String
 });
 
-module.exports = mongoose.model(showsSchema, 'Show');
+module.exports = mongoose.model('Show', showSchema);

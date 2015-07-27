@@ -1,11 +1,17 @@
-'use strict';
-
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var settingsSchema = new Schema({
-  showTitle: String
-
+var showSchema = new Schema({
+  showTitle: String,
+  date: Date,
+  venue: {type: Schema.Types.ObjectId, ref: 'Venue'},
+  bands: String, //will update later
+  description: String,
+  cost: Number,
+  time: Date,
+  age: Boolean,
+  image: String,
+  social: String
 });
 
-module.exports = mongoose.model('show', showsSchema, 'mainShows');
+module.exports = mongoose.model('Show', showSchema);

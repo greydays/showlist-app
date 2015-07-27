@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var Venue = require('../models/Venue');
-var Show = require('../models/Show');
 
 module.exports = function(router) {
   router.use(bodyParser.json());
@@ -33,7 +32,7 @@ module.exports = function(router) {
           res.status(404).json({msg: 'Unable to locate '} + venueName);
         }
       });
-    });
+    })
     .put(function(req, res) {
       var venueName = req.params.venue;
       var newVenueInfo = req.body;

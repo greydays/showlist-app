@@ -1,31 +1,33 @@
 var express = require('express');
-var app = express();
 var mongoose = require('mongoose');
 var passport = require('passport');
-var port = process.env.PORT || 3000;
-var bodyParser = require('body-parser');
+var app = express();
 
+var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+process.env.APP_SECRET = process.env.APP_SECRET || 'changethis';
+
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost');
 
-
+var venueRouter = express.Router();
+var showRouter = express.Router();
+var authRouter = express.Router();
 
 app.use(passport.initialize());
 
-var venueRouter = express.Router();
-require('./routes/venue-router')(venueRouter);
-var showRouter = express.Router();
+require('./lib/passport-strat')(passport);
+
 require('./routes/show-router')(showRouter);
+require('./routes/venue-router')(venueRouter);
+require('./routes/auth-routes')(authRouter, passport);
 
-var authRouter = express.Router();
-require('./routes/auth-routes')(authRouter);
-
-// app.use('/venue', require('./middlewares/verify'));
+app.use('/venue', authRouter);
 app.use('/venue', venueRouter);
 app.use('/show', showRouter);
-app.use('/', authRouter);
+
+var port = process.env.PORT || 3000;
 
 app.listen(port, function() {
   console.log('Server started on port ' + port);

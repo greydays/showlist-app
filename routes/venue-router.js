@@ -1,9 +1,27 @@
+'use strict';
+
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var Venue = require('../models/Venue');
 
 module.exports = function(router) {
   router.use(bodyParser.json());
+
+  router.route('/')
+    .post(function(req, res) {
+      var venueName = req.params.venue;
+      var venueInfo = req.body;
+      Venue.update({name: venueName}, venueInfo, function(err, venue) {
+        if (err) {
+          return res.status(500).json({msg: err});
+        }
+        if (venue) {
+          res.json(venue);
+        } else {
+          res.status(404).json({msg: 'Unable to locate '} + venueName);
+        }
+      });
+    })
 
   router.route('/:venue')
     .get(function(req, res) {
@@ -16,20 +34,6 @@ module.exports = function(router) {
           res.json(venue);
         } else {
           res.status(404).json({msg: 'Unable to locate ' + venueName});
-        }
-      });
-    })
-    .post(function(req, res) {
-      var venueName = req.params.venue;
-      var venueInfo = req.body;
-      Venue.update({name: venueName}, venueInfo, function(err, venue) {
-        if (err) {
-          return res.status(500).json({msg: err});
-        }
-        if (venue) {
-          res.json(venue);
-        } else {
-          res.status(404).json({msg: 'Unable to locate '} + venueName);
         }
       });
     })

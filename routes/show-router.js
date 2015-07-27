@@ -1,9 +1,11 @@
+'use strict';
+
+var mongoose = require('mongoose');
 var Show = require('../models/show');
 var Venue = require('../models/Venue');
 
-
 module.exports = function(router) {
-	router.route('/shows')
+  router.route('/shows')
 	.get(function(req,res) {
 		Show.find({}, function(err,data) {
 			console.log('shows router hit')

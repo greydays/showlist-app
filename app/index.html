@@ -1,13 +1,41 @@
-<main data-ng-controller("showController")>
-  <form action="" data-ng-submit="submitForm(show)">
-    <label for="showTitle">Show Title</label>
-    <input id="showTitle" type="text" data-ng-model="show.showTitle">
-    <button type="submit">New Show</button>
-  </form>
-  <ul>
-    <li data-ng-repeat("show in shows")></li>
-      <h3>
-        Show Listing: {{shows.params.showTitle}}
-      </h3>
-  </ul>
-</main>
+<!doctype html>
+<html class="no-js" lang="EN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>The Showlist</title>
+    <meta name="description" content="a place to find out about live music evewnts and shows">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="css/application.css">
+    <!-- <script src="js/vendor/modernizr-2.8.3.min.js"></script> -->
+  </head>
+  <body data-ng-app="showlistApp">
+    <header>
+      <h1>Show List</h1>
+      <nav>
+        <a href="#/shows">Link</a>
+        <a href="#/link">Link</a>
+        <a href="#/link">Link</a>
+      </nav>
+      <div class="login"></div>
+    </header>
+    <main>
+      <section class="left-sidebar">
+        <h3>Sort Options</h3>
+        <ul>
+          <li>
+            <a href="#/past">Past Shows</a>
+          </li>
+        </ul>
+      </section>
+      <div class="showlist" data-ng-view></div>
+    </main>
+
+    <script src="js/bundle.js"></script>
+
+  </body>
+</html>

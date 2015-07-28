@@ -15,7 +15,7 @@ module.exports = function(router, passport) {
         console.log(err);
         return res.status(500).json({msg: err});
       }
-      
+
       venue.generateToken(process.env.APP_SECRET, function(err, token) {
         if (err) {
           console.log(err);

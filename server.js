@@ -25,21 +25,15 @@ require('./lib/passport-strat')(passport);
 require('./routes/auth-routes')(authRouter, passport);
 require('./routes/show-router')(showRouter);
 require('./routes/venue-router')(venueRouter);
-// require('./routes/band-router')(bandRouter);
+require('./routes/band-router')(bandRouter);
 
 app.use('/venue', authRouter);
 app.use('/venue', venueRouter);
 app.use('/show', showRouter);
-// app.use('/band', bandRouter);
+app.use('/band', bandRouter);
 
 var port = process.env.PORT || 3000;
 
 app.listen(port, function() {
   console.log('Server started on port ' + port);
 });
-
-
-// venue auth login
-// if time, artist login
-// sorting shows based on different criteria
-// past shows should not be displayed

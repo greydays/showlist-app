@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 var Show = require('../models/show');
 var Venue = require('../models/Venue');
-// var eatAuth = require('../lib/eat-auth')(process.env.APP_SECRET);
+var eatAuth = require('../lib/eat-auth')(process.env.APP_SECRET);
 
 
 module.exports = function(router) {
@@ -19,7 +19,7 @@ module.exports = function(router) {
 		});
 	})
 
-	.delete(function(req,res) {
+	.delete(eatAuth, function(req,res) {
 		Show.remove({}, function(err,data) {
 			if (err) {
 				res.status(500).json({msg: 'Internal Server Error'})

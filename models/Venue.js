@@ -35,25 +35,8 @@ venueSchema.methods.generateToken = function(secret, callback) {
   eat.encode({id: this._id}, secret, callback);
 };
 
-// venueSchema.methods.owns = function(obj) {
-//   return obj.venue === this._id;
-// };
+venueSchema.methods.owns = function(obj) {
+  return obj.venue === this._id;
+};
 
 module.exports = mongoose.model('Venue', venueSchema);
-
-
-// var venue = new Venue ({
-//   name: 'test venue',
-//   location: 'test location',
-//   website: 'test',
-//   social: 'test',
-//   address: 'test',
-//   image: 'test',
-//   contact: 'test',
-// })
-
-
-
-
-
-

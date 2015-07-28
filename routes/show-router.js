@@ -72,7 +72,6 @@ module.exports = function(router) {
   					res.status(500).json(err)
   				}
   				res.json(data)
-  				console.log(data);
   			})
   		})
   	})
@@ -95,7 +94,6 @@ module.exports = function(router) {
         showArray.push(doc.shows[i])
       }
      }
-     console.log(showArray);
       res.json(showArray);
     })
   })
@@ -110,7 +108,6 @@ module.exports = function(router) {
     if(err) {
       res.status(500).json(err);
     } 
-     console.log(doc.shows);
      for(var i = 0; i < doc.shows.length; i ++) {
       if(doc.shows[i].showTitle === showRequest) {
         Show.find({name: showRequest}).remove(function(err,res) {
@@ -121,10 +118,7 @@ module.exports = function(router) {
         })
       }
      }
-     console.log(showArray);
-      res.json(showArray);
     })
-
   })
 
   .update(function(req,res) {
@@ -138,7 +132,6 @@ module.exports = function(router) {
     if(err) {
       res.status(500).json(err);
     } 
-     console.log(doc.shows);
      for(var i = 0; i < doc.shows.length; i ++) {
       if(doc.shows[i].showTitle === showRequest) {
         Shows.findOneAndUpdate(name: showRequest, showData, function(err,res) {

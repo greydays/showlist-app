@@ -24,6 +24,7 @@ module.exports = function(router) {
   });
 
   router.route('/:venue')
+  
   .get(function(req, res) {
     var venueName = req.params.venue;
     Venue.findOne({name: venueName}, function(err, venue) {
@@ -37,10 +38,10 @@ module.exports = function(router) {
       }
     });
   })
+
   .put(eatAuth, function(req, res) {
     var venueName = req.params.venue;
     var newVenueInfo = req.body;
-
     Venue.update({name: venueName}, newVenueInfo, function(err, venue) {
       if (err) {
         return res.status(500).json({msg: err});
@@ -52,6 +53,7 @@ module.exports = function(router) {
       }
     });
   })
+  
   .delete(eatAuth, function(req, res) {
     var venueName = req.params.venue;
     Venue.findOne({name: venueName}, function(err, venue) {

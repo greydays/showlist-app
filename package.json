@@ -3,10 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node server.js"
   },
   "dependencies": {
-    "angular-route": "^1.4.3",
     "bcrypt-nodejs": "latest",
     "body-parser": "^1.13.2",
     "debug": "~2.2.0",
@@ -20,6 +19,9 @@
   },
   "devDependencies": {
     "angular": "^1.4.3",
+    "angular-base64": "^2.0.5",
+    "angular-cookies": "^1.4.0",
+    "angular-route": "^1.4.3",
     "chai": "^3.2.0",
     "chai-http": "^1.0.0",
     "gulp": "^3.9.0",

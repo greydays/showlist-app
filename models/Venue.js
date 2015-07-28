@@ -40,3 +40,20 @@ venueSchema.methods.generateToken = function(secret, callback) {
 // };
 
 module.exports = mongoose.model('Venue', venueSchema);
+
+
+// var venue = new Venue ({
+//   name: 'test venue',
+//   location: 'test location',
+//   website: 'test',
+//   social: 'test',
+//   address: 'test',
+//   image: 'test',
+//   contact: 'test',
+// })
+
+
+
+
+
+

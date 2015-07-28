@@ -1,0 +1,19 @@
+<section data-ng-controller="authController">
+  <form class="login-form" data-ng-submit="authSubmit(user)"> <!-- user? -->
+    <ul>
+      <li>
+        <label for="login-username">Email</label>
+        <input type="text" id="login-username" placeholder="example@email.com" data-ng-model="user.username" autofocus>
+      </li>
+      <li>
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="******" data-ng-model="user.password">
+      </li>
+      <li>
+        <button type="submit">Log in</button>
+      </li>
+    </ul>
+  </form>
+</section>
+
+<!-- https://github.com/codefellows/sea-d37/blob/master/jun_4_angular_auth/app/templates/views/sign_in.html -->

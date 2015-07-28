@@ -15,8 +15,8 @@ module.exports = function(router) {
 				res.status(500).json({msg: 'Internal Server Error'})
 			}
 			res.json(data)
-			console.log(data)
-		})
+      //route gets all shows
+		});
 	})
 
 	.post(eatAuth, function(req,res) {
@@ -27,7 +27,6 @@ module.exports = function(router) {
 			if (err) {
 				res.status(500).json({msg: 'internal server error'})
 			}
-			console.log(data)
 			res.json({msg: 'New show has been saved!'})
 		}) 
 	})
@@ -39,22 +38,27 @@ module.exports = function(router) {
 			}
 			res.json({msg: 'shows have been deleted'})
 		//this route deletes ALL SHOWS use with caution
-
-		})
+		});
 	})
   
   router.route('/:venue/shows')
+  
   .get(function(req,res) {
-  	var venueName = req.params.venue;
-  	Venue.findOne({name: venueName})
-  	.populate('Shows')
+  	var id = req.params.venue;
+  	Venue.findById(id)
+  	.populate('shows')
   	.exec(function(err,doc) {
+    if(err) {
+      res.status(500).json(err);
+    } 
+     
   		res.json(doc);
-  	})
+  	});
   })
 
   .post(eatAuth, function(req, res) {
   	var show = new Show(req.body)
+    console.log(req.body)
   	show.save(function(err,data) {
   		if (err) {
   			res.status(500).json({msg: 'Internal server error'})
@@ -64,24 +68,79 @@ module.exports = function(router) {
   				res.status(500).json(err);
   			}
   			venue.shows.push(data)
-  			user.save(function(err,data) {
+  			venue.save(function(err,data) {
   				if(err) {
   					res.status(500).json(err)
   				}
   				res.json(data)
   				console.log(data);
-  			})
-  		})
-  	})
-
-
+  			});
+  		});
+  	});
   })
 
   router.route('/:venue/shows/:show')
+
   .get(function(req,res) {
-  	var venueName = req.params.venue;
-  	var showName = req.params.show;
-  	Venue.findOne()
+    var id = req.params.venue;
+    var showRequest = req.params.show;
+    var showArray = [];
+    Venue.findById(id)
+    .populate('shows')
+    .exec(function(err,doc) {
+    if(err) {
+      res.status(500).json(err);
+    } 
+     for(var i = 0; i < doc.shows.length; i ++) {
+      if(doc.shows[i].showTitle === showRequest) {
+        showArray.push(doc.shows[i])
+      }
+     }
+      res.json(showArray);
+    });
   })
 
-}
+  .delete(function(req,res) {
+    var id = req.params.venue;
+    var showRequest = req.params.show;
+    var showArray = [];
+    Venue.findById(id)
+    .populate('shows')
+    .exec(function(err,doc) {
+    if(err) {
+      res.status(500).json(err);
+    } 
+     console.log(doc.shows);
+     for(var i = 0; i < doc.shows.length; i ++) {
+      if(doc.shows[i].showTitle === showRequest) {
+        Show.find({name: showRequest}).remove();
+      }
+     }
+      res.json(showArray);
+    });
+  })
+
+  .patch(function(req,res) {
+    var showData = req.body;
+    var id = req.params.venue;
+    var showRequest = req.params.show;
+    var showArray = [];
+    Venue.findById(id)
+    .populate('shows')
+    .exec(function(err,doc) {
+    if(err) {
+      res.status(500).json(err);
+    } 
+     for(var i = 0; i < doc.shows.length; i ++) {
+      if(doc.shows[i].showTitle === showRequest) {
+        Show.findOneAndUpdate({name: showRequest}, showData, function(err,doc) {
+          if(err) {
+            res.status(500).json(err)
+          }
+          res.json(doc);
+        });
+      }
+     }     
+    });
+  });
+};

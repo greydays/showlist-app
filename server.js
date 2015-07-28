@@ -9,23 +9,28 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 process.env.APP_SECRET = process.env.APP_SECRET || 'changethis';
 
+app.use(express.static(__dirname + '/public'));
+
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost');
 
+var authRouter = express.Router();
 var venueRouter = express.Router();
 var showRouter = express.Router();
-var authRouter = express.Router();
+var bandRouter = express.Router();
 
 app.use(passport.initialize());
 
 require('./lib/passport-strat')(passport);
 
+require('./routes/auth-routes')(authRouter, passport);
 require('./routes/show-router')(showRouter);
 require('./routes/venue-router')(venueRouter);
-require('./routes/auth-routes')(authRouter, passport);
+require('./routes/band-router')(bandRouter);
 
 app.use('/venue', authRouter);
 app.use('/venue', venueRouter);
 app.use('/show', showRouter);
+app.use('/band', bandRouter);
 
 var port = process.env.PORT || 3000;
 

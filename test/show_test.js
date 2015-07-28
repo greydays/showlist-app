@@ -106,17 +106,17 @@ var port = 'localhost:3000';
 // 	})
 // })
 
-describe('show/:venue/shows/:show', function() {
-	it('should respond to a delete request', function(done) {
-		chai.request(port)
-		.delete('/show/55b69043f2ae087702bde66c/shows/test')
-		.end(function(err,res) {
-			expect(err).to.be.null;
-			expect(res).to.have.status(200);
-			done();
-		})
-	})
-})
+// describe('show/:venue/shows/:show', function() {
+// 	it('should respond to a delete request', function(done) {
+// 		chai.request(port)
+// 		.delete('/show/55b69043f2ae087702bde66c/shows/test')
+// 		.end(function(err,res) {
+// 			expect(err).to.be.null;
+// 			expect(res).to.have.status(200);
+// 			done();
+// 		})
+// 	})
+// })
 
 
 

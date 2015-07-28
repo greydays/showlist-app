@@ -15,7 +15,7 @@
   </head>
   <body data-ng-app="showlistApp">
     <header class="container">
-      <h1 class="flex-item-1">Show List</h1>
+      <h1 class="flex-item-1 header_h1">Show List</h1>
       <nav class="flex-item-2 header_nav-links">
         <a href="#/new-show">Create Show</a>
         <a href="#/shows">Shows</a>
@@ -23,16 +23,16 @@
       </nav>
       <div class="login"></div>
     </header>
-    <main class="clearfix">
+    <main class="main-container">
       <section class="left-sidebar">
         <h3>Sort Options</h3>
-        <ul>
+        <ul class="left-sidebar_ul">
           <li>
             <a href="#/past">Past Shows</a>
           </li>
         </ul>
       </section>
-      <div class="right" data-ng-view></div>
+      <div class="main_right" data-ng-view></div>
     </main>
 
     <script src="js/bundle.js"></script>

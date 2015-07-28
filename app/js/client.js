@@ -19,16 +19,17 @@ require('./shows/controllers/showsController')(showlistApp);
 //directives
 // require('./directives/simple_directive')(showlistApp);
 require('./shows/directives/show_form_directive')(showlistApp);
+require('./shows/directives/show-card_directive')(showlistApp);
 // require('./auth/directives/logout_directive')(showlistApp);
 
 showlistApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider
     .when('/shows', {
-      templateUrl: 'templates/views/shows_view.html',
+      templateUrl: 'templates/directives/shows_view.html',
       controller: 'showsController'
     })
     // .when('/login', {
-    //   templateUrl: 'templates/views/login_form.html',
+    //   templateUrl: 'templates/directivs/login_form.html',
     //   controller: 'authController'
     // })
     .when('/new-show', {

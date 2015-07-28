@@ -18,17 +18,17 @@ module.exports = function(app) {
 
 
 //http://jsfiddle.net/jaimem/aSjwk/1/
-  // app.controller('ctrl', function($scope){
-  // });
+  app.controller('ctrl', function($scope){
+  });
 
-  // app.directive('backImg', function(){
-  //     return function(scope, element){
-  //         element.css({
-  //             'background-image': 'url(' + shows.image +')',
-  //             'background-size' : 'cover'
-  //         });
-  //     };
-  // });
+  app.directive('backImg', function(){
+      return function(scope, element){
+          element.css({
+              'background-image': 'url(' + shows.image +')',
+              'background-size' : 'cover'
+          });
+      };
+  });
 
 
 };

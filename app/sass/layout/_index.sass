@@ -1,0 +1,59 @@
+body
+  max-width: 60em
+  margin: 0 auto
+  height: 100%
+  position: relative
+  align-content: stretch
+  align-items: stretch
+
+header
+  height: 3em
+  position: absolute
+  top: 0
+
+@mixin flex-row-nowrap
+  display: flex
+  flex-direction: row
+  flex-wrap: nowrap
+
+@mixin flex-row-wrap
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+
+@mixin flex-align-default
+  justify-content: flex-start
+  align-content: flex-start
+  align-items: flex-start
+
+@mixin flex-align-center-spaced
+  justify-content: space-between
+  align-content: center
+  align-items: center
+
+.main_right
+  width: 300px
+  flex-grow: 1
+  flex-shrink: 0
+  flex-basis: 200px
+  overflow: scroll
+
+.container
+  @include flex-row-nowrap
+  @include flex-align-center-spaced
+
+.flex-grow-right
+  text-align: right
+  flex-grow: 1
+  flex-shrink: 0
+  flex-basis: 200px
+
+.main-container
+  height: 100%
+  padding-top: 3em
+  overflow: hidden
+  @include flex-row-nowrap
+  justify-content: flex-start
+  align-content: stretch
+  align-items: stretch
+

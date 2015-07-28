@@ -37,9 +37,3 @@ var port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log('Server started on port ' + port);
 });
-
-
-// venue auth login
-// if time, artist login
-// sorting shows based on different criteria
-// past shows should not be displayed

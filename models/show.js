@@ -14,6 +14,4 @@ var showSchema = new Schema({
   social: String
 });
 
-
-
 module.exports = mongoose.model('Show', showSchema);

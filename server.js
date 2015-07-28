@@ -25,12 +25,12 @@ require('./lib/passport-strat')(passport);
 require('./routes/auth-routes')(authRouter, passport);
 require('./routes/show-router')(showRouter);
 require('./routes/venue-router')(venueRouter);
-// require('./routes/band-router')(bandRouter);
+require('./routes/band-router')(bandRouter);
 
 app.use('/venue', authRouter);
 app.use('/venue', venueRouter);
 app.use('/show', showRouter);
-// app.use('/band', bandRouter);
+app.use('/band', bandRouter);
 
 var port = process.env.PORT || 3000;
 

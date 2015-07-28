@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost');
 
-
+app.use(express.static(__dirname + '/public'));
 
 app.use(passport.initialize());
 

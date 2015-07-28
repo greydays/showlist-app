@@ -1,4 +1,4 @@
-<section data-ng-controller="newShowController">
+<section data-ng-controller="showsController">
   <form class="show-form" data-ng-submit="newShow(show)">
     <ul>
       <li>
@@ -23,11 +23,11 @@
       </li>
       <li>
         <label for="show-cost">Admission</label>
-        <span>$<input type="number" id="show-cost" placeholder="000" data-ng-model="show.cost"> (whole dollars)</span>
+        <span class="show-cost_span">$<input type="number" id="show-cost" placeholder="000" data-ng-model="show.cost"> (whole dollars)</span>
       </li>
       <li>
         <label for="show-time">Time</label>
-        <input type="datetime-local" id="show-time" placeholder="Venue Presents" data-ng-model="show.time">
+        <input type="text" id="show-time" placeholder="7pm doors/8pm show" data-ng-model="show.time">
       </li>
       <li>
         <input type="checkbox" id="show-age" value="true" data-ng-model="show.age">

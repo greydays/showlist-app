@@ -14,25 +14,25 @@
     <!-- <script src="js/vendor/modernizr-2.8.3.min.js"></script> -->
   </head>
   <body data-ng-app="showlistApp">
-    <header>
-      <h1>Show List</h1>
-      <nav>
-        <a href="#/shows">Link</a>
-        <a href="#/link">Link</a>
+    <header class="container">
+      <h1 class="flex-item-1 header_h1">Show List</h1>
+      <nav class="flex-item-2 header_nav-links">
+        <a href="#/new-show">Create Show</a>
+        <a href="#/shows">Shows</a>
         <a href="#/link">Link</a>
       </nav>
       <div class="login"></div>
     </header>
-    <main>
+    <main class="main-container">
       <section class="left-sidebar">
         <h3>Sort Options</h3>
-        <ul>
+        <ul class="left-sidebar_ul">
           <li>
             <a href="#/past">Past Shows</a>
           </li>
         </ul>
       </section>
-      <div class="showlist" data-ng-view></div>
+      <div class="main_right" data-ng-view></div>
     </main>
 
     <script src="js/bundle.js"></script>

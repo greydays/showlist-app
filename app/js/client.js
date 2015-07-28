@@ -5,7 +5,7 @@ require('angular-route');
 require('angular-cookies');
 require('angular-base64');
 
-var settingsApp = angular.module('showlistApp', ['ngRoute', 'ngCookies', 'base64']);
+var showlistApp = angular.module('showlistApp', ['ngRoute', 'ngCookies', 'base64']);
 
 //services
 // require('./services/copy')(showlistApp);
@@ -19,21 +19,22 @@ require('./shows/controllers/showsController')(showlistApp);
 //directives
 // require('./directives/simple_directive')(showlistApp);
 require('./shows/directives/show_form_directive')(showlistApp);
+require('./shows/directives/show-card_directive')(showlistApp);
 // require('./auth/directives/logout_directive')(showlistApp);
 
 showlistApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider
     .when('/shows', {
-      templateUrl: 'templates/views/shows_view.html',
+      templateUrl: 'templates/directives/shows_view.html',
       controller: 'showsController'
     })
-    .when('/login', {
-      templateUrl: 'templates/views/loginForm.html',
-      controller: 'authController'
-    })
-    .when('/newShow', {
-      templateUrl: 'templates/views/newShow.html',
-      controller: 'authController'
+    // .when('/login', {
+    //   templateUrl: 'templates/directivs/login_form.html',
+    //   controller: 'authController'
+    // })
+    .when('/new-show', {
+      templateUrl: 'templates/directives/new_show_form.html',
+      controller: 'showsController'
     })
     .when('/', {
       redirectTo: '/shows'

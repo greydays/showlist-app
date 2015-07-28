@@ -10,7 +10,7 @@ var minifyHTML = require('gulp-minify-html');
 gulp.task('sass', function () {
   gulp.src('./app/sass/application.sass')
     .pipe(sass().on('error', sass.logError))
-    // .pipe(minifyCss({compatibility: 'ie8'}))
+    .pipe(minifyCss({compatibility: 'ie8'}))
     .pipe(gulp.dest('./public/css/'));
 });
 
@@ -25,7 +25,7 @@ gulp.task('webpackdev', function() {
         filename: 'bundle.js'
       }
     }))
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(gulp.dest('./public/js/'));
 });
 

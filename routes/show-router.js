@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 var Show = require('../models/show');
 var Venue = require('../models/Venue');
-var eatAuth = require('../lib/eat-auth')(process.env.APP_SECRET);
+// var eatAuth = require('../lib/eat-auth')(process.env.APP_SECRET);
 
 
 module.exports = function(router) {
@@ -19,7 +19,7 @@ module.exports = function(router) {
 		});
 	})
 
-	.post(eatAuth, function(req,res) {
+	.post(function(req,res) {
     var show = new Show(req.body);
 		console.log(req.body);
 		console.log(show);
@@ -28,10 +28,10 @@ module.exports = function(router) {
 				res.status(500).json({msg: 'internal server error'})
 			}
 			res.json({msg: 'New show has been saved!'})
-		}) 
+		})
 	})
 
-	.delete(eatAuth, function(req,res) {
+	.delete(function(req,res) {
 		Show.remove({}, function(err,data) {
 			if (err) {
 				res.status(500).json({msg: 'Internal Server Error'})
@@ -40,9 +40,9 @@ module.exports = function(router) {
 		//this route deletes ALL SHOWS use with caution
 		});
 	})
-  
+
   router.route('/:venue/shows')
-  
+
   .get(function(req,res) {
   	var id = req.params.venue;
   	Venue.findById(id)
@@ -50,18 +50,18 @@ module.exports = function(router) {
   	.exec(function(err,doc) {
     if(err) {
       res.status(500).json(err);
-    } 
-     
+    }
+
   		res.json(doc);
   	});
   })
 
-  .post(eatAuth, function(req, res) {
+  .post(function(req, res) {
   	var show = new Show(req.body)
     console.log(req.body)
   	show.save(function(err,data) {
   		if (err) {
-  			res.status(500).json({msg: 'Internal server error'})
+  			res.status(500).json(err)
   		}
   		Venue.findById(show.venue, function(err,venue) {
   			if(err) {
@@ -73,7 +73,6 @@ module.exports = function(router) {
   					res.status(500).json(err)
   				}
   				res.json(data)
-<<<<<<< HEAD
   			})
   		})
   	})
@@ -91,7 +90,7 @@ module.exports = function(router) {
     .exec(function(err,doc) {
     if(err) {
       res.status(500).json(err);
-    } 
+    }
      for(var i = 0; i < doc.shows.length; i ++) {
       if(doc.shows[i].showTitle === showRequest) {
         showArray.push(doc.shows[i])
@@ -113,11 +112,15 @@ module.exports = function(router) {
     } 
      for(var i = 0; i < doc.shows.length; i ++) {
       if(doc.shows[i].showTitle === showRequest) {
-        Show.find({name: showRequest}).remove();
+        Show.find({name: showRequest}).remove(function(err,doc) {
+          if(err) {
+            res.status(500).json(err);
+          }
+          res.json(doc.name + ' has been deleted')
+        });
       }
      }
-      res.json(showArray);
-    });
+    })
   })
 
   .patch(function(req,res) {
@@ -130,7 +133,7 @@ module.exports = function(router) {
     .exec(function(err,doc) {
     if(err) {
       res.status(500).json(err);
-    } 
+    }
      for(var i = 0; i < doc.shows.length; i ++) {
       if(doc.shows[i].showTitle === showRequest) {
         Show.findOneAndUpdate({name: showRequest}, showData, function(err,doc) {
@@ -140,7 +143,7 @@ module.exports = function(router) {
           res.json(doc);
         });
       }
-     }     
+     }
     });
   });
 };

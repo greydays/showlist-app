@@ -1,6 +1,6 @@
-<section data-ng-controler="showsController" class="show-card" >
-  <article ng-repeat="show in shows">
-    <div class="show-card_top" style="background: url{{show.image}}, background-size: cover;">
+<section data-ng-controler="showsController" class="show-view-container">
+  <article data-ng-repeat="show in shows" class="show-card">
+    <div class="show-card_top" style="background: url{{show.image}}, background-size: contain;">
       <h2 class="show-card_title">{{show.showTitle}}</h2>
       <span class="show-card_fixed-corner">
         <h2 class="show-card_date">{{show.date}}</h2>
@@ -17,25 +17,4 @@
       </h4>
     </div>
   </article>
-
- <!-- demo card for styling-->
-  <article class="show-card">
-    <div class="show-card_top" style="background: url(https://c2.staticflickr.com/4/3321/3509763984_a57fdaa0b2_n.jpg);, background-size: cover;" >
-      <h2 class="show-card_title">Upcoming Show</h2>
-      <span class="show-card_fixed-corner">
-        <h2 class="show-card_date">08/30/2015</h2>
-        <h2 class="show-card_if-all-ages">All-Ages!</h2>
-      </span>
-    </div>
-    <div>
-      <h3>A list of bands, separated by commas</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-      <h4>
-        <span>8pm</span>
-        <span>$10</span>
-        <span>FB Link</span>
-      </h4>
-    </div>
-  </article>
-
 </section>

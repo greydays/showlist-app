@@ -5,10 +5,10 @@ var showSchema = new Schema({
   showTitle: String,
   date: Date,
   venue: {type: Schema.Types.ObjectId, ref: 'Venue'},
-  bands: {type: Schema.Types.ObjectId, ref: 'Bands'}, //will update later
+  bands: String, //{type: Schema.Types.ObjectId, ref: 'Bands'}, will update later
   description: String,
   cost: Number,
-  time: Date,
+  time: String,
   age: Boolean,
   image: String,
   social: String

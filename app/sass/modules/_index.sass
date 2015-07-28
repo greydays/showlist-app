@@ -1,0 +1,61 @@
+//header
+header
+  background-color: $header-color
+  color: $header-font
+
+.header_h1
+  margin: 0 0 0 0.5em
+  width: 8em
+
+.header_nav-links
+  margin: 0 1em
+  width: 9em
+  a
+    margin: 0 0.25em
+
+// left sidebar
+.left-sidebar
+  width: 12em
+  padding: 1em
+  background-color: $sidebar-color
+
+.left-sidebar_ul
+  list-style: none
+
+//show list cards
+.show-card
+  position: relative
+  width: 22em
+  margin: 0.5em
+
+.show-card_top
+  color: white
+  text-shadow: 1px 1px 2px black
+  height: 8em
+
+//forms
+input, label, textarea, button
+  cursor: pointer
+
+input[type=date]
+  display: block
+
+input[type=text], .show-cost_span, textarea
+  @extend input[type=date]
+  width: 95%
+
+  //new show form
+.show-view-container
+  @include flex-row-wrap
+  @include flex-align-default
+
+.show-form
+  width: 80%
+  box-sizing: border-box
+  margin: 1em auto
+  text-align: left
+  background-color: $form-color
+  ul
+    list-style: none
+  li
+    padding: 0.5em

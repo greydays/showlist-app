@@ -10,17 +10,16 @@ var showlistApp = angular.module('showlistApp', ['ngRoute', 'ngCookies', 'base64
 //services
 // require('./services/copy')(showlistApp);
 // require('./services/rest_resource')(showlistApp);
-// require('./auth/services/auth')(showlistApp);
+require('./auth/services/auth_service')(showlistApp);
 
 //controllers
 require('./shows/controllers/showsController')(showlistApp);
-// require('./auth/controllers/auth_controller')(showlistApp);
+require('./auth/controllers/auth_controller')(showlistApp);
 
 //directives
-// require('./directives/simple_directive')(showlistApp);
 require('./shows/directives/show_form_directive')(showlistApp);
 require('./shows/directives/show-card_directive')(showlistApp);
-// require('./auth/directives/logout_directive')(showlistApp);
+require('./auth/directives/auth_form_directive')(showlistApp);
 
 showlistApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -28,10 +27,10 @@ showlistApp.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'templates/directives/shows_view.html',
       controller: 'showsController'
     })
-    // .when('/login', {
-    //   templateUrl: 'templates/directivs/login_form.html',
-    //   controller: 'authController'
-    // })
+    .when('/login', {
+      templateUrl: 'templates/directives/login_form.html',
+      controller: 'authController'
+    })
     .when('/new-show', {
       templateUrl: 'templates/directives/new_show_form.html',
       controller: 'showsController'

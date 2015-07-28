@@ -11,7 +11,7 @@ module.exports = function(router) {
 				res.status(500).json({msg: 'Internal Server Error'})
 			}
 			res.json(data)
-			console.log(data)
+      //route gets all shows
 		})
 	})
 
@@ -23,7 +23,6 @@ module.exports = function(router) {
 			if (err) {
 				res.status(500).json({msg: 'internal server error'})
 			}
-			console.log(data)
 			res.json({msg: 'New show has been saved!'})
 		}) 
 	})
@@ -35,13 +34,11 @@ module.exports = function(router) {
 			}
 			res.json({msg: 'shows have been deleted'})
 		//this route deletes ALL SHOWS use with caution
-
 		})
 	})
   
   router.route('/:venue/shows')
   
-
   .get(function(req,res) {
   	var id = req.params.venue;
   	Venue.findById(id)
@@ -78,6 +75,7 @@ module.exports = function(router) {
   })
 
   router.route('/:venue/shows/:show')
+
   .get(function(req,res) {
     var id = req.params.venue;
     var showRequest = req.params.show;
@@ -88,7 +86,6 @@ module.exports = function(router) {
     if(err) {
       res.status(500).json(err);
     } 
-     console.log(doc.shows);
      for(var i = 0; i < doc.shows.length; i ++) {
       if(doc.shows[i].showTitle === showRequest) {
         showArray.push(doc.shows[i])
@@ -110,18 +107,14 @@ module.exports = function(router) {
     } 
      for(var i = 0; i < doc.shows.length; i ++) {
       if(doc.shows[i].showTitle === showRequest) {
-        Show.find({name: showRequest}).remove(function(err,res) {
-          if(err) {
-            res.status(500).json(err)
-          }
-          res.json({msg: 'show deleted'});
-        })
+        Show.find({name: showRequest}).remove();
       }
      }
+      res.json(showArray);
     })
   })
 
-  .update(function(req,res) {
+  .patch(function(req,res) {
     var showData = req.body;
     var id = req.params.venue;
     var showRequest = req.params.show;
@@ -134,14 +127,14 @@ module.exports = function(router) {
     } 
      for(var i = 0; i < doc.shows.length; i ++) {
       if(doc.shows[i].showTitle === showRequest) {
-        Shows.findOneAndUpdate(name: showRequest, showData, function(err,res) {
+        Show.findOneAndUpdate({name: showRequest}, showData, function(err,doc) {
           if(err) {
             res.status(500).json(err)
           }
-          res.json(msg: "show udpated");
+          res.json(doc);
         })
       }
-     }
+     }     
     })
   })
 }

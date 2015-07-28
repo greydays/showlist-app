@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost');
 
-
+app.use(express.static(__dirname + '/public'));
 
 app.use(passport.initialize());
 
@@ -18,11 +18,14 @@ var venueRouter = express.Router();
 require('./routes/venue-router')(venueRouter);
 var showRouter = express.Router();
 require('./routes/show-router')(showRouter);
+var bandRouter = express.Router();
+require('./routes/band-router')(bandRouter);
 
 var authRouter = express.Router();
 require('./routes/auth-routes')(authRouter);
 
 // app.use('/venue', require('./middlewares/verify'));
+app.use('/band', bandRouter);
 app.use('/venue', venueRouter);
 app.use('/show', showRouter);
 app.use('/', authRouter);

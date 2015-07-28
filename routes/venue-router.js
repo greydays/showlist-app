@@ -48,6 +48,8 @@ module.exports = function(router) {
         }
       });
     })
+
+    
     .delete(function(req, res) {
       var venueName = req.params.venue;
       Venue.findOne({name: venueName}, function(err, venue) {

@@ -15,15 +15,15 @@
   </head>
   <body data-ng-app="showlistApp">
     <header class="container">
-      <h1 class="flex-item-1 header_h1">Show List</h1>
-      <nav class="flex-item-2 header_nav-links">
+      <h1 class="header_h1">Show List</h1>
+      <nav class="flex-grow-right header_nav-links">
         <a href="#/new-show">Create Show</a>
         <a href="#/shows">Shows</a>
         <a href="#/link">Link</a>
       </nav>
       <div class="login"></div>
     </header>
-    <main class="main-container">
+    <main class="main-container" data-ng-init="getAll()">
       <section class="left-sidebar">
         <h3>Sort Options</h3>
         <ul class="left-sidebar_ul">

@@ -8,10 +8,12 @@ var eatAuth = require('../lib/eat-auth')(process.env.APP_SECRET);
 module.exports = function(router) {
   router.use(bodyParser.json());
 
-  router.post('/', eatAuth, function(req, res) {
+  router.post('/',  function(req, res) {
     var venue = new Venue(req.body);
+    venue.basic.password = venue.generateHash(req.body.basic.password);
     venue.save(function(err,data) {
       if (err) {
+        console.log(err);
         res.status(500).json(err)
       }
       res.json(data);
@@ -105,7 +107,7 @@ module.exports = function(router) {
       })
     })
   });
-    
+
 
   router.route('/:venue/shows/:show')
 
@@ -152,7 +154,7 @@ module.exports = function(router) {
       }
      }
     });
-  });
+  })
 
   .delete(eatAuth, function(req,res) {
     var id = req.params.venue;
@@ -163,7 +165,7 @@ module.exports = function(router) {
     .exec(function(err,doc) {
     if(err) {
       res.status(500).json(err);
-    } 
+    }
      for(var i = 0; i < doc.shows.length; i ++) {
       if(doc.shows[i].showTitle === showRequest) {
         Show.find({name: showRequest}).remove(function(err,doc) {

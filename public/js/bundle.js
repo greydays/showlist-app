@@ -30035,7 +30035,7 @@
 	    return {
 	      signIn: function(venue, callback) {
 	        var encoded = $base64.encode(venue.name + ':' + venue.password);
-	        $http.get('/api/sign_in', {
+	        $http.get('/venue/sign_in', {
 	          headers: {'Authorization': 'Basic ' + encoded}
 	        })
 	        .success(function(data) {
@@ -30048,7 +30048,7 @@
 	      },
 
 	      create: function(venue, callback) {
-	        $http.post('/api/create_venue', venue)
+	        $http.post('/venue/create_venue', venue)
 	          .success(function(data) {
 	            console.log(data);
 	            $cookies.put('eat', data.token)
@@ -30194,6 +30194,7 @@
 	    };
 	  });
 	};
+
 
 
 

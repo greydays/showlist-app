@@ -10,7 +10,7 @@ module.exports = function(router) {
   			res.status(500).json({msg: 'Internal Server error'})
   		}
   		res.json(bands);
-  	})
+  	});
   })
 
   .post(function(req,res) {
@@ -20,9 +20,8 @@ module.exports = function(router) {
   			res.status(500).json({msg: 'Internal Server Error'})
   		}
   		res.json({msg: 'Your band ' + band.name + ' has ben saved!'})
-  	})
-
-  })
+  	});
+  });
 
 	router.route('/band/:band')
 	.get(function(req,res) {
@@ -32,7 +31,7 @@ module.exports = function(router) {
 				res.status(404).json(err)
 			}
 			res.json(doc);
-		})
+		});
 	})
 
   .put(function(req,res) {
@@ -42,7 +41,7 @@ module.exports = function(router) {
     		res.status(500).json(err)
     	}
     	res.json(doc);
-    }) 
+    });
   })
 
   .delete(function(req,res) {
@@ -52,7 +51,7 @@ module.exports = function(router) {
   			res.status(500).json(err)
   		}
   		res.json({msg: data.name + ' was deleted'});
-  	})
+  	});
   })
 
   router.route('/band/:band/shows')
@@ -66,7 +65,7 @@ module.exports = function(router) {
   			res.status(404).json({msg: 'Error, Band not found'})
   		}
   		res.json(doc.shows);
-  	})
+  	});
   })
   .post(function(req,res) {
   	var showData = req.body;
@@ -81,9 +80,9 @@ module.exports = function(router) {
       	}
         band.shows.push(show.id);
         res.json({msg: 'show saved!'})
-      })
-  	})
-  })
+      });
+  	});
+  });
 
   router.route('/band/:band/shows/:show')
   
@@ -111,9 +110,9 @@ module.exports = function(router) {
   					showArray.push(data.shows[i]);
   				}
   			}
-  		})
+  		});
   		res.json(showArray);
-  	})
+  	});
   })
 
   .put(function(req,res) {
@@ -142,11 +141,11 @@ module.exports = function(router) {
   							res.status(500).json(err)
   						}
   						res.json({msg: show.name + ' was updated'})
-  					})
+  					});
   				}
   			}
-  		})  		
-  	})
+  		}); 		
+  	});
   })
 
   .delete(function(req,res) {
@@ -174,13 +173,12 @@ module.exports = function(router) {
   							res.status(500).json(err)
   						}
   						res.json({msg: show.name + ' was deleted'})
-  					})
+  					});
   				}
   			}
-  		})  		
-  	})
-  })
-
+  		});
+  	});
+  });
 }
 
 

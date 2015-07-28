@@ -3,6 +3,8 @@
 var mongoose = require('mongoose');
 var Show = require('../models/show');
 var Venue = require('../models/Venue');
+var eatAuth = require('../lib/eat-auth')(process.env.APP_SECRET);
+
 
 module.exports = function(router) {
   router.route('/shows')
@@ -17,8 +19,8 @@ module.exports = function(router) {
 		})
 	})
 
-	.post(function(req,res) {
-		var show = new Show(req.body);
+	.post(eatAuth, function(req,res) {
+    var show = new Show(req.body);
 		console.log(req.body);
 		console.log(show);
 		show.save(function(err,data) {
@@ -30,7 +32,7 @@ module.exports = function(router) {
 		}) 
 	})
 
-	.delete(function(req,res) {
+	.delete(eatAuth, function(req,res) {
 		Show.remove({}, function(err,data) {
 			if (err) {
 				res.status(500).json({msg: 'Internal Server Error'})
@@ -51,7 +53,7 @@ module.exports = function(router) {
   	})
   })
 
-  .post(function(req, res) {
+  .post(eatAuth, function(req, res) {
   	var show = new Show(req.body)
   	show.save(function(err,data) {
   		if (err) {

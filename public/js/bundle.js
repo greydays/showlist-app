@@ -45,9 +45,12 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	__webpack_require__(8);
 	__webpack_require__(10);
-	module.exports = __webpack_require__(9);
+	__webpack_require__(13);
+	__webpack_require__(9);
+	__webpack_require__(2);
+	__webpack_require__(12);
+	module.exports = __webpack_require__(11);
 
 
 /***/ },
@@ -56,27 +59,26 @@
 
 	'use strict';
 
-	__webpack_require__(2);
 	__webpack_require__(3);
-	__webpack_require__(5);
-	__webpack_require__(7);
+	__webpack_require__(4);
+	__webpack_require__(6);
+	__webpack_require__(8);
 
 	var showlistApp = angular.module('showlistApp', ['ngRoute', 'ngCookies', 'base64']);
 
 	//services
 	// require('./services/copy')(showlistApp);
 	// require('./services/rest_resource')(showlistApp);
-	// require('./auth/services/auth')(showlistApp);
+	__webpack_require__(9)(showlistApp);
 
 	//controllers
-	__webpack_require__(8)(showlistApp);
-	// require('./auth/controllers/auth_controller')(showlistApp);
+	__webpack_require__(2)(showlistApp);
+	__webpack_require__(10)(showlistApp);
 
 	//directives
-	// require('./directives/simple_directive')(showlistApp);
-	__webpack_require__(9)(showlistApp);
-	__webpack_require__(10)(showlistApp);
-	// require('./auth/directives/logout_directive')(showlistApp);
+	__webpack_require__(11)(showlistApp);
+	__webpack_require__(12)(showlistApp);
+	__webpack_require__(13)(showlistApp);
 
 	showlistApp.config(['$routeProvider', function($routeProvider) {
 	  $routeProvider
@@ -84,10 +86,10 @@
 	      templateUrl: 'templates/directives/shows_view.html',
 	      controller: 'showsController'
 	    })
-	    // .when('/login', {
-	    //   templateUrl: 'templates/directivs/login_form.html',
-	    //   controller: 'authController'
-	    // })
+	    .when('/login', {
+	      templateUrl: 'templates/directives/login_form.html',
+	      controller: 'authController'
+	    })
 	    .when('/new-show', {
 	      templateUrl: 'templates/directives/new_show_form.html',
 	      controller: 'showsController'
@@ -103,6 +105,45 @@
 
 /***/ },
 /* 2 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.controller('showsController', ['$scope', '$http', function($scope, $http) {
+
+	    //set up get request to backend
+	    var getAll = function() {
+	      $http.get('/show/shows').success(function(response){
+	        console.log('I got data');
+	        console.log(response);
+	        $scope.shows = response;
+	      });
+	    };
+
+	    getAll();
+
+	    $scope.submitForm = function(show){
+	      console.log(show);
+	      $http.post('/show/shows', show).success(function(response){
+	        getAll();
+	      });
+	    };
+
+	    $scope.destroy = function(id) {
+	      console.log(id)
+	      $http.delete('/show/shows/'  + id).success(function(){
+	        getAll();
+	      });
+	    };
+
+	  }]);
+	};
+
+
+
+/***/ },
+/* 3 */
 /***/ function(module, exports) {
 
 	/**
@@ -28471,15 +28512,15 @@
 	!window.angular.$$csp() && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(4);
+	__webpack_require__(5);
 	module.exports = 'ngRoute';
 
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports) {
 
 	/**
@@ -29477,15 +29518,15 @@
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(6);
+	__webpack_require__(7);
 	module.exports = 'ngCookies';
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports) {
 
 	/**
@@ -29812,7 +29853,7 @@
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports) {
 
 	(function() {
@@ -29984,46 +30025,90 @@
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports) {
 
 	'use strict';
 
 	module.exports = function(app) {
-	  app.controller('showsController', ['$scope', '$http', function($scope, $http) {
+	  app.factory('auth' , ['$http','$base64', '$cookies', function($http, $base64, $cookies) {
+	    return {
+	      signIn: function(venue, callback) {
+	        var encoded = $base64.encode(venue.name + ':' + venue.password);
+	        $http.get('/api/sign_in', {
+	          headers: {'Authorization': 'Basic ' + encoded}
+	        })
+	        .success(function(data) {
+	          $cookies.put('eat', data.token);
+	          callback(null);
+	        })
+	        .error(function(data) {
+	          callback(data);
+	        });
+	      },
 
-	    //set up get request to backend
-	    var getAll = function() {
-	      $http.get('/show/shows').success(function(response){
-	        console.log('I got data');
-	        console.log(response);
-	        $scope.shows = response;
-	      });
+	      create: function(venue, callback) {
+	        $http.post('/api/create_venue', venue)
+	          .success(function(data) {
+	            console.log(data);
+	            $cookies.put('eat', data.token)
+	            callback(null);
+	          })
+	          .error(function(data) {
+	            callback(data);
+	          });
+	      },
+
+	      logout: function() {
+	        $cookies.put('eat', '');
+	      },
+
+	      isSignedIn: function() {
+	        return !!($cookies.get('eat') && $cookies.get('eat').length);
+	      }
 	    };
-
-	    getAll();
-
-	    $scope.submitForm = function(show){
-	      console.log(show);
-	      $http.post('/show/shows', show).success(function(response){
-	        getAll();
-	      });
-	    };
-
-	    $scope.destroy = function(id) {
-	      console.log(id)
-	      $http.delete('/show/shows/'  + id).success(function(){
-	        getAll();
-	      });
-	    };
-
 	  }]);
 	};
 
 
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.controller('authController', ['$scope','$location', 'auth', function($scope, $location, auth) {
+
+	    if (auth.isSignedIn()) $location.path('/venue');
+	    $scope.errors = [];
+	    $scope.authSubmit = function(venue) {
+	      if (venue.password_confirmation) {
+	        auth.create(venue, function(err) {
+	          if(err) {
+	            console.log(err);
+	            return $scope.errors.push({msg: 'could not sign in'});
+	          }
+
+	          $location.path('/venue');
+	        })
+	      } else {
+	        auth.signIn(venue, function(err) {
+	          if(err) {
+	            console.log(err);
+	            return $scope.errors.push({msg: 'could not create venue'});
+	          }
+
+	          $location.path('/venue');
+	        });
+	      }
+	    };
+	  }]);
+	};
+
 
 /***/ },
-/* 9 */
+/* 11 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30048,7 +30133,7 @@
 
 
 /***/ },
-/* 10 */
+/* 12 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30085,6 +30170,31 @@
 
 
 	};
+
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.directive('showFormDirective', function() {
+	    return {
+	      restrict: 'AC',
+	      replace: true,
+	      templateUrl: '/templates/directives/login_form.html',
+	      scope: {
+	        save: '&',
+	        buttonText: '=',
+	        labelText: '@',
+	        note: '='
+	      },
+	      transclude: true
+	    };
+	  });
+	};
+
 
 
 /***/ }

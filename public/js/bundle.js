@@ -30034,7 +30034,7 @@
 	  app.factory('auth' , ['$http','$base64', '$cookies', function($http, $base64, $cookies) {
 	    return {
 	      signIn: function(venue, callback) {
-	        var encoded = $base64.encode(venue.name + ':' + venue.password);
+	        var encoded = $base64.encode(venue.email + ':' + venue.password);
 	        $http.get('/venue/sign_in', {
 	          headers: {'Authorization': 'Basic ' + encoded}
 	        })

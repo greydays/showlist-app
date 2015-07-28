@@ -74,6 +74,9 @@ module.exports = function(router) {
   		if (err) {
   			res.status(500).json(err)
   		}
+  		if(!doc) {
+  			res.status(404).json(err + ' band not found')
+  		}
       Band.findById(show.band, function(err,band) {
       	if (err) {
       		res.status(500).json(err)

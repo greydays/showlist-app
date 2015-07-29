@@ -45,16 +45,18 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	__webpack_require__(10);
-	__webpack_require__(15);
 	__webpack_require__(8);
+	__webpack_require__(9);
 	__webpack_require__(12);
 	__webpack_require__(17);
-	__webpack_require__(9);
+	__webpack_require__(10);
 	__webpack_require__(14);
-	__webpack_require__(13);
+	__webpack_require__(19);
+	__webpack_require__(16);
+	__webpack_require__(15);
 	__webpack_require__(11);
-	module.exports = __webpack_require__(16);
+	__webpack_require__(13);
+	module.exports = __webpack_require__(18);
 
 
 /***/ },
@@ -71,22 +73,22 @@
 	var showlistApp = angular.module('showlistApp', ['ngRoute', 'ngCookies', 'base64']);
 
 	//services
-	// require('./services/copy')(showlistApp);
-	// require('./services/rest_resource')(showlistApp);
 	__webpack_require__(8)(showlistApp);
-
-	//controllers
 	__webpack_require__(9)(showlistApp);
 	__webpack_require__(10)(showlistApp);
+
+	//controllers
 	__webpack_require__(11)(showlistApp);
 	__webpack_require__(12)(showlistApp);
+	__webpack_require__(13)(showlistApp);
+	__webpack_require__(14)(showlistApp);
 
 
 	//directives
-	__webpack_require__(13)(showlistApp);
-	__webpack_require__(14)(showlistApp);
 	__webpack_require__(15)(showlistApp);
 	__webpack_require__(16)(showlistApp);
+	__webpack_require__(17)(showlistApp);
+	__webpack_require__(18)(showlistApp);
 
 	showlistApp.config(['$routeProvider', function($routeProvider) {
 	  $routeProvider
@@ -30012,6 +30014,79 @@
 	'use strict';
 
 	module.exports = function(app) {
+	  app.factory('copy', function() {
+	    return function(objToCopy) {
+	      var obj = {}; 
+	      Object.keys(objToCopy).forEach(function(key) {
+	        obj[key] = objToCopy[key];
+	      });
+	      return obj;
+	    };
+	  });
+	};
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  var handleError = function(callback) {
+	    return function(data) {
+	      console.log(data);
+	      callback(data);
+	    };
+	  };
+
+	  var handleSuccess = function(callback) {
+	    return function(data) {
+	      callback(null, data);
+	    };
+	  };
+
+	  app.factory('RESTResource', ['$http', '$cookies', function($http, $cookies) {
+	    return function(resourceName) {
+	      var eat = $cookies.get('eat');
+	      $http.defaults.headers.common['eat'] = eat;
+	      return {
+	        get: function(callback) {
+	          $http.get('/venue/' + resourceName)
+	            .success(handleSuccess(callback))
+	            .error(handleError(callback));
+	        },
+
+	        create: function(resourceData, callback) {
+	          $http.post('/venue/' + resourceName, resourceData) 
+	            .success(handleSuccess(callback))
+	            .error(handleError(callback));
+	        },
+
+	        save: function(resourceData, callback) {
+	          $http.put('/venue/' + resourceName + '/' + resourceData._id, resourceData)
+	            .success(handleSuccess(callback))
+	            .error(handleError(callback));
+	        },
+
+	        remove: function(resourceData, callback) {
+	          $http.delete('/venue/' + resourceName + '/' + resourceData._id)
+	            .success(handleSuccess(callback))
+	            .error(handleError(callback));
+	        }
+	      };
+	    };
+	  }]);
+	};
+
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
 	  app.factory('auth' , ['$http','$base64', '$cookies', function($http, $base64, $cookies) {
 	    return {
 	      signIn: function(venue, callback) {
@@ -30021,7 +30096,7 @@
 	        })
 	        .success(function(data) {
 	          $cookies.put('eat', data.token);
-	          callback(null);
+	          callback(null, data.venue);
 	        })
 	        .error(function(data) {
 	          callback(data);
@@ -30033,7 +30108,7 @@
 	          .success(function(data) {
 	            console.log(data);
 	            $cookies.put('eat', data.token)
-	            callback(null);
+	            callback(null, data.venue);
 	          })
 	          .error(function(data) {
 	            callback(data);
@@ -30054,7 +30129,7 @@
 
 
 /***/ },
-/* 9 */
+/* 11 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30065,8 +30140,6 @@
 	    //set up get request to backend
 	    var getAll = function() {
 	      $http.get('/show/shows').success(function(response){
-	        console.log('I got data');
-	        console.log(response);
 	        $scope.shows = response;
 	      });
 	    };
@@ -30093,139 +30166,37 @@
 
 
 /***/ },
-/* 7 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function(app) {
-	  app.controller('authController', ['$scope','$location', 'auth', function($scope, $location, auth) {
-
-	    if (auth.isSignedIn()) $location.path('/venue');
-	    $scope.errors = [];
-	    $scope.authSubmit = function(venue) {
-	      if (venue.password_confirmation) {
-	        auth.create(venue, function(err) {
-	          if(err) {
-	            console.log(err);
-	            return $scope.errors.push({msg: 'could not sign in'});
-	          }
-
-	          $location.path('/venue');
-	        })
-	      } else {
-	        auth.signIn(venue, function(err) {
-	          if(err) {
-	            console.log(err);
-	            return $scope.errors.push({msg: 'could not create venue'});
-	          }
-
-	          $location.path('/venue');
-	        });
-	      }
-	    };
-	  }]);
-	};
-
-
-/***/ },
-/* 8 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function(app) {
-	  app.controller('venueController', ['$scope', 'RESTResource', 'copy', function($scope, resource, copy) {
-	    var Venue = resource('venue');
-	    $scope.errors = [];
-	    $scope.venue = [];
-
-	    $scope.getAll = function() {
-	      Venue.getAll(function(err, data) {
-	        if (err) return $scope.errors.push({msg: 'error retrieving venue'});
-	        $scope.venue = data;
-	      });
-	    };
-
-	    $scope.createnewVenue = function(venue) {
-	      var newVenue = copy(venue);
-	      venue.venueBody = '';
-	      $scope.venue.push(newVenue);
-	      Venue.create(newVenue, function(err, data) {
-	        if(err) return $scope.errors.push({msg: 'could not save venue: ' + newVenue.venueBody});
-	        $scope.venue.splice($scope.venue.indexOf(newVenue), 1, data);
-	      });
-	    };
-
-	    $scope.removeVenue = function(venue) {
-	      $scope.venue.splice($scope.venue.indexOf(venue), 1);
-	      Venue.remove(venue, function(err) {
-	        if(err) {
-	          $scope.errors.push({msg: 'could not remove venue: ' + venue.venueBody});
-	        }
-	      });
-	    };
-
-	    $scope.saveVenue = function(venue) {
-	      venue.editing = false;
-	      Venue.save(venue, function(err, data) {
-	          if(err) $scope.errors.push({msg: 'could not update venue'});
-	      });
-	    };
-
-	    $scope.toggleEdit = function(venue) {
-	      if(venue.editing) {
-	        venue.venueBody = venue.venueBodyBackup;
-	        venue.venueBodyBackup = undefined;
-	        venue.editing = false;
-	      } else {
-	        venue.venueBodyBackup = venue.venueBody;
-	        venue.editing = true;
-	      }
-	    };
-
-	    $scope.clearErrors = function() {
-	      $scope.errors = [];
-	      $scope.getAll();
-	    };
-	  }]);
-	}
-
-
-/***/ },
 /* 12 */
 /***/ function(module, exports) {
 
-	'use strict'
+	'use strict';
 
 	module.exports = function(app) {
 	  app.controller('authController', ['$scope','$location', 'auth', function($scope, $location, auth) {
-
-	    if (auth.isSignedIn()) $location.path('/bands');
+	    // if (auth.isSignedIn()) $location.path('/venue');
 	    $scope.errors = [];
 	    $scope.authSubmit = function(venue) {
 	      if (venue.password_confirmation) {
-	        auth.create(venue, function(err) {
-	          if(err) {
-	            console.log(err);
-	            return $scope.errors.push({msg: 'could not sign in'});
-	          }
-
-	          $location.path('/venue');
-	        })
-	      } else {
-	        auth.signIn(venue, function(err) {
+	        auth.create(venue, function(err, data) {
 	          if(err) {
 	            console.log(err);
 	            return $scope.errors.push({msg: 'could not create venue'});
 	          }
-
-	          $location.path('/venue');
+	          $location.path('/' + data.userName);
+	        })
+	      } else {
+	        auth.signIn(venue, function(err, data) {
+	          if(err) {
+	            console.log(err);
+	            return $scope.errors.push({msg: 'could not sign in'});
+	          }
+	          $location.path('/' + data.userName); 
 	        });
 	      }
 	    };
 	  }]);
 	};
+
 
 /***/ },
 /* 13 */
@@ -30234,226 +30205,22 @@
 	'use strict';
 
 	module.exports = function(app) {
-	  app.directive('showFormDirective', function() {
-	    return {
-	      restrict: 'AC',
-	      replace: true,
-	      templateUrl: '/templates/shows/new_show_form.html',
-	      scope: {
-	        save: '&',
-	        buttonText: '=',
-	        labelText: '@',
-	        note: '='
-	      },
-	      transclude: true
-	    };
-	  });
-	};
-
-
-
-/***/ },
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function(app) {
-	  app.directive('showCardDirective', function() {
-	    return {
-	      restrict: 'AC',
-	      replace: true,
-	      templateUrl: '/templates/shows/shows_view.html',
-	      scope: {
-	        save: '&',
-	        buttonText: '=',
-	        labelText: '@',
-	        note: '='
-	      },
-	      transclude: true
-	    };
-	  });
-
-
-	//http://jsfiddle.net/jaimem/aSjwk/1/
-	  app.controller('ctrl', function($scope){
-	  });
-
-	  app.directive('backImg', function(){
-	      return function(scope, element){
-	          element.css({
-	              'background-image': 'url(' + shows.image +')',
-	              'background-size' : 'cover'
-	          });
-	      };
-	  });
-
-
-	};
-
-
-/***/ },
-
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function(app) {
-	  app.directive('showFormDirective', function() {
-	    return {
-	      restrict: 'AC',
-	      replace: true,
-	      templateUrl: '/templates/auth/login_form.html',
-	      scope: {
-	        save: '&',
-	        buttonText: '=',
-	        labelText: '@',
-	        note: '='
-	      },
-	      transclude: true
-	    };
-	  });
-	};
-
-
-
-
-/***/ },
-/* 16 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function(app) {
-	  app.directive('venueFormDirective', function() {
-	    return {
-	      restrict: 'AC',
-	      replace: true,
-	      templateUrl: '/templates/venues/new_venue_form.html',
-	      scope: {
-	        save: '&',
-	        buttonText: '=',
-	        labelText: '@',
-	        note: '='
-	      },
-	      transclude: true
-	    };
-	  });
-
-	  app.directive('venueCardDirective', function() {
-	    return {
-	      restrict: 'AC',
-	      replace: true,
-	      templateUrl: '/templates/venues/venue-card.html',
-	      scope: {
-	        save: '&',
-	        buttonText: '=',
-	        labelText: '@',
-	        note: '='
-	      },
-	      transclude: true
-	    };
-	  });
-	};
-
-
-
-/***/ },
-/* 17 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function(app) {
-	  app.directive('bandFormDirective', function() {
-	    return {
-	      restrict: 'AC',
-	      replace: true,
-	      templateUrl: '/templates/directives/login_form.html',
-	      scope: {
-	        save: '&',
-	        buttonText: '=',
-	        labelText: '@',
-	        note: '='
-	      },
-	      transclude: true
-	    };
-	  });
-	};
-
-/***/ },
-/* 11 */
-/***/ function(module, exports) {
-
-	'use strict'
-
-	module.exports = function(app) {
-	  app.controller('authController', ['$scope','$location', 'auth', function($scope, $location, auth) {
-
-	    if (auth.isSignedIn()) $location.path('/bands');
-	    $scope.errors = [];
-	    $scope.authSubmit = function(venue) {
-	      if (venue.password_confirmation) {
-	        auth.create(venue, function(err) {
-	          if(err) {
-	            console.log(err);
-	            return $scope.errors.push({msg: 'could not sign in'});
-	          }
-
-	          $location.path('/venue');
-	        })
-	      } else {
-	        auth.signIn(venue, function(err) {
-	          if(err) {
-	            console.log(err);
-	            return $scope.errors.push({msg: 'could not create venue'});
-	          }
-
-	          $location.path('/venue');
-	        });
-	      }
-	    };
-	  }]);
-	};
-
-/***/ },
-/* 12 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function(app) {
-	  app.directive('bandFormDirective', function() {
-	    return {
-	      restrict: 'AC',
-	      replace: true,
-	      templateUrl: '/templates/directives/login_form.html',
-	      scope: {
-	        save: '&',
-	        buttonText: '=',
-	        labelText: '@',
-	        note: '='
-	      },
-	      transclude: true
-	    };
-	  });
-	};
-
-/***/ },
-/* 13 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function(app) {
-	  app.controller('venueController', ['$scope', 'RESTResource', 'copy', function($scope, resource, copy) {
+	  app.controller('venueController', ['$scope', '$http', 'RESTResource', 'copy', function($scope, $http, resource, copy) {
 	    var Venue = resource('venue');
 	    $scope.errors = [];
 	    $scope.venue = [];
 
-	    $scope.getAll = function() {
-	      Venue.getAll(function(err, data) {
-	        if (err) return $scope.errors.push({msg: 'error retrieving venue'});
-	        $scope.venue = data;
+	    $scope.getVenue = function(venue) {
+	      // Venue.get(venue, function(err, data) {
+	      //   if (err) return $scope.errors.push({msg: 'error retrieving venue'});
+	      //   $scope.venue = data;
+	      // });
+	      console.log('reached venue controller get venue');
+	      console.log(venue);
+	      $http.get('/venue/' + venue.name).success(function(response){
+	        console.log('I got data');
+	        console.log(response);
+	        $scope.venue = response;
 	      });
 	    };
 
@@ -30506,14 +30273,78 @@
 /* 14 */
 /***/ function(module, exports) {
 
+	'use strict'
+
+	module.exports = function(app) {
+	  app.controller('bandController', ['$scope', 'RESTResource', 'copy', function($scope, resource, copy) {
+	    var Band = resource('band');
+	    $scope.errors = [];
+	    $scope.band = [];
+
+	    $scope.getAll = function() {
+	      Band.getAll(function(err, data) {
+	        if (err) return $scope.errors.push({msg: 'error retrieving band'});
+	        $scope.band = data;
+	      });
+	    };
+
+	    $scope.createnewBand = function(band) {
+	      var newBand = copy(band);
+	      band.bandBody = '';
+	      $scope.band.push(newBand);
+	      Band.create(newBand, function(err, data) {
+	        if(err) return $scope.errors.push({msg: 'could not save band: ' + newBand.bandBody});
+	        $scope.band.splice($scope.band.indexOf(newBand), 1, data);
+	      });
+	    };
+
+	    $scope.removeBand = function(band) {
+	      $scope.band.splice($scope.band.indexOf(band), 1);
+	      Band.remove(band, function(err) {
+	        if(err) {
+	          $scope.errors.push({msg: 'could not remove band: ' + band.bandBody});
+	        }
+	      });
+	    };
+
+	    $scope.saveBand = function(band) {
+	      band.editing = false;
+	      Band.save(band, function(err, data) {
+	          if(err) $scope.errors.push({msg: 'could not update band'});
+	      });
+	    };
+
+	    $scope.toggleEdit = function(band) {
+	      if(band.editing) {
+	        band.bandBody = band.bandBodyBackup;
+	        band.bandBodyBackup = undefined;
+	        band.editing = false;
+	      } else {
+	        band.bandBodyBackup = band.bandBody;
+	        band.editing = true;
+	      }
+	    };
+
+	    $scope.clearErrors = function() {
+	      $scope.errors = [];
+	      $scope.getAll();
+	    };
+	  }]);
+	};
+
+
+/***/ },
+/* 15 */
+/***/ function(module, exports) {
+
 	'use strict';
 
 	module.exports = function(app) {
-	  app.directive('venueFormDirective', function() {
+	  app.directive('showFormDirective', function() {
 	    return {
-	      restrict: 'A',
+	      restrict: 'AC',
 	      replace: true,
-	      templateUrl: '/templates/directives/venue_form.html',
+	      templateUrl: '/templates/shows/new_show_form.html',
 	      scope: {
 	        save: '&',
 	        buttonText: '=',
@@ -30525,6 +30356,136 @@
 	  });
 	};
 
+
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.directive('showCardDirective', function() {
+	    return {
+	      restrict: 'AC',
+	      replace: true,
+	      templateUrl: '/templates/shows/shows_view.html',
+	      scope: {
+	        save: '&',
+	        buttonText: '=',
+	        labelText: '@',
+	        note: '='
+	      },
+	      transclude: true
+	    };
+	  });
+
+
+	//http://jsfiddle.net/jaimem/aSjwk/1/
+	  app.controller('ctrl', function($scope){
+	  });
+
+	  app.directive('backImg', function(){
+	      return function(scope, element){
+	          element.css({
+	              'background-image': 'url(' + shows.image +')',
+	              'background-size' : 'cover'
+	          });
+	      };
+	  });
+
+
+	};
+
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.directive('showFormDirective', function() {
+	    return {
+	      restrict: 'AC',
+	      replace: true,
+	      templateUrl: '/templates/auth/login_form.html',
+	      scope: {
+	        save: '&',
+	        buttonText: '=',
+	        labelText: '@',
+	        note: '='
+	      },
+	      transclude: true
+	    };
+	  });
+	};
+
+
+
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.directive('venueFormDirective', function() {
+	    return {
+	      restrict: 'AC',
+	      replace: true,
+	      templateUrl: '/templates/venues/new_venue_form.html',
+	      scope: {
+	        save: '&',
+	        buttonText: '=',
+	        labelText: '@',
+	        note: '='
+	      },
+	      transclude: true
+	    };
+	  });
+
+	  app.directive('venueCardDirective', function() {
+	    return {
+	      restrict: 'AC',
+	      replace: true,
+	      templateUrl: '/templates/venues/venue-card.html',
+	      scope: {
+	        save: '&',
+	        buttonText: '=',
+	        labelText: '@',
+	        note: '='
+	      },
+	      transclude: true
+	    };
+	  });
+	};
+
+
+
+/***/ },
+/* 19 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.directive('bandFormDirective', function() {
+	    return {
+	      restrict: 'AC',
+	      replace: true,
+	      templateUrl: '/templates/directives/login_form.html',
+	      scope: {
+	        save: '&',
+	        buttonText: '=',
+	        labelText: '@',
+	        note: '='
+	      },
+	      transclude: true
+	    };
+	  });
+	};
 
 /***/ }
 /******/ ]);

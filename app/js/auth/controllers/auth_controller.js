@@ -11,7 +11,7 @@ module.exports = function(app) {
             console.log(err);
             return $scope.errors.push({msg: 'could not create venue'});
           }
-          $location.path('/venue/' + data.name);
+          $location.path('/' + data.userName);
         })
       } else {
         auth.signIn(venue, function(err, data) {
@@ -19,7 +19,7 @@ module.exports = function(app) {
             console.log(err);
             return $scope.errors.push({msg: 'could not sign in'});
           }
-          $location.path('/venue/' + data.name); 
+          $location.path('/' + data.userName); 
         });
       }
     };

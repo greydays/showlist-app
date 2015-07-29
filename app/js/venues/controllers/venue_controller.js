@@ -9,7 +9,7 @@ module.exports = function(app) {
     $scope.getVenue = function(venue) {
       console.log('reached venue controller get venue');
       console.log(venue);
-      Venue.get(venue, function(err, data) {
+      $http.get(venue, function(err, data) {
         if (err) return $scope.errors.push({msg: 'error retrieving venue'});
         $scope.venue = data;
       });
@@ -19,6 +19,14 @@ module.exports = function(app) {
       //   $scope.venue = response;
       // });
     };
+
+    // var getAll = function() {
+    //   $http.get('/show/:venue').success(function(response){
+    //     $scope.venue = response;
+    //   });
+    // };
+
+    // getAll();
 
     $scope.createnewVenue = function(venue) {
       var newVenue = copy(venue);

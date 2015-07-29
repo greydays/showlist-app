@@ -23,6 +23,7 @@ module.exports = function(app) {
           $http.get('/venue/' + resourceName)
             .success(handleSuccess(callback))
             .error(handleError(callback));
+            console.log('hitting this')
         },
 
         create: function(resourceData, callback) {

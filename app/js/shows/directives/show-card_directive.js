@@ -5,7 +5,7 @@ module.exports = function(app) {
     return {
       restrict: 'AC',
       replace: true,
-      templateUrl: '/templates/directives/shows_view.html',
+      templateUrl: '/templates/shows/shows_view.html',
       scope: {
         save: '&',
         buttonText: '=',

@@ -1,6 +1,6 @@
 <section data-ng-controler="showsController" class="show-view-container">
   <article data-ng-repeat="show in shows" class="show-card">
-    <div class="show-card_top" style="background: url{{show.image}}, background-size: contain;">
+    <div class="show-card_top" data-ng-style="{'background-image':'url({{show.image}})'}">
       <h2 class="show-card_title">{{show.showTitle}}</h2>
       <span class="show-card_fixed-corner">
         <h2 class="show-card_date">{{show.date}}</h2>

@@ -7,6 +7,7 @@ var Schema = mongoose.Schema;
 
 var venueSchema = new Schema({
   name: String,
+  userName: {type: String, unique: true},
   location: String,
   shows: [{type: Schema.Types.ObjectId, ref: 'Show'}],
   website: String,

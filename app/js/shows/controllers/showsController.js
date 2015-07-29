@@ -6,8 +6,6 @@ module.exports = function(app) {
     //set up get request to backend
     var getAll = function() {
       $http.get('/show/shows').success(function(response){
-        console.log('I got data');
-        console.log(response);
         $scope.shows = response;
       });
     };

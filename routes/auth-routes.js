@@ -32,7 +32,7 @@ module.exports = function(router, passport) {
         console.log(err);
         return res.status(500).json({msg: 'error generating token'});
       }
-      res.json({token: token});
+      res.json({venue: req.user, token: token});
     });
   });
 };

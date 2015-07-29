@@ -23,6 +23,7 @@ module.exports = function(router) {
   router.route('/:venue')
 
   .get(function(req, res) {
+    console.log(req);
     var venueName = req.params.venue;
     Venue.findOne({name: venueName}, function(err, venue) {
       if (err) {

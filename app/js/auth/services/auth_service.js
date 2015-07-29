@@ -10,7 +10,7 @@ module.exports = function(app) {
         })
         .success(function(data) {
           $cookies.put('eat', data.token);
-          callback(null);
+          callback(data.venue);
         })
         .error(function(data) {
           callback(data);
@@ -22,7 +22,7 @@ module.exports = function(app) {
           .success(function(data) {
             console.log(data);
             $cookies.put('eat', data.token)
-            callback(null);
+            callback(data.venue);
           })
           .error(function(data) {
             callback(data);

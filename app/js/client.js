@@ -8,8 +8,8 @@ require('angular-base64');
 var showlistApp = angular.module('showlistApp', ['ngRoute', 'ngCookies', 'base64']);
 
 //services
-// require('./services/copy')(showlistApp);
-// require('./services/rest_resource')(showlistApp);
+require('./services/copy')(showlistApp);
+require('./services/rest_resource')(showlistApp);
 require('./auth/services/auth_service')(showlistApp);
 
 //controllers

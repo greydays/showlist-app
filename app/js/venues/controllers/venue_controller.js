@@ -1,15 +1,22 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('venueController', ['$scope', 'RESTResource', 'copy', function($scope, resource, copy) {
+  app.controller('venueController', ['$scope', '$http', 'RESTResource', 'copy', function($scope, $http, resource, copy) {
     var Venue = resource('venue');
     $scope.errors = [];
     $scope.venue = [];
 
-    $scope.getAll = function() {
-      Venue.getAll(function(err, data) {
-        if (err) return $scope.errors.push({msg: 'error retrieving venue'});
-        $scope.venue = data;
+    $scope.getVenue = function(venue) {
+      // Venue.get(venue, function(err, data) {
+      //   if (err) return $scope.errors.push({msg: 'error retrieving venue'});
+      //   $scope.venue = data;
+      // });
+      console.log('reached venue controller get venue');
+      console.log(venue);
+      $http.get('/venue/' + venue.name).success(function(response){
+        console.log('I got data');
+        console.log(response);
+        $scope.venue = response;
       });
     };
 

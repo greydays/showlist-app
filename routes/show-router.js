@@ -10,7 +10,6 @@ module.exports = function(router) {
   router.route('/shows')
 	.get(function(req,res) {
 		Show.find({}, function(err,data) {
-			console.log('shows router hit')
 			if (err) {
 				res.status(500).json({msg: 'Internal Server Error'})
 			}

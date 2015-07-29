@@ -21,7 +21,7 @@ module.exports = function(app) {
             console.log(err);
             return $scope.errors.push({msg: 'could not sign in'});
           }
-          $location.path('/' + data.userName); 
+          $location.path('/venue/' + data.userName); 
         });
       }
     };

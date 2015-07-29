@@ -13,8 +13,8 @@ module.exports = function(router) {
     var venue = new Venue(req.body);
     var userName = req.body.userName;
     if (/\s/.test(userName)) {
-    res.status(405).json({msg: 'No spaces allowed in user name'})
-}
+      res.status(405).json({msg: 'No spaces allowed in user name'})
+    }
     venue.basic.password = venue.generateHash(req.body.basic.password);
     venue.save(function(err,data) {
       if (err) {
@@ -27,14 +27,14 @@ module.exports = function(router) {
 
   router.route('/:venue')
 
-  .get(function(req, res) {
-    console.log('hit get' + req);
+  .get(eatAuth, function(req, res) {
     var name = req.params.venue;
     Venue.findOne({userName: name}, function(err, venue) {
       if (err) {
         return res.status(500).json({msg: err});
       }
       if (venue) {
+        console.log(venue);
         res.json(venue);
       } else {
         res.status(404).json({msg: 'Unable to locate ' + venueName});

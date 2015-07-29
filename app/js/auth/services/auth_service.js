@@ -5,7 +5,7 @@ module.exports = function(app) {
     return {
       signIn: function(venue, callback) {
         var encoded = $base64.encode(venue.email + ':' + venue.password);
-        $http.get('/venue/sign_in', {
+        $http.get('/venue/login', {
           headers: {'Authorization': 'Basic ' + encoded}
         })
         .success(function(data) {

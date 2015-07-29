@@ -43,7 +43,7 @@ showlistApp.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'templates/venues/new_venue_form.html',
       controller: 'venueController'
     })
-    .when('/venue', {
+    .when('/venue/:venue', {
       templateUrl: 'templates/venues/venue-card.html',
       controller: 'venueController'
     })
@@ -54,7 +54,7 @@ showlistApp.config(['$routeProvider', function($routeProvider) {
     .when('/', {
       redirectTo: '/shows'
     })
-    .otherwise({
-      redirectTo: '/login'
-    });
+    // .otherwise({
+    //   redirectTo: '/login'
+    // });
 }]);

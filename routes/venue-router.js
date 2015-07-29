@@ -95,7 +95,7 @@ module.exports = function(router) {
     var name = req.venue.userName;
     var show = new Show(req.body)
     show.venue = req.venue._id;
-    console.log(req.body)
+    console.log(show)
     show.save(function(err,data) {
       if (err) {
         res.status(500).json(err)

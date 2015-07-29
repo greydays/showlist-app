@@ -19,7 +19,7 @@ module.exports = function(app) {
       var newShow = copy(show);
       show.showBody = '';
       $scope.show.push(newShow);
-      Show.create(show, function(err, data) {
+      Show.create(newShow, function(err, data) {
         if (err) return $scope.errors.push({msg: 'could not save show: ' + newShow.showBody});
         console.log('show create data', data)
         $scope.show.splice($scope.show.indexOf(newShow), 1, data);

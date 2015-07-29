@@ -17,9 +17,10 @@
     <header class="container">
       <h1 class="header_h1">Show List</h1>
       <nav class="flex-grow-right header_nav-links">
-        <a href="#/login">Sign In</a>
+        <a href="#/login">Log In</a>
+        <a href="#/shows" data-ng-show="signedIn()">Log Out</a>
+
       </nav>
-      <div class="login"></div>
     </header>
     <main class="main-container" data-ng-init="getAll()">
       <section class="left-sidebar">

@@ -1,8 +1,10 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('showsController','RESTresource' ['$scope', '$http', function($scope, $http) {
-
+  app.controller('showsController', ['$scope', '$http', '$location', 'RESTResource', 'copy', function($scope, $http, $location, resource, copy) {
+    var Show = resource('new-show');
+    $scope.errors = [];
+    $scope.show = [];
     //set up get request to backend
     var getAll = function() {
       $http.get('/show/shows').success(function(response){
@@ -13,9 +15,14 @@ module.exports = function(app) {
     getAll();
 
     $scope.submitForm = function(show){
-      console.log(show);
-      $http.post('/show/shows', show).success(function(response){
-        getAll();
+      console.log('show', show);
+      var newShow = copy(show);
+      show.showBody = '';
+      $scope.show.push(newShow);
+      Show.create(show, function(err, data) {
+        if (err) return $scope.errors.push({msg: 'could not save show: ' + newShow.showBody});
+        console.log('show create data', data)
+        $scope.show.splice($scope.show.indexOf(newShow), 1, data);
       });
     };
 

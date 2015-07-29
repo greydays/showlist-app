@@ -21,17 +21,41 @@ header
 
 .left-sidebar_ul
   list-style: none
+  line-height: 1.5em
+  margin: 0 0 2em 0
 
 //show list cards
 .show-card
   position: relative
   width: 22em
   margin: 0.5em
+  overflow: hidden
+  background-image: url(../images/kitten1.jpg)
+  background-size: 100%
 
 .show-card_top
   color: white
   text-shadow: 1px 1px 2px black
   height: 8em
+  padding: 0.25em
+
+.show-card_absolute-corner
+  position: absolute
+  top: 0.25em
+  right: 0.25em
+  h2
+    font-size: 1em
+    margin: 0 0 0.5em 0
+
+.show-card_description
+  background-color: rgba(240,240,240,0.7);
+  height: 4em
+  padding: 0.25
+
+.show-card_footer
+  background-color: rgba(2,2,40,0.7);
+  color: white
+  padding: 0.25em
 
 //forms
 input, label, textarea, button
@@ -61,5 +85,5 @@ input[type=text], .show-cost_span, textarea
     padding: 0.5em
 
 //new venue form
-.venue-form
+.venue-form, .band-form, .login-form
   @extend .show-form

@@ -3,6 +3,7 @@
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var Venue = require('../models/Venue');
+var Show = require('../models/show')
 var eatAuth = require('../lib/eat-auth')(process.env.APP_SECRET);
 // var validator = require('validator')
 
@@ -89,10 +90,11 @@ module.exports = function(router) {
     });
   })
 
+  router.route('/new-show')
   .post(eatAuth, function(req, res) {
-    var name = req.params.venue;
+    var name = req.venue.userName;
     var show = new Show(req.body)
-    show.venue = req.params.venue._id;
+    show.venue = req.venue._id;
     console.log(req.body)
     show.save(function(err,data) {
       if (err) {

@@ -45,14 +45,16 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	__webpack_require__(2);
-	__webpack_require__(14);
-	__webpack_require__(9);
 	__webpack_require__(10);
-	__webpack_require__(13);
+	__webpack_require__(15);
+	__webpack_require__(8);
 	__webpack_require__(12);
+	__webpack_require__(17);
+	__webpack_require__(9);
+	__webpack_require__(14);
+	__webpack_require__(13);
 	__webpack_require__(11);
-	module.exports = __webpack_require__(15);
+	module.exports = __webpack_require__(16);
 
 
 /***/ },
@@ -61,28 +63,30 @@
 
 	'use strict';
 
+	__webpack_require__(2);
 	__webpack_require__(3);
-	__webpack_require__(4);
-	__webpack_require__(6);
-	__webpack_require__(8);
+	__webpack_require__(5);
+	__webpack_require__(7);
 
 	var showlistApp = angular.module('showlistApp', ['ngRoute', 'ngCookies', 'base64']);
 
 	//services
 	// require('./services/copy')(showlistApp);
 	// require('./services/rest_resource')(showlistApp);
-	__webpack_require__(9)(showlistApp);
+	__webpack_require__(8)(showlistApp);
 
 	//controllers
+	__webpack_require__(9)(showlistApp);
 	__webpack_require__(10)(showlistApp);
-	__webpack_require__(2)(showlistApp);
 	__webpack_require__(11)(showlistApp);
+	__webpack_require__(12)(showlistApp);
+
 
 	//directives
-	__webpack_require__(12)(showlistApp);
 	__webpack_require__(13)(showlistApp);
 	__webpack_require__(14)(showlistApp);
 	__webpack_require__(15)(showlistApp);
+	__webpack_require__(16)(showlistApp);
 
 	showlistApp.config(['$routeProvider', function($routeProvider) {
 	  $routeProvider
@@ -106,6 +110,10 @@
 	      templateUrl: 'templates/venues/venue-card.html',
 	      controller: 'venueController'
 	    })
+	    .when('/new-band', {
+	      templateUrl: 'templates/artists/new-artist-form.html',
+	      controller: 'band-controller'
+	    })
 	    .when('/', {
 	      redirectTo: '/shows'
 	    })
@@ -117,42 +125,6 @@
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function(app) {
-	  app.controller('authController', ['$scope','$location', 'auth', function($scope, $location, auth) {
-
-	    if (auth.isSignedIn()) $location.path('/venue');
-	    $scope.errors = [];
-	    $scope.authSubmit = function(venue) {
-	      if (venue.password_confirmation) {
-	        auth.create(venue, function(err) {
-	          if(err) {
-	            console.log(err);
-	            return $scope.errors.push({msg: 'could not sign in'});
-	          }
-
-	          $location.path('/venue');
-	        })
-	      } else {
-	        auth.signIn(venue, function(err) {
-	          if(err) {
-	            console.log(err);
-	            return $scope.errors.push({msg: 'could not create venue'});
-	          }
-
-	          $location.path('/venue');
-	        });
-	      }
-	    };
-	  }]);
-	};
-
-
-/***/ },
-/* 3 */
 /***/ function(module, exports) {
 
 	/**
@@ -28521,15 +28493,15 @@
 	!window.angular.$$csp() && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ },
-/* 4 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(5);
+	__webpack_require__(4);
 	module.exports = 'ngRoute';
 
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports) {
 
 	/**
@@ -29527,15 +29499,15 @@
 
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(7);
+	__webpack_require__(6);
 	module.exports = 'ngCookies';
 
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports) {
 
 	/**
@@ -29862,7 +29834,7 @@
 
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports) {
 
 	(function() {
@@ -30034,7 +30006,7 @@
 
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30082,7 +30054,7 @@
 
 
 /***/ },
-/* 10 */
+/* 9 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30121,60 +30093,142 @@
 
 
 /***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.controller('authController', ['$scope','$location', 'auth', function($scope, $location, auth) {
+
+	    if (auth.isSignedIn()) $location.path('/venue');
+	    $scope.errors = [];
+	    $scope.authSubmit = function(venue) {
+	      if (venue.password_confirmation) {
+	        auth.create(venue, function(err) {
+	          if(err) {
+	            console.log(err);
+	            return $scope.errors.push({msg: 'could not sign in'});
+	          }
+
+	          $location.path('/venue');
+	        })
+	      } else {
+	        auth.signIn(venue, function(err) {
+	          if(err) {
+	            console.log(err);
+	            return $scope.errors.push({msg: 'could not create venue'});
+	          }
+
+	          $location.path('/venue');
+	        });
+	      }
+	    };
+	  }]);
+	};
+
+
+/***/ },
 /* 11 */
 /***/ function(module, exports) {
 
 	'use strict';
 
 	module.exports = function(app) {
-	  app.controller('venueController', ['$scope', '$http', function($scope, $http) {
+	  app.controller('venueController', ['$scope', 'RESTResource', 'copy', function($scope, resource, copy) {
+	    var Venue = resource('venue');
+	    $scope.errors = [];
+	    $scope.venue = [];
 
-	    //set up get request to backend
-	    // var getAll = function() {
-	    //   $http.get('/show/shows').success(function(response){
-	    //     console.log(response);
-	    //     $scope.venues = response;
-	    //   });
-	    // };
-
-	    // getAll();
-
-	    $scope.submitForm = function(venue){
-	      console.log(show);
-	      $http.post('/show/shows', show).success(function(response){
-	        getAll();
+	    $scope.getAll = function() {
+	      Venue.getAll(function(err, data) {
+	        if (err) return $scope.errors.push({msg: 'error retrieving venue'});
+	        $scope.venue = data;
 	      });
 	    };
 
-	//     $scope.destroy = function(id) {
-	//       console.log(id)
-	//       $http.delete('/show/shows/'  + id).success(function(){
-	//         getAll();
-	//       });
-	//     };
-
-	    //venue-card edit view
-	    $scope.edit = function(venue) {
-	      venue.editing = true;
+	    $scope.createnewVenue = function(venue) {
+	      var newVenue = copy(venue);
+	      venue.venueBody = '';
+	      $scope.venue.push(newVenue);
+	      Venue.create(newVenue, function(err, data) {
+	        if(err) return $scope.errors.push({msg: 'could not save venue: ' + newVenue.venueBody});
+	        $scope.venue.splice($scope.venue.indexOf(newVenue), 1, data);
+	      });
 	    };
 
-	    $scope.update = function(venue) {
-	      console.log(venue);
-	      $http.put('/venues/' + venue._id, venue)
-	        .error(function (error) {
-	          console.log(error);
+	    $scope.removeVenue = function(venue) {
+	      $scope.venue.splice($scope.venue.indexOf(venue), 1);
+	      Venue.remove(venue, function(err) {
+	        if(err) {
+	          $scope.errors.push({msg: 'could not remove venue: ' + venue.venueBody});
+	        }
 	      });
+	    };
+
+	    $scope.saveVenue = function(venue) {
 	      venue.editing = false;
+	      Venue.save(venue, function(err, data) {
+	          if(err) $scope.errors.push({msg: 'could not update venue'});
+	      });
 	    };
 
+	    $scope.toggleEdit = function(venue) {
+	      if(venue.editing) {
+	        venue.venueBody = venue.venueBodyBackup;
+	        venue.venueBodyBackup = undefined;
+	        venue.editing = false;
+	      } else {
+	        venue.venueBodyBackup = venue.venueBody;
+	        venue.editing = true;
+	      }
+	    };
 
+	    $scope.clearErrors = function() {
+	      $scope.errors = [];
+	      $scope.getAll();
+	    };
 	  }]);
-	};
-
+	}
 
 
 /***/ },
 /* 12 */
+/***/ function(module, exports) {
+
+	'use strict'
+
+	module.exports = function(app) {
+	  app.controller('authController', ['$scope','$location', 'auth', function($scope, $location, auth) {
+
+	    if (auth.isSignedIn()) $location.path('/bands');
+	    $scope.errors = [];
+	    $scope.authSubmit = function(venue) {
+	      if (venue.password_confirmation) {
+	        auth.create(venue, function(err) {
+	          if(err) {
+	            console.log(err);
+	            return $scope.errors.push({msg: 'could not sign in'});
+	          }
+
+	          $location.path('/venue');
+	        })
+	      } else {
+	        auth.signIn(venue, function(err) {
+	          if(err) {
+	            console.log(err);
+	            return $scope.errors.push({msg: 'could not create venue'});
+	          }
+
+	          $location.path('/venue');
+	        });
+	      }
+	    };
+	  }]);
+	};
+
+/***/ },
+/* 13 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30199,7 +30253,7 @@
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30239,7 +30293,7 @@
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30265,7 +30319,7 @@
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30275,7 +30329,7 @@
 	    return {
 	      restrict: 'AC',
 	      replace: true,
-	      templateUrl: '/templates/venues/new_show_form.html',
+	      templateUrl: '/templates/venues/new_venue_form.html',
 	      scope: {
 	        save: '&',
 	        buttonText: '=',
@@ -30303,6 +30357,29 @@
 	};
 
 
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.directive('bandFormDirective', function() {
+	    return {
+	      restrict: 'AC',
+	      replace: true,
+	      templateUrl: '/templates/directives/login_form.html',
+	      scope: {
+	        save: '&',
+	        buttonText: '=',
+	        labelText: '@',
+	        note: '='
+	      },
+	      transclude: true
+	    };
+	  });
+	};
 
 /***/ }
 /******/ ]);

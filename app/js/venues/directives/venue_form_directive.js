@@ -5,7 +5,7 @@ module.exports = function(app) {
     return {
       restrict: 'AC',
       replace: true,
-      templateUrl: '/templates/venues/new_show_form.html',
+      templateUrl: '/templates/venues/new_venue_form.html',
       scope: {
         save: '&',
         buttonText: '=',

@@ -15,7 +15,9 @@ require('./auth/services/auth_service')(showlistApp);
 //controllers
 require('./shows/controllers/showsController')(showlistApp);
 require('./auth/controllers/auth_controller')(showlistApp);
-require('./venues/controllers/venueController')(showlistApp);
+require('./venues/controllers/venue_controller')(showlistApp);
+require('./bands/controllers/band_controller')(showlistApp);
+
 
 //directives
 require('./shows/directives/show_form_directive')(showlistApp);
@@ -44,6 +46,10 @@ showlistApp.config(['$routeProvider', function($routeProvider) {
     .when('/venue', {
       templateUrl: 'templates/venues/venue-card.html',
       controller: 'venueController'
+    })
+    .when('/new-band', {
+      templateUrl: 'templates/artists/new-artist-form.html',
+      controller: 'band-controller'
     })
     .when('/', {
       redirectTo: '/shows'

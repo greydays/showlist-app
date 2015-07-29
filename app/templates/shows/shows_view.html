@@ -1,9 +1,9 @@
 <section data-ng-controler="showsController" class="show-view-container">
-  <article data-ng-repeat="show in shows" class="show-card">
+  <article data-ng-repeat="show in shows | orderBy: '-date'" class="show-card">
     <div class="show-card_top" data-ng-style="{'background-image':'url({{show.image}})'}">
       <h2 class="show-card_title">{{show.showTitle}}</h2>
       <span class="show-card_fixed-corner">
-        <h2 class="show-card_date">{{show.date}}</h2>
+        <h2 class="show-card_date">{{show.date | date: 'EEE, M/dd'}}</h2>
         <h2 class="show-card_if-all-ages">All-Ages!</h2>
       </span>
     </div>

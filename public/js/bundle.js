@@ -46,11 +46,15 @@
 
 	__webpack_require__(1);
 	__webpack_require__(10);
-	__webpack_require__(13);
-	__webpack_require__(9);
-	__webpack_require__(2);
+	__webpack_require__(15);
+	__webpack_require__(8);
 	__webpack_require__(12);
-	module.exports = __webpack_require__(11);
+	__webpack_require__(17);
+	__webpack_require__(9);
+	__webpack_require__(14);
+	__webpack_require__(13);
+	__webpack_require__(11);
+	module.exports = __webpack_require__(16);
 
 
 /***/ },
@@ -59,40 +63,56 @@
 
 	'use strict';
 
+	__webpack_require__(2);
 	__webpack_require__(3);
-	__webpack_require__(4);
-	__webpack_require__(6);
-	__webpack_require__(8);
+	__webpack_require__(5);
+	__webpack_require__(7);
 
 	var showlistApp = angular.module('showlistApp', ['ngRoute', 'ngCookies', 'base64']);
 
 	//services
 	// require('./services/copy')(showlistApp);
 	// require('./services/rest_resource')(showlistApp);
-	__webpack_require__(9)(showlistApp);
+	__webpack_require__(8)(showlistApp);
 
 	//controllers
-	__webpack_require__(2)(showlistApp);
+	__webpack_require__(9)(showlistApp);
 	__webpack_require__(10)(showlistApp);
-
-	//directives
 	__webpack_require__(11)(showlistApp);
 	__webpack_require__(12)(showlistApp);
+
+
+	//directives
 	__webpack_require__(13)(showlistApp);
+	__webpack_require__(14)(showlistApp);
+	__webpack_require__(15)(showlistApp);
+	__webpack_require__(16)(showlistApp);
 
 	showlistApp.config(['$routeProvider', function($routeProvider) {
 	  $routeProvider
 	    .when('/shows', {
-	      templateUrl: 'templates/directives/shows_view.html',
+	      templateUrl: 'templates/shows/shows_view.html',
 	      controller: 'showsController'
 	    })
 	    .when('/login', {
-	      templateUrl: 'templates/directives/login_form.html',
+	      templateUrl: 'templates/auth/login_form.html',
 	      controller: 'authController'
 	    })
 	    .when('/new-show', {
-	      templateUrl: 'templates/directives/new_show_form.html',
+	      templateUrl: 'templates/shows/new_show_form.html',
 	      controller: 'showsController'
+	    })
+	    .when('/new-venue', {
+	      templateUrl: 'templates/venues/new_venue_form.html',
+	      controller: 'venueController'
+	    })
+	    .when('/venue', {
+	      templateUrl: 'templates/venues/venue-card.html',
+	      controller: 'venueController'
+	    })
+	    .when('/new-band', {
+	      templateUrl: 'templates/artists/new-artist-form.html',
+	      controller: 'band-controller'
 	    })
 	    .when('/', {
 	      redirectTo: '/shows'
@@ -105,45 +125,6 @@
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function(app) {
-	  app.controller('showsController', ['$scope', '$http', function($scope, $http) {
-
-	    //set up get request to backend
-	    var getAll = function() {
-	      $http.get('/show/shows').success(function(response){
-	        console.log('I got data');
-	        console.log(response);
-	        $scope.shows = response;
-	      });
-	    };
-
-	    getAll();
-
-	    $scope.submitForm = function(show){
-	      console.log(show);
-	      $http.post('/show/shows', show).success(function(response){
-	        getAll();
-	      });
-	    };
-
-	    $scope.destroy = function(id) {
-	      console.log(id)
-	      $http.delete('/show/shows/'  + id).success(function(){
-	        getAll();
-	      });
-	    };
-
-	  }]);
-	};
-
-
-
-/***/ },
-/* 3 */
 /***/ function(module, exports) {
 
 	/**
@@ -28512,15 +28493,15 @@
 	!window.angular.$$csp() && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ },
-/* 4 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(5);
+	__webpack_require__(4);
 	module.exports = 'ngRoute';
 
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports) {
 
 	/**
@@ -29518,15 +29499,15 @@
 
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(7);
+	__webpack_require__(6);
 	module.exports = 'ngCookies';
 
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports) {
 
 	/**
@@ -29853,7 +29834,7 @@
 
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports) {
 
 	(function() {
@@ -30025,7 +30006,7 @@
 
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30071,6 +30052,46 @@
 	};
 
 
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.controller('showsController', ['$scope', '$http', function($scope, $http) {
+
+	    //set up get request to backend
+	    var getAll = function() {
+	      $http.get('/show/shows').success(function(response){
+	        console.log('I got data');
+	        console.log(response);
+	        $scope.shows = response;
+	      });
+	    };
+
+	    getAll();
+
+	    $scope.submitForm = function(show){
+	      console.log(show);
+	      $http.post('/show/shows', show).success(function(response){
+	        getAll();
+	      });
+	    };
+
+	    $scope.destroy = function(id) {
+	      console.log(id)
+	      $http.delete('/show/shows/'  + id).success(function(){
+	        getAll();
+	      });
+	    };
+
+	  }]);
+	};
+
+
+
 /***/ },
 /* 10 */
 /***/ function(module, exports) {
@@ -30114,11 +30135,110 @@
 	'use strict';
 
 	module.exports = function(app) {
+	  app.controller('venueController', ['$scope', 'RESTResource', 'copy', function($scope, resource, copy) {
+	    var Venue = resource('venue');
+	    $scope.errors = [];
+	    $scope.venue = [];
+
+	    $scope.getAll = function() {
+	      Venue.getAll(function(err, data) {
+	        if (err) return $scope.errors.push({msg: 'error retrieving venue'});
+	        $scope.venue = data;
+	      });
+	    };
+
+	    $scope.createnewVenue = function(venue) {
+	      var newVenue = copy(venue);
+	      venue.venueBody = '';
+	      $scope.venue.push(newVenue);
+	      Venue.create(newVenue, function(err, data) {
+	        if(err) return $scope.errors.push({msg: 'could not save venue: ' + newVenue.venueBody});
+	        $scope.venue.splice($scope.venue.indexOf(newVenue), 1, data);
+	      });
+	    };
+
+	    $scope.removeVenue = function(venue) {
+	      $scope.venue.splice($scope.venue.indexOf(venue), 1);
+	      Venue.remove(venue, function(err) {
+	        if(err) {
+	          $scope.errors.push({msg: 'could not remove venue: ' + venue.venueBody});
+	        }
+	      });
+	    };
+
+	    $scope.saveVenue = function(venue) {
+	      venue.editing = false;
+	      Venue.save(venue, function(err, data) {
+	          if(err) $scope.errors.push({msg: 'could not update venue'});
+	      });
+	    };
+
+	    $scope.toggleEdit = function(venue) {
+	      if(venue.editing) {
+	        venue.venueBody = venue.venueBodyBackup;
+	        venue.venueBodyBackup = undefined;
+	        venue.editing = false;
+	      } else {
+	        venue.venueBodyBackup = venue.venueBody;
+	        venue.editing = true;
+	      }
+	    };
+
+	    $scope.clearErrors = function() {
+	      $scope.errors = [];
+	      $scope.getAll();
+	    };
+	  }]);
+	}
+
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	'use strict'
+
+	module.exports = function(app) {
+	  app.controller('authController', ['$scope','$location', 'auth', function($scope, $location, auth) {
+
+	    if (auth.isSignedIn()) $location.path('/bands');
+	    $scope.errors = [];
+	    $scope.authSubmit = function(venue) {
+	      if (venue.password_confirmation) {
+	        auth.create(venue, function(err) {
+	          if(err) {
+	            console.log(err);
+	            return $scope.errors.push({msg: 'could not sign in'});
+	          }
+
+	          $location.path('/venue');
+	        })
+	      } else {
+	        auth.signIn(venue, function(err) {
+	          if(err) {
+	            console.log(err);
+	            return $scope.errors.push({msg: 'could not create venue'});
+	          }
+
+	          $location.path('/venue');
+	        });
+	      }
+	    };
+	  }]);
+	};
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
 	  app.directive('showFormDirective', function() {
 	    return {
 	      restrict: 'AC',
 	      replace: true,
-	      templateUrl: '/templates/directives/new_show_form.html',
+	      templateUrl: '/templates/shows/new_show_form.html',
 	      scope: {
 	        save: '&',
 	        buttonText: '=',
@@ -30133,7 +30253,7 @@
 
 
 /***/ },
-/* 12 */
+/* 14 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30143,7 +30263,7 @@
 	    return {
 	      restrict: 'AC',
 	      replace: true,
-	      templateUrl: '/templates/directives/shows_view.html',
+	      templateUrl: '/templates/shows/shows_view.html',
 	      scope: {
 	        save: '&',
 	        buttonText: '=',
@@ -30173,13 +30293,79 @@
 
 
 /***/ },
-/* 13 */
+/* 15 */
 /***/ function(module, exports) {
 
 	'use strict';
 
 	module.exports = function(app) {
 	  app.directive('showFormDirective', function() {
+	    return {
+	      restrict: 'AC',
+	      replace: true,
+	      templateUrl: '/templates/auth/login_form.html',
+	      scope: {
+	        save: '&',
+	        buttonText: '=',
+	        labelText: '@',
+	        note: '='
+	      },
+	      transclude: true
+	    };
+	  });
+	};
+
+
+
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.directive('venueFormDirective', function() {
+	    return {
+	      restrict: 'AC',
+	      replace: true,
+	      templateUrl: '/templates/venues/new_venue_form.html',
+	      scope: {
+	        save: '&',
+	        buttonText: '=',
+	        labelText: '@',
+	        note: '='
+	      },
+	      transclude: true
+	    };
+	  });
+
+	  app.directive('venueCardDirective', function() {
+	    return {
+	      restrict: 'AC',
+	      replace: true,
+	      templateUrl: '/templates/venues/venue-card.html',
+	      scope: {
+	        save: '&',
+	        buttonText: '=',
+	        labelText: '@',
+	        note: '='
+	      },
+	      transclude: true
+	    };
+	  });
+	};
+
+
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.directive('bandFormDirective', function() {
 	    return {
 	      restrict: 'AC',
 	      replace: true,
@@ -30194,9 +30380,6 @@
 	    };
 	  });
 	};
-
-
-
 
 /***/ }
 /******/ ]);

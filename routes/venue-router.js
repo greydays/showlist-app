@@ -82,6 +82,7 @@ module.exports = function(router) {
 
   .post(eatAuth, function(req, res) {
     var show = new Show(req.body)
+    show.venue = req.params.venue._id;
     console.log(req.body)
     show.save(function(err,data) {
       if (err) {

@@ -66,6 +66,7 @@ jade
 body-parser
 serve-favicon
 data/
+public/
 
 
 # Sublime specific #

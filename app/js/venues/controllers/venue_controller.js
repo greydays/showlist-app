@@ -7,17 +7,17 @@ module.exports = function(app) {
     $scope.venue = [];
 
     $scope.getVenue = function(venue) {
-      // Venue.get(venue, function(err, data) {
-      //   if (err) return $scope.errors.push({msg: 'error retrieving venue'});
-      //   $scope.venue = data;
-      // });
       console.log('reached venue controller get venue');
       console.log(venue);
-      $http.get('/venue/' + venue.name).success(function(response){
-        console.log('I got data');
-        console.log(response);
-        $scope.venue = response;
+      Venue.get(venue, function(err, data) {
+        if (err) return $scope.errors.push({msg: 'error retrieving venue'});
+        $scope.venue = data;
       });
+      // $http.get('/venue/' + venue.name).success(function(response){
+      //   console.log('I got data');
+      //   console.log(response);
+      //   $scope.venue = response;
+      // });
     };
 
     $scope.createnewVenue = function(venue) {

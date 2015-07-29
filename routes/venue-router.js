@@ -23,8 +23,9 @@ module.exports = function(router) {
   router.route('/:venue')
 
   .get(function(req, res) {
-    console.log(req);
+    console.log('hit get' + req);
     var venueName = req.params.venue;
+    venueName = venueName.split('%20').join(' ');
     Venue.findOne({name: venueName}, function(err, venue) {
       if (err) {
         return res.status(500).json({msg: err});

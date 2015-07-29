@@ -48,7 +48,7 @@ showlistApp.config(['$routeProvider', function($routeProvider) {
       controller: 'venueController'
     })
     .when('/new-band', {
-      templateUrl: 'templates/artists/new-artist-form.html',
+      templateUrl: 'templates/artists/new_artist_form.html',
       controller: 'band-controller'
     })
     .when('/', {

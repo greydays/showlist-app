@@ -9,6 +9,9 @@ module.exports = function(router) {
   		if (err) {
   			res.status(500).json({msg: 'Internal Server error'})
   		}
+      if (!bands) {
+        res.status(404).json({msg: 'bands not found'})
+      }
   		res.json(bands);
   	});
   })
@@ -19,6 +22,9 @@ module.exports = function(router) {
   		if(err) {
   			res.status(500).json({msg: 'Internal Server Error'})
   		}
+      if(!data) {
+        res.status(404).json({msg: 'band not found'})
+      }
   		res.json({msg: 'Your band ' + band.name + ' has ben saved!'})
   	});
   });
@@ -28,8 +34,11 @@ module.exports = function(router) {
 		var band = req.params.band;
 		Band.findOne({name: band}, function(err, doc) {
 			if (err) {
-				res.status(404).json(err)
+				res.status(500).json(err)
 			}
+      if (!doc) {
+        res.status(404).json({msg: 'error, band not found'})
+      }
 			res.json(doc);
 		});
 	})
@@ -40,6 +49,9 @@ module.exports = function(router) {
     	if (err) {
     		res.status(500).json(err)
     	}
+      if (!doc) {
+        res.status(404).json({msg: 'error, file not found'})
+      }
     	res.json(doc);
     });
   })
@@ -50,6 +62,9 @@ module.exports = function(router) {
   		if (err) {
   			res.status(500).json(err)
   		}
+      if (!data) {
+        res.status(500).json({msg: 'band was not found'})
+      }
   		res.json({msg: data.name + ' was deleted'});
   	});
   })

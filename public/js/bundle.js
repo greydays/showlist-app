@@ -45,16 +45,16 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	__webpack_require__(11);
-	__webpack_require__(12);
-	__webpack_require__(13);
-	__webpack_require__(14);
-	__webpack_require__(7);
 	__webpack_require__(10);
-	__webpack_require__(6);
-	__webpack_require__(2);
+	__webpack_require__(15);
+	__webpack_require__(8);
+	__webpack_require__(12);
+	__webpack_require__(17);
 	__webpack_require__(9);
-	module.exports = __webpack_require__(8);
+	__webpack_require__(14);
+	__webpack_require__(13);
+	__webpack_require__(11);
+	module.exports = __webpack_require__(16);
 
 
 /***/ },
@@ -63,40 +63,56 @@
 
 	'use strict';
 
+	__webpack_require__(2);
 	__webpack_require__(3);
-	__webpack_require__(4);
-	__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"angular-cookies\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"angular-base64\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	__webpack_require__(5);
+	__webpack_require__(7);
 
 	var showlistApp = angular.module('showlistApp', ['ngRoute', 'ngCookies', 'base64']);
 
 	//services
 	// require('./services/copy')(showlistApp);
 	// require('./services/rest_resource')(showlistApp);
-	__webpack_require__(6)(showlistApp);
+	__webpack_require__(8)(showlistApp);
 
 	//controllers
-	__webpack_require__(2)(showlistApp);
-	__webpack_require__(7)(showlistApp);
-
-	//directives
-	__webpack_require__(8)(showlistApp);
 	__webpack_require__(9)(showlistApp);
 	__webpack_require__(10)(showlistApp);
+	__webpack_require__(11)(showlistApp);
+	__webpack_require__(12)(showlistApp);
+
+
+	//directives
+	__webpack_require__(13)(showlistApp);
+	__webpack_require__(14)(showlistApp);
+	__webpack_require__(15)(showlistApp);
+	__webpack_require__(16)(showlistApp);
 
 	showlistApp.config(['$routeProvider', function($routeProvider) {
 	  $routeProvider
 	    .when('/shows', {
-	      templateUrl: 'templates/directives/shows_view.html',
+	      templateUrl: 'templates/shows/shows_view.html',
 	      controller: 'showsController'
 	    })
 	    .when('/login', {
-	      templateUrl: 'templates/directives/login_form.html',
+	      templateUrl: 'templates/auth/login_form.html',
 	      controller: 'authController'
 	    })
 	    .when('/new-show', {
-	      templateUrl: 'templates/directives/new_show_form.html',
+	      templateUrl: 'templates/shows/new_show_form.html',
 	      controller: 'showsController'
+	    })
+	    .when('/new-venue', {
+	      templateUrl: 'templates/venues/new_venue_form.html',
+	      controller: 'venueController'
+	    })
+	    .when('/venue', {
+	      templateUrl: 'templates/venues/venue-card.html',
+	      controller: 'venueController'
+	    })
+	    .when('/new-band', {
+	      templateUrl: 'templates/artists/new-artist-form.html',
+	      controller: 'band-controller'
 	    })
 	    .when('/', {
 	      redirectTo: '/shows'
@@ -109,45 +125,6 @@
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function(app) {
-	  app.controller('showsController', ['$scope', '$http', function($scope, $http) {
-
-	    //set up get request to backend
-	    var getAll = function() {
-	      $http.get('/show/shows').success(function(response){
-	        console.log('I got data');
-	        console.log(response);
-	        $scope.shows = response;
-	      });
-	    };
-
-	    getAll();
-
-	    $scope.submitForm = function(show){
-	      console.log(show);
-	      $http.post('/show/shows', show).success(function(response){
-	        getAll();
-	      });
-	    };
-
-	    $scope.destroy = function(id) {
-	      console.log(id)
-	      $http.delete('/show/shows/'  + id).success(function(){
-	        getAll();
-	      });
-	    };
-
-	  }]);
-	};
-
-
-
-/***/ },
-/* 3 */
 /***/ function(module, exports) {
 
 	/**
@@ -28516,15 +28493,15 @@
 	!window.angular.$$csp() && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ },
-/* 4 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(5);
+	__webpack_require__(4);
 	module.exports = 'ngRoute';
 
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports) {
 
 	/**
@@ -29522,7 +29499,514 @@
 
 
 /***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(6);
+	module.exports = 'ngCookies';
+
+
+/***/ },
 /* 6 */
+/***/ function(module, exports) {
+
+	/**
+	 * @license AngularJS v1.4.3
+	 * (c) 2010-2015 Google, Inc. http://angularjs.org
+	 * License: MIT
+	 */
+	(function(window, angular, undefined) {'use strict';
+
+	/**
+	 * @ngdoc module
+	 * @name ngCookies
+	 * @description
+	 *
+	 * # ngCookies
+	 *
+	 * The `ngCookies` module provides a convenient wrapper for reading and writing browser cookies.
+	 *
+	 *
+	 * <div doc-module-components="ngCookies"></div>
+	 *
+	 * See {@link ngCookies.$cookies `$cookies`} for usage.
+	 */
+
+
+	angular.module('ngCookies', ['ng']).
+	  /**
+	   * @ngdoc provider
+	   * @name $cookiesProvider
+	   * @description
+	   * Use `$cookiesProvider` to change the default behavior of the {@link ngCookies.$cookies $cookies} service.
+	   * */
+	   provider('$cookies', [function $CookiesProvider() {
+	    /**
+	     * @ngdoc property
+	     * @name $cookiesProvider#defaults
+	     * @description
+	     *
+	     * Object containing default options to pass when setting cookies.
+	     *
+	     * The object may have following properties:
+	     *
+	     * - **path** - `{string}` - The cookie will be available only for this path and its
+	     *   sub-paths. By default, this would be the URL that appears in your base tag.
+	     * - **domain** - `{string}` - The cookie will be available only for this domain and
+	     *   its sub-domains. For obvious security reasons the user agent will not accept the
+	     *   cookie if the current domain is not a sub domain or equals to the requested domain.
+	     * - **expires** - `{string|Date}` - String of the form "Wdy, DD Mon YYYY HH:MM:SS GMT"
+	     *   or a Date object indicating the exact date/time this cookie will expire.
+	     * - **secure** - `{boolean}` - The cookie will be available only in secured connection.
+	     *
+	     * Note: by default the address that appears in your `<base>` tag will be used as path.
+	     * This is import so that cookies will be visible for all routes in case html5mode is enabled
+	     *
+	     **/
+	    var defaults = this.defaults = {};
+
+	    function calcOptions(options) {
+	      return options ? angular.extend({}, defaults, options) : defaults;
+	    }
+
+	    /**
+	     * @ngdoc service
+	     * @name $cookies
+	     *
+	     * @description
+	     * Provides read/write access to browser's cookies.
+	     *
+	     * <div class="alert alert-info">
+	     * Up until Angular 1.3, `$cookies` exposed properties that represented the
+	     * current browser cookie values. In version 1.4, this behavior has changed, and
+	     * `$cookies` now provides a standard api of getters, setters etc.
+	     * </div>
+	     *
+	     * Requires the {@link ngCookies `ngCookies`} module to be installed.
+	     *
+	     * @example
+	     *
+	     * ```js
+	     * angular.module('cookiesExample', ['ngCookies'])
+	     *   .controller('ExampleController', ['$cookies', function($cookies) {
+	     *     // Retrieving a cookie
+	     *     var favoriteCookie = $cookies.get('myFavorite');
+	     *     // Setting a cookie
+	     *     $cookies.put('myFavorite', 'oatmeal');
+	     *   }]);
+	     * ```
+	     */
+	    this.$get = ['$$cookieReader', '$$cookieWriter', function($$cookieReader, $$cookieWriter) {
+	      return {
+	        /**
+	         * @ngdoc method
+	         * @name $cookies#get
+	         *
+	         * @description
+	         * Returns the value of given cookie key
+	         *
+	         * @param {string} key Id to use for lookup.
+	         * @returns {string} Raw cookie value.
+	         */
+	        get: function(key) {
+	          return $$cookieReader()[key];
+	        },
+
+	        /**
+	         * @ngdoc method
+	         * @name $cookies#getObject
+	         *
+	         * @description
+	         * Returns the deserialized value of given cookie key
+	         *
+	         * @param {string} key Id to use for lookup.
+	         * @returns {Object} Deserialized cookie value.
+	         */
+	        getObject: function(key) {
+	          var value = this.get(key);
+	          return value ? angular.fromJson(value) : value;
+	        },
+
+	        /**
+	         * @ngdoc method
+	         * @name $cookies#getAll
+	         *
+	         * @description
+	         * Returns a key value object with all the cookies
+	         *
+	         * @returns {Object} All cookies
+	         */
+	        getAll: function() {
+	          return $$cookieReader();
+	        },
+
+	        /**
+	         * @ngdoc method
+	         * @name $cookies#put
+	         *
+	         * @description
+	         * Sets a value for given cookie key
+	         *
+	         * @param {string} key Id for the `value`.
+	         * @param {string} value Raw value to be stored.
+	         * @param {Object=} options Options object.
+	         *    See {@link ngCookies.$cookiesProvider#defaults $cookiesProvider.defaults}
+	         */
+	        put: function(key, value, options) {
+	          $$cookieWriter(key, value, calcOptions(options));
+	        },
+
+	        /**
+	         * @ngdoc method
+	         * @name $cookies#putObject
+	         *
+	         * @description
+	         * Serializes and sets a value for given cookie key
+	         *
+	         * @param {string} key Id for the `value`.
+	         * @param {Object} value Value to be stored.
+	         * @param {Object=} options Options object.
+	         *    See {@link ngCookies.$cookiesProvider#defaults $cookiesProvider.defaults}
+	         */
+	        putObject: function(key, value, options) {
+	          this.put(key, angular.toJson(value), options);
+	        },
+
+	        /**
+	         * @ngdoc method
+	         * @name $cookies#remove
+	         *
+	         * @description
+	         * Remove given cookie
+	         *
+	         * @param {string} key Id of the key-value pair to delete.
+	         * @param {Object=} options Options object.
+	         *    See {@link ngCookies.$cookiesProvider#defaults $cookiesProvider.defaults}
+	         */
+	        remove: function(key, options) {
+	          $$cookieWriter(key, undefined, calcOptions(options));
+	        }
+	      };
+	    }];
+	  }]);
+
+	angular.module('ngCookies').
+	/**
+	 * @ngdoc service
+	 * @name $cookieStore
+	 * @deprecated
+	 * @requires $cookies
+	 *
+	 * @description
+	 * Provides a key-value (string-object) storage, that is backed by session cookies.
+	 * Objects put or retrieved from this storage are automatically serialized or
+	 * deserialized by angular's toJson/fromJson.
+	 *
+	 * Requires the {@link ngCookies `ngCookies`} module to be installed.
+	 *
+	 * <div class="alert alert-danger">
+	 * **Note:** The $cookieStore service is **deprecated**.
+	 * Please use the {@link ngCookies.$cookies `$cookies`} service instead.
+	 * </div>
+	 *
+	 * @example
+	 *
+	 * ```js
+	 * angular.module('cookieStoreExample', ['ngCookies'])
+	 *   .controller('ExampleController', ['$cookieStore', function($cookieStore) {
+	 *     // Put cookie
+	 *     $cookieStore.put('myFavorite','oatmeal');
+	 *     // Get cookie
+	 *     var favoriteCookie = $cookieStore.get('myFavorite');
+	 *     // Removing a cookie
+	 *     $cookieStore.remove('myFavorite');
+	 *   }]);
+	 * ```
+	 */
+	 factory('$cookieStore', ['$cookies', function($cookies) {
+
+	    return {
+	      /**
+	       * @ngdoc method
+	       * @name $cookieStore#get
+	       *
+	       * @description
+	       * Returns the value of given cookie key
+	       *
+	       * @param {string} key Id to use for lookup.
+	       * @returns {Object} Deserialized cookie value, undefined if the cookie does not exist.
+	       */
+	      get: function(key) {
+	        return $cookies.getObject(key);
+	      },
+
+	      /**
+	       * @ngdoc method
+	       * @name $cookieStore#put
+	       *
+	       * @description
+	       * Sets a value for given cookie key
+	       *
+	       * @param {string} key Id for the `value`.
+	       * @param {Object} value Value to be stored.
+	       */
+	      put: function(key, value) {
+	        $cookies.putObject(key, value);
+	      },
+
+	      /**
+	       * @ngdoc method
+	       * @name $cookieStore#remove
+	       *
+	       * @description
+	       * Remove given cookie
+	       *
+	       * @param {string} key Id of the key-value pair to delete.
+	       */
+	      remove: function(key) {
+	        $cookies.remove(key);
+	      }
+	    };
+
+	  }]);
+
+	/**
+	 * @name $$cookieWriter
+	 * @requires $document
+	 *
+	 * @description
+	 * This is a private service for writing cookies
+	 *
+	 * @param {string} name Cookie name
+	 * @param {string=} value Cookie value (if undefined, cookie will be deleted)
+	 * @param {Object=} options Object with options that need to be stored for the cookie.
+	 */
+	function $$CookieWriter($document, $log, $browser) {
+	  var cookiePath = $browser.baseHref();
+	  var rawDocument = $document[0];
+
+	  function buildCookieString(name, value, options) {
+	    var path, expires;
+	    options = options || {};
+	    expires = options.expires;
+	    path = angular.isDefined(options.path) ? options.path : cookiePath;
+	    if (value === undefined) {
+	      expires = 'Thu, 01 Jan 1970 00:00:00 GMT';
+	      value = '';
+	    }
+	    if (angular.isString(expires)) {
+	      expires = new Date(expires);
+	    }
+
+	    var str = encodeURIComponent(name) + '=' + encodeURIComponent(value);
+	    str += path ? ';path=' + path : '';
+	    str += options.domain ? ';domain=' + options.domain : '';
+	    str += expires ? ';expires=' + expires.toUTCString() : '';
+	    str += options.secure ? ';secure' : '';
+
+	    // per http://www.ietf.org/rfc/rfc2109.txt browser must allow at minimum:
+	    // - 300 cookies
+	    // - 20 cookies per unique domain
+	    // - 4096 bytes per cookie
+	    var cookieLength = str.length + 1;
+	    if (cookieLength > 4096) {
+	      $log.warn("Cookie '" + name +
+	        "' possibly not set or overflowed because it was too large (" +
+	        cookieLength + " > 4096 bytes)!");
+	    }
+
+	    return str;
+	  }
+
+	  return function(name, value, options) {
+	    rawDocument.cookie = buildCookieString(name, value, options);
+	  };
+	}
+
+	$$CookieWriter.$inject = ['$document', '$log', '$browser'];
+
+	angular.module('ngCookies').provider('$$cookieWriter', function $$CookieWriterProvider() {
+	  this.$get = $$CookieWriter;
+	});
+
+
+	})(window, window.angular);
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	(function() {
+	    'use strict';
+
+	    /*
+	     * Encapsulation of Nick Galbreath's base64.js library for AngularJS
+	     * Original notice included below
+	     */
+
+	    /*
+	     * Copyright (c) 2010 Nick Galbreath
+	     * http://code.google.com/p/stringencoders/source/browse/#svn/trunk/javascript
+	     *
+	     * Permission is hereby granted, free of charge, to any person
+	     * obtaining a copy of this software and associated documentation
+	     * files (the "Software"), to deal in the Software without
+	     * restriction, including without limitation the rights to use,
+	     * copy, modify, merge, publish, distribute, sublicense, and/or sell
+	     * copies of the Software, and to permit persons to whom the
+	     * Software is furnished to do so, subject to the following
+	     * conditions:
+	     *
+	     * The above copyright notice and this permission notice shall be
+	     * included in all copies or substantial portions of the Software.
+	     *
+	     * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+	     * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+	     * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+	     * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+	     * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+	     * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+	     * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+	     * OTHER DEALINGS IN THE SOFTWARE.
+	     */
+
+	    /* base64 encode/decode compatible with window.btoa/atob
+	     *
+	     * window.atob/btoa is a Firefox extension to convert binary data (the "b")
+	     * to base64 (ascii, the "a").
+	     *
+	     * It is also found in Safari and Chrome.  It is not available in IE.
+	     *
+	     * if (!window.btoa) window.btoa = base64.encode
+	     * if (!window.atob) window.atob = base64.decode
+	     *
+	     * The original spec's for atob/btoa are a bit lacking
+	     * https://developer.mozilla.org/en/DOM/window.atob
+	     * https://developer.mozilla.org/en/DOM/window.btoa
+	     *
+	     * window.btoa and base64.encode takes a string where charCodeAt is [0,255]
+	     * If any character is not [0,255], then an exception is thrown.
+	     *
+	     * window.atob and base64.decode take a base64-encoded string
+	     * If the input length is not a multiple of 4, or contains invalid characters
+	     *   then an exception is thrown.
+	     */
+
+	    angular.module('base64', []).constant('$base64', (function() {
+
+	        var PADCHAR = '=';
+
+	        var ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+
+	        function getbyte64(s,i) {
+	            var idx = ALPHA.indexOf(s.charAt(i));
+	            if (idx == -1) {
+	                throw "Cannot decode base64";
+	            }
+	            return idx;
+	        }
+
+	        function decode(s) {
+	            // convert to string
+	            s = "" + s;
+	            var pads, i, b10;
+	            var imax = s.length;
+	            if (imax == 0) {
+	                return s;
+	            }
+
+	            if (imax % 4 != 0) {
+	                throw "Cannot decode base64";
+	            }
+
+	            pads = 0;
+	            if (s.charAt(imax -1) == PADCHAR) {
+	                pads = 1;
+	                if (s.charAt(imax -2) == PADCHAR) {
+	                    pads = 2;
+	                }
+	                // either way, we want to ignore this last block
+	                imax -= 4;
+	            }
+
+	            var x = [];
+	            for (i = 0; i < imax; i += 4) {
+	                b10 = (getbyte64(s,i) << 18) | (getbyte64(s,i+1) << 12) |
+	                    (getbyte64(s,i+2) << 6) | getbyte64(s,i+3);
+	                x.push(String.fromCharCode(b10 >> 16, (b10 >> 8) & 0xff, b10 & 0xff));
+	            }
+
+	            switch (pads) {
+	                case 1:
+	                    b10 = (getbyte64(s,i) << 18) | (getbyte64(s,i+1) << 12) | (getbyte64(s,i+2) << 6);
+	                    x.push(String.fromCharCode(b10 >> 16, (b10 >> 8) & 0xff));
+	                    break;
+	                case 2:
+	                    b10 = (getbyte64(s,i) << 18) | (getbyte64(s,i+1) << 12);
+	                    x.push(String.fromCharCode(b10 >> 16));
+	                    break;
+	            }
+	            return x.join('');
+	        }
+
+	        function getbyte(s,i) {
+	            var x = s.charCodeAt(i);
+	            if (x > 255) {
+	                throw "INVALID_CHARACTER_ERR: DOM Exception 5";
+	            }
+	            return x;
+	        }
+
+	        function encode(s) {
+	            if (arguments.length != 1) {
+	                throw "SyntaxError: Not enough arguments";
+	            }
+
+	            var i, b10;
+	            var x = [];
+
+	            // convert to string
+	            s = "" + s;
+
+	            var imax = s.length - s.length % 3;
+
+	            if (s.length == 0) {
+	                return s;
+	            }
+	            for (i = 0; i < imax; i += 3) {
+	                b10 = (getbyte(s,i) << 16) | (getbyte(s,i+1) << 8) | getbyte(s,i+2);
+	                x.push(ALPHA.charAt(b10 >> 18));
+	                x.push(ALPHA.charAt((b10 >> 12) & 0x3F));
+	                x.push(ALPHA.charAt((b10 >> 6) & 0x3f));
+	                x.push(ALPHA.charAt(b10 & 0x3f));
+	            }
+	            switch (s.length - imax) {
+	                case 1:
+	                    b10 = getbyte(s,i) << 16;
+	                    x.push(ALPHA.charAt(b10 >> 18) + ALPHA.charAt((b10 >> 12) & 0x3F) +
+	                        PADCHAR + PADCHAR);
+	                    break;
+	                case 2:
+	                    b10 = (getbyte(s,i) << 16) | (getbyte(s,i+1) << 8);
+	                    x.push(ALPHA.charAt(b10 >> 18) + ALPHA.charAt((b10 >> 12) & 0x3F) +
+	                        ALPHA.charAt((b10 >> 6) & 0x3f) + PADCHAR);
+	                    break;
+	            }
+	            return x.join('');
+	        }
+
+	        return {
+	            encode: encode,
+	            decode: decode
+	        };
+	    })());
+
+	})();
+
+
+/***/ },
+/* 8 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29568,6 +30052,46 @@
 	};
 
 
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.controller('showsController', ['$scope', '$http', function($scope, $http) {
+
+	    //set up get request to backend
+	    var getAll = function() {
+	      $http.get('/show/shows').success(function(response){
+	        console.log('I got data');
+	        console.log(response);
+	        $scope.shows = response;
+	      });
+	    };
+
+	    getAll();
+
+	    $scope.submitForm = function(show){
+	      console.log(show);
+	      $http.post('/show/shows', show).success(function(response){
+	        getAll();
+	      });
+	    };
+
+	    $scope.destroy = function(id) {
+	      console.log(id)
+	      $http.delete('/show/shows/'  + id).success(function(){
+	        getAll();
+	      });
+	    };
+
+	  }]);
+	};
+
+
+
 /***/ },
 /* 7 */
 /***/ function(module, exports) {
@@ -29611,11 +30135,110 @@
 	'use strict';
 
 	module.exports = function(app) {
+	  app.controller('venueController', ['$scope', 'RESTResource', 'copy', function($scope, resource, copy) {
+	    var Venue = resource('venue');
+	    $scope.errors = [];
+	    $scope.venue = [];
+
+	    $scope.getAll = function() {
+	      Venue.getAll(function(err, data) {
+	        if (err) return $scope.errors.push({msg: 'error retrieving venue'});
+	        $scope.venue = data;
+	      });
+	    };
+
+	    $scope.createnewVenue = function(venue) {
+	      var newVenue = copy(venue);
+	      venue.venueBody = '';
+	      $scope.venue.push(newVenue);
+	      Venue.create(newVenue, function(err, data) {
+	        if(err) return $scope.errors.push({msg: 'could not save venue: ' + newVenue.venueBody});
+	        $scope.venue.splice($scope.venue.indexOf(newVenue), 1, data);
+	      });
+	    };
+
+	    $scope.removeVenue = function(venue) {
+	      $scope.venue.splice($scope.venue.indexOf(venue), 1);
+	      Venue.remove(venue, function(err) {
+	        if(err) {
+	          $scope.errors.push({msg: 'could not remove venue: ' + venue.venueBody});
+	        }
+	      });
+	    };
+
+	    $scope.saveVenue = function(venue) {
+	      venue.editing = false;
+	      Venue.save(venue, function(err, data) {
+	          if(err) $scope.errors.push({msg: 'could not update venue'});
+	      });
+	    };
+
+	    $scope.toggleEdit = function(venue) {
+	      if(venue.editing) {
+	        venue.venueBody = venue.venueBodyBackup;
+	        venue.venueBodyBackup = undefined;
+	        venue.editing = false;
+	      } else {
+	        venue.venueBodyBackup = venue.venueBody;
+	        venue.editing = true;
+	      }
+	    };
+
+	    $scope.clearErrors = function() {
+	      $scope.errors = [];
+	      $scope.getAll();
+	    };
+	  }]);
+	}
+
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	'use strict'
+
+	module.exports = function(app) {
+	  app.controller('authController', ['$scope','$location', 'auth', function($scope, $location, auth) {
+
+	    if (auth.isSignedIn()) $location.path('/bands');
+	    $scope.errors = [];
+	    $scope.authSubmit = function(venue) {
+	      if (venue.password_confirmation) {
+	        auth.create(venue, function(err) {
+	          if(err) {
+	            console.log(err);
+	            return $scope.errors.push({msg: 'could not sign in'});
+	          }
+
+	          $location.path('/venue');
+	        })
+	      } else {
+	        auth.signIn(venue, function(err) {
+	          if(err) {
+	            console.log(err);
+	            return $scope.errors.push({msg: 'could not create venue'});
+	          }
+
+	          $location.path('/venue');
+	        });
+	      }
+	    };
+	  }]);
+	};
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
 	  app.directive('showFormDirective', function() {
 	    return {
 	      restrict: 'AC',
 	      replace: true,
-	      templateUrl: '/templates/directives/new_show_form.html',
+	      templateUrl: '/templates/shows/new_show_form.html',
 	      scope: {
 	        save: '&',
 	        buttonText: '=',
@@ -29630,7 +30253,6 @@
 
 
 /***/ },
-/* 9 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29640,7 +30262,7 @@
 	    return {
 	      restrict: 'AC',
 	      replace: true,
-	      templateUrl: '/templates/directives/shows_view.html',
+	      templateUrl: '/templates/shows/shows_view.html',
 	      scope: {
 	        save: '&',
 	        buttonText: '=',
@@ -29670,13 +30292,79 @@
 
 
 /***/ },
-/* 10 */
+
 /***/ function(module, exports) {
 
 	'use strict';
 
 	module.exports = function(app) {
 	  app.directive('showFormDirective', function() {
+	    return {
+	      restrict: 'AC',
+	      replace: true,
+	      templateUrl: '/templates/auth/login_form.html',
+	      scope: {
+	        save: '&',
+	        buttonText: '=',
+	        labelText: '@',
+	        note: '='
+	      },
+	      transclude: true
+	    };
+	  });
+	};
+
+
+
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.directive('venueFormDirective', function() {
+	    return {
+	      restrict: 'AC',
+	      replace: true,
+	      templateUrl: '/templates/venues/new_venue_form.html',
+	      scope: {
+	        save: '&',
+	        buttonText: '=',
+	        labelText: '@',
+	        note: '='
+	      },
+	      transclude: true
+	    };
+	  });
+
+	  app.directive('venueCardDirective', function() {
+	    return {
+	      restrict: 'AC',
+	      replace: true,
+	      templateUrl: '/templates/venues/venue-card.html',
+	      scope: {
+	        save: '&',
+	        buttonText: '=',
+	        labelText: '@',
+	        note: '='
+	      },
+	      transclude: true
+	    };
+	  });
+	};
+
+
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.directive('bandFormDirective', function() {
 	    return {
 	      restrict: 'AC',
 	      replace: true,
@@ -29691,9 +30379,6 @@
 	    };
 	  });
 	};
-
-
-
 
 /***/ },
 /* 11 */

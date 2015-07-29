@@ -69,18 +69,22 @@ module.exports = function(router) {
   router.route('/:venue/shows')
 
   .get(function(req,res) {
-    var id = req.params.venue;
-    Venue.findById(id)
+    var venueName = req.params.venue;
+    Venue.findOne({name: venueName})
     .populate('shows')
     .exec(function(err,doc) {
     if(err) {
       res.status(500).json(err);
+    }
+    if (!doc) {
+      res.status(404).json({msg: 'Venue not found'})
     }
       res.json(doc);
     });
   })
 
   .post(eatAuth, function(req, res) {
+    var venueName = req.params.venue;
     var show = new Show(req.body)
     show.venue = req.params.venue._id;
     console.log(req.body)
@@ -91,7 +95,7 @@ module.exports = function(router) {
       if(!data) {
         res.status(404).json(err)
       }
-      Venue.findById(show.venue, function(err,venue) {
+      Venue.findOne({name: venueName}, function(err,venue) {
         if(err) {
           res.status(500).json(err);
         }
@@ -113,14 +117,17 @@ module.exports = function(router) {
   router.route('/:venue/shows/:show')
 
   .get(function(req,res) {
-    var id = req.params.venue;
+    var venueName = req.params.venue;
     var showRequest = req.params.show;
     var showArray = [];
-    Venue.findById(id)
+    Venue.findOne({name: venueName})
     .populate('shows')
     .exec(function(err,doc) {
     if(err) {
       res.status(500).json(err);
+    }
+    if(!doc) {
+      res.status(404).json({msg: 'show not found'})
     }
      for(var i = 0; i < doc.shows.length; i ++) {
       if(doc.shows[i].showTitle === showRequest) {
@@ -131,18 +138,19 @@ module.exports = function(router) {
     });
   })
 
-
-
   .patch(eatAuth, function(req,res) {
     var showData = req.body;
-    var id = req.params.venue;
+    var venueName = req.params.venue;
     var showRequest = req.params.show;
     var showArray = [];
-    Venue.findById(id)
+    Venue.findOne({name: venueName})
     .populate('shows')
     .exec(function(err,doc) {
     if(err) {
       res.status(500).json(err);
+    }
+    if(!doc) {
+      res.status(404).json({msg: 'Show not found'})
     }
      for(var i = 0; i < doc.shows.length; i ++) {
       if(doc.shows[i].showTitle === showRequest) {
@@ -158,10 +166,10 @@ module.exports = function(router) {
   })
 
   .delete(eatAuth, function(req,res) {
-    var id = req.params.venue;
+    var venueName = req.params.venue;
     var showRequest = req.params.show;
     var showArray = [];
-    Venue.findById(id)
+    Venue.findByName({name: venueName})
     .populate('shows')
     .exec(function(err,doc) {
     if(err) {

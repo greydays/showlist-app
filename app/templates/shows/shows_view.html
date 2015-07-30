@@ -1,5 +1,5 @@
 <section data-ng-controler="showsController" class="show-view-container">
-  <article data-ng-repeat="show in shows | orderBy: '-date' : !reverse" class="show-card" data-ng-attr-id="{{show._id}}">
+  <article data-ng-repeat="show in shows | orderBy: '-date' : !reverse" class="show-card" data-ng-attr-id="{{show._id}}" data-ng-style="{'background-image':'url({{show.image}})'}">
     <div class="show-card_top">
       <h2 class="show-card_title">{{show.showTitle}}</h2>
       <span class="show-card_absolute-corner">
@@ -21,4 +21,3 @@
   </article>
 </section>
 
-<!-- data-ng-style="{'background-image':'url({{show.image}})'}" -->

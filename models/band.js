@@ -3,7 +3,7 @@ var bcrypt = require('bcrypt-nodejs');
 var Schema = mongoose.Schema;
 
 var bandSchema = new Schema({
-  name: {type: String, unique: true},
+  name: String,
   shows: [{type: Schema.Types.ObjectId, ref: 'Show'}],
   website: String,
   genre: String,

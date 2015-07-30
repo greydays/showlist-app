@@ -1,4 +1,4 @@
-<section data-ng-controller="bandsController">
+<section data-ng-controller="bandController">
   <form class="band-form" data-ng-submit="submitForm(band)">
     <ul>
       <li>
@@ -15,11 +15,11 @@
       </li>
 
        <li>
-        <label for="band-social">Event Link (Facebook, etc.)</label>
+        <label for="band-social">Band Link (Facebook, etc.)</label>
         <input type="text" id="band-social" placeholder="http://" data-ng-model="band.social">
       </li>
       <li>
-        <label for="band-image">Show Image (link to, for now)</label>
+        <label for="band-image">Band Image (link to, for now)</label>
         <input type="text" id="band-image" placeholder="http://..." data-ng-model="band.image">
       </li>
 

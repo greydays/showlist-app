@@ -1,26 +1,31 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('showsController', ['$scope', '$http', 'ShowsRESTResource', 'copy', function($scope, $http, resource, copy) {
+  app.controller('showsController', ['$scope', '$http', '$location', 'ShowsRESTResource', 'copy', function($scope, $http, $location, resource, copy) {
     var Show = resource('new-show');
     $scope.errors = [];
     $scope.show = [];
-    //set up get request to backend
-    // $scope.getShow = function(show) {
-    //   console.log('reached show controller get show');
-    //   console.log(show);
-    //   Show.get(show, function(err, data) {
-    //     if (err) return $scope.errors.push({msg: 'error retrieving show'});
-    //     $scope.show = data;
-    //   });
-    // };
-    var getShow = function() {
+    
+    $scope.getAllShows = function() {
       $http.get('/show/shows').success(function(response){
         $scope.shows = response;
       });
     };
 
-    getShow();
+    $scope.getShow = function() {
+      console.log($scope.show);
+      // console.log(show);
+      // $http.get('/show/' + show._id).success(function(response) {
+      //   $scope.show = response;
+      // });
+      // $location.path('/show/' + show._id);
+    };
+
+    $scope.storeShow = function(show) {
+      $http.get('/show/' + show._id).success(function(response) {
+        $scope.show = response;
+      });
+    }
 
     $scope.submitForm = function(show){
       console.log('show', show);
@@ -37,7 +42,7 @@ module.exports = function(app) {
     $scope.destroy = function(id) {
       console.log(id)
       $http.delete('/show/shows/'  + id).success(function(){
-        getShow();
+        $scope.getAllShows();
       });
     };
 

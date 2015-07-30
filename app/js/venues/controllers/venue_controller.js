@@ -10,7 +10,6 @@ module.exports = function(app) {
     var getVenue = function() {
       console.log('reached venue controller get venue');
       Venue.get(function(err, data) {
-        console.log(data);
         if (err) return $scope.errors.push({msg: 'error retrieving venue'});
         $scope.venue = data;
       });

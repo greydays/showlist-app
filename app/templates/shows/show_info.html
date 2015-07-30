@@ -1,6 +1,6 @@
-<section data-ng-controler="showsController" class="show-info-container">
+<section data-ng-controller="showsController" class="show-info-container">
 
-    <article data-ng-attr-id="{{show._id}}" data-ng-style="{'background-image':'url({{show.image}})'}">
+    <article data-ng-init="getShow()" data-ng-attr-id="{{show._id}}" data-ng-style="{'background-image':'url({{show.image}})'}">
       <div class="show-info_top">
         <h2 class="show-info_title">{{show.showTitle}}</h2>
         <span class="show-info_absolute-corner">

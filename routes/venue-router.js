@@ -6,13 +6,17 @@ var Venue = require('../models/Venue');
 var Show = require('../models/show')
 var Band = require('../models/band')
 var eatAuth = require('../lib/eat-auth')(process.env.APP_SECRET);
-// var validator = require('validator')
+var validator = require('validator');
 
 module.exports = function(router) {
   router.use(bodyParser.json());
 
   router.post('/',  function(req, res) {
+    console.log(req.body);
     var venue = new Venue(req.body);
+    if(validator.isEmail(req.body.basic.email === false)) {
+      res.status(405).json({msg: 'not valid email'})
+    }
     var userName = req.body.userName;
     if (/\s/.test(userName)) {
       res.status(405).json({msg: 'No spaces allowed in user name'})

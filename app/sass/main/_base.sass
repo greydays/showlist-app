@@ -4,6 +4,12 @@ $header-font: white
 $form-color: gray
 $sidebar-color: #99A6AB  //light blue-gray
 
+@mixin anchor-default
+  text-transform: uppercase
+  color: white
+  &:hover
+    color: red
+
 section, ul, h1, h3, div, header, main, nav
   box-sizing: border-box
 
@@ -29,10 +35,7 @@ h4
 
 a
   text-decoration: none
-  text-transform: uppercase
-  color: white
-  &:hover
-    color: red
+
 
 
 

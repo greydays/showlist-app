@@ -9,7 +9,8 @@ var showlistApp = angular.module('showlistApp', ['ngRoute', 'ngCookies', 'base64
 
 //services
 require('./services/copy')(showlistApp);
-require('./services/rest_resource')(showlistApp);
+require('./services/venue_rest_resource')(showlistApp);
+require('./services/shows_rest_resource')(showlistApp);
 require('./auth/services/auth_service')(showlistApp);
 
 //controllers
@@ -40,7 +41,7 @@ showlistApp.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'templates/shows/new_show_form.html',
       controller: 'showsController'
     })
-    .when('/new-venue', {
+    .when('/edit-venue', {
       templateUrl: 'templates/venues/new_venue_form.html',
       controller: 'venueController'
     })

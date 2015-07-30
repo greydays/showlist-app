@@ -1,8 +1,9 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('venueController', ['$scope', '$http', 'VenueRESTResource', 'copy', function($scope, $http, resource, copy) {
+  app.controller('venueController', ['$scope', '$http', '$location', 'VenueRESTResource', 'copy', function($scope, $http, $location, resource, copy) {
     var Venue = resource('venue-view');
+    var CreateVenue = resource('new-Venue');
     $scope.errors = [];
     $scope.venue = [];
 
@@ -14,6 +15,19 @@ module.exports = function(app) {
         $scope.venue = data;
       });
     };
+
+    $scope.submitForm = function(venue) {
+     console.log('venue', venue);
+     var newVenue = copy(venue);
+     venue.venueBody = '';
+     $scope.venue.push(newVenue);
+     CreateVenue.create(newVenue, function(err,data) {
+      if (err) return $scope.errors.push({msg: 'could not save venue'})
+        console.log('venue create data', data)
+      $scope.venue.splice($scope.venue.indexOf(newVenue), 1, data);
+     })
+     $location.path('/shows');
+    }
 
     getVenue();
 

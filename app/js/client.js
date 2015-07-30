@@ -40,7 +40,7 @@ showlistApp.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'templates/shows/new_show_form.html',
       controller: 'showsController'
     })
-    .when('/edit-venue', {
+    .when('/new-venue', {
       templateUrl: 'templates/venues/new_venue_form.html',
       controller: 'venueController'
     })

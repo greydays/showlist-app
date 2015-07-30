@@ -17,8 +17,16 @@
     <header class="container">
       <h1 class="header_h1">Show List</h1>
       <nav class="flex-grow-right header_nav-links">
-        <a href="#/login">Log In</a>
-        <a href="#/shows" data-ng-show="signedIn()">Log Out</a>
+        <section data-ng-controller="authController" data-ng-if="!auth.isSignedIn">
+          <form data-ng-submit="authSubmit(venue)">
+            <label for="login-username">Email</label>
+            <input type="email" id="login-username" placeholder="example@email.com" data-ng-model="venue.email" autofocus>
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" placeholder="******" data-ng-model="venue.password">
+            <button type="submit">Log in</button>
+          </form>
+        </section>
+        <a href="#/shows" data-ng-if="auth.isSignedIn" data-ng-click="signOut()">Log Out</a>
 
       </nav>
     </header>
@@ -36,7 +44,7 @@
             <a href="#/new-venue">New Venue</a>
           </li>
           <li>
-            <a href="#/venue">Venue Profile</a>
+            <a href="#/venue/venue-view">Venue Profile</a>
           </li>
           <li>
             <a href="#/new-band">New Band</a>

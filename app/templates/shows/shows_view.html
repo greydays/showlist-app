@@ -1,7 +1,7 @@
 <section data-ng-controller="showsController" data-ng-init="getAllShows()" class="show-view-container">
 
     <article data-ng-repeat="show in shows | orderBy: '-date' : !reverse" class="show-card" data-ng-attr-id="{{show._id}}" data-ng-style="{'background-image':'url({{show.image}})'}">
-      <a href="#/show" data-ng-click="storeShow(show)" >
+      <a href="#/show" data-ng-click="storeShow(show)">
         <div class="show-card_top">
           <h2 class="show-card_title">{{show.showTitle}}</h2>
           <span class="show-card_absolute-corner">

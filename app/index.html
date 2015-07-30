@@ -31,23 +31,23 @@
       </nav>
     </header>
     <main class="main-container" data-ng-init="getAll()">
-      <section class="left-sidebar">
+      <section data-ng-controller="authController" class="left-sidebar">
         <h3>Site Navigation</h3>
         <ul class="left-sidebar_ul">
           <li>
             <a href="#/shows">Shows View</a>
           </li>
           <li>
-            <a href="#/new-show">New Show</a>
+            <a href="#/new-show" data-ng-if="isSignedIn">New Show</a>
           </li>
           <li>
-            <a href="#/new-venue">New Venue</a>
+            <a href="#/new-venue" data-ng-if="isSignedIn">New Venue</a>
           </li>
           <li>
-            <a href="#/venue/venue-view">Venue Profile</a>
+            <a href="#/venue/venue-view" data-ng-if="isSignedIn">Venue Profile</a>
           </li>
           <li>
-            <a href="#/new-band">New Band</a>
+            <a href="#/new-band" data-ng-if="isSignedIn">New Band</a>
           </li>
         </ul>
         <h3>Sort Options</h3>

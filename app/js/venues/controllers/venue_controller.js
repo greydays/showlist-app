@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('venueController', ['$scope', '$http', 'RESTResource', 'copy', function($scope, $http, resource, copy) {
+  app.controller('venueController', ['$scope', '$http', 'VenueRESTResource', 'copy', function($scope, $http, resource, copy) {
     var Venue = resource('venue-view');
     $scope.errors = [];
     $scope.venue = [];
@@ -13,11 +13,6 @@ module.exports = function(app) {
         if (err) return $scope.errors.push({msg: 'error retrieving venue'});
         $scope.venue = data;
       });
-      // $http.get('/venue/' + venue.name).success(function(response){
-      //   console.log('I got data');
-      //   console.log(response);
-      //   $scope.venue = response;
-      // });
     };
 
     getVenue();
@@ -44,7 +39,7 @@ module.exports = function(app) {
     $scope.saveVenue = function(venue) {
       venue.editing = false;
       Venue.save(venue, function(err, data) {
-          if(err) $scope.errors.push({msg: 'could not update venue'});
+        if(err) $scope.errors.push({msg: 'could not update venue'});
       });
     };
 

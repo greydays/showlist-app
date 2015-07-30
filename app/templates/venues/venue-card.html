@@ -78,7 +78,9 @@
         </li>
         <li>
           <button data-ng-click="venue.editing = false">Cancel</button>
-          <button data-ng-click="update(venue); venue.editing = false">Update</button>
+
+          <!-- <button data-ng-click="update(venue); venue.editing = false">Update</button> -->
+          <button data-ng-click="saveVenue(venue)">Update</button>
         </li>
       </ul>
     </form>

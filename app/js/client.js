@@ -9,7 +9,8 @@ var showlistApp = angular.module('showlistApp', ['ngRoute', 'ngCookies', 'base64
 
 //services
 require('./services/copy')(showlistApp);
-require('./services/rest_resource')(showlistApp);
+require('./services/venue_rest_resource')(showlistApp);
+require('./services/shows_rest_resource')(showlistApp);
 require('./auth/services/auth_service')(showlistApp);
 
 //controllers

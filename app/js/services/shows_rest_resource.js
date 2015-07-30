@@ -14,7 +14,7 @@ module.exports = function(app) {
     };
   };
 
-  app.factory('RESTResource', ['$http', '$cookies', function($http, $cookies) {
+  app.factory('ShowsRESTResource', ['$http', '$cookies', function($http, $cookies) {
     return function(resourceName) {
       var eat = $cookies.get('eat');
       $http.defaults.headers.common['eat'] = eat;
@@ -23,7 +23,6 @@ module.exports = function(app) {
           $http.get('/venue/' + resourceName)
             .success(handleSuccess(callback))
             .error(handleError(callback));
-            console.log('hitting this')
         },
 
         create: function(resourceData, callback) {

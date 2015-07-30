@@ -34,6 +34,7 @@ header
   background-size: 100%
 
 .show-card_top
+  position: relative
   color: white
   text-shadow: 1px 1px 2px black
   height: 8em
@@ -41,11 +42,15 @@ header
 
 .show-card_absolute-corner
   position: absolute
-  top: 0.25em
-  right: 0.25em
+  bottom: 0.5em
+  right: 0
+  padding: 0.25em
+  background-color: rgba(2,2,40,0.7);
   h2
     font-size: 1em
-    margin: 0 0 0.5em 0
+
+.show-card_if-all-ages
+  margin: 0.5em 0 0 0
 
 .show-card_description
   background-color: rgba(240,240,240,0.7);
@@ -87,3 +92,22 @@ input[type=text], .show-cost_span, textarea
 //new venue form
 .venue-form, .band-form, .login-form
   @extend .show-form
+
+//venue card
+.venue-card
+  width: 80%
+  background-color: rgba(2,2,40,0.7);
+  background-size: auto 100%
+  color: white
+  text-shadow: 1px 1px 2px black
+  ul
+    list-style: none
+  li
+    padding: 0.5em
+  h3
+    font-size: 1em
+  h4
+    font-size: 0.8em
+  button
+    color: black
+

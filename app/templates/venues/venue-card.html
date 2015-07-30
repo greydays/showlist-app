@@ -1,32 +1,36 @@
 <section data-ng-controller="venueController">
-  <div data-ng-if="!venue.editing">
+
+  <div data-ng-if="!venue.editing" class="venue-card container" data-ng-style="{'background-image':'url({{venue.image}})'}">
     <ul>
       <li>
-        {{venue.name}}
+        <h4>User Name:</h4> <h3>{{venue.userName}}</h3>
       </li>
       <li>
-        {{venue.location}}
+        <h4>Venue Name:</h4> <h3>{{venue.name}}</h3>
       </li>
       <li>
-        {{venue.website}}
+        <h4>Location:</h4> <h3>{{venue.location}}</h3>
       </li>
       <li>
-        {{venue.social}}
+        <h4>Homepage:</h4> <h3>{{venue.website}}</h3>
       </li>
       <li>
-        {{venue.address}}
+        <h4>Facebook:</h4> <h3>{{venue.social}}</h3>
       </li>
       <li>
-        {{venue.image}}
+        <h4>Street Address:</h4> <h3>{{venue.address}}</h3>
       </li>
       <li>
-        {{venue.contact}}
+        <h4>Image:</h4> <h3>{{venue.image}}</h3>
       </li>
       <li>
-        {{venue.email}}
+        <h4>Contact Info:</h4> <h3>{{venue.contact}}</h3>
       </li>
       <li>
-        <button data-ng-click="edit(venue)">Edit</button>
+        <h4>Email:</h4> <h3>{{venue.email}}</h3>
+      </li>
+      <li>
+        <button data-ng-click="toggleEdit(venue)">Edit</button>
       </li>
     </ul>
   </div>
@@ -34,6 +38,8 @@
   <div data-ng-if="venue.editing">
     <form class="venue-form">
       <ul>
+        <li>
+          <label for="venue-name">For: {{venue.userName}}</label>
         <li>
           <label for="venue-name">Venue Name</label>
           <input type="text" id="venue-name" placeholder="Venue" data-ng-model="venue.name" autofocus>
@@ -72,7 +78,7 @@
         </li>
         <li>
           <button data-ng-click="venue.editing = false">Cancel</button>
-          <button data-ng-click="update(venue)">Update</button>
+          <button data-ng-click="update(venue); venue.editing = false">Update</button>
         </li>
       </ul>
     </form>

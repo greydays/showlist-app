@@ -2,10 +2,14 @@
 
 module.exports = function(app) {
   app.controller('authController', ['$scope','$location', 'auth', function($scope, $location, auth) {
-    if (auth.isSignedIn()) {
-      $location.path('/venue-view');
-    }
     $scope.errors = [];
+    
+    $scope.signedIn = function() {
+      if (auth.isSignedIn()) {
+        venue.signedIn = true;
+      }
+    };
+
     $scope.authSubmit = function(venue) {
       if (venue.password_confirmation) {
         auth.create(venue, function(err, data) {

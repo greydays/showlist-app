@@ -2,14 +2,14 @@
 
 module.exports = function(app) {
   app.controller('venueController', ['$scope', '$http', 'RESTResource', 'copy', function($scope, $http, resource, copy) {
-    var Venue = resource('venue');
+    var Venue = resource('venue-view');
     $scope.errors = [];
     $scope.venue = [];
 
-    $scope.getVenue = function(venue) {
+    var getVenue = function() {
       console.log('reached venue controller get venue');
-      console.log(venue);
-      Venue.get(venue, function(err, data) {
+      Venue.get(function(err, data) {
+        console.log(data);
         if (err) return $scope.errors.push({msg: 'error retrieving venue'});
         $scope.venue = data;
       });
@@ -19,6 +19,8 @@ module.exports = function(app) {
       //   $scope.venue = response;
       // });
     };
+
+    getVenue();
 
     $scope.createnewVenue = function(venue) {
       var newVenue = copy(venue);

@@ -26,16 +26,16 @@ module.exports = function(router) {
     })
   });
 
-  router.route('/:venue')
+  router.route('/venue-view')
 
   .get(eatAuth, function(req, res) {
-    var name = req.params.venue;
+    console.log('hit get route');
+    var name = req.venue.userName;
     Venue.findOne({userName: name}, function(err, venue) {
       if (err) {
         return res.status(500).json({msg: err});
       }
       if (venue) {
-        console.log(venue);
         res.json(venue);
       } else {
         res.status(404).json({msg: 'Unable to locate ' + venueName});

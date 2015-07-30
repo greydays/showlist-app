@@ -6,20 +6,28 @@ module.exports = function(app) {
     $scope.errors = [];
     $scope.show = [];
     //set up get request to backend
-    var getAll = function() {
+    // $scope.getShow = function(show) {
+    //   console.log('reached show controller get show');
+    //   console.log(show);
+    //   Show.get(show, function(err, data) {
+    //     if (err) return $scope.errors.push({msg: 'error retrieving show'});
+    //     $scope.show = data;
+    //   });
+    // };
+    var getShow = function() {
       $http.get('/show/shows').success(function(response){
         $scope.shows = response;
       });
     };
 
-    getAll();
+    getShow();
 
     $scope.submitForm = function(show){
       console.log('show', show);
       var newShow = copy(show);
       show.showBody = '';
       $scope.show.push(newShow);
-      Show.create(show, function(err, data) {
+      Show.create(newShow, function(err, data) {
         if (err) return $scope.errors.push({msg: 'could not save show: ' + newShow.showBody});
         console.log('show create data', data)
         $scope.show.splice($scope.show.indexOf(newShow), 1, data);
@@ -29,7 +37,7 @@ module.exports = function(app) {
     $scope.destroy = function(id) {
       console.log(id)
       $http.delete('/show/shows/'  + id).success(function(){
-        getAll();
+        getShow();
       });
     };
 

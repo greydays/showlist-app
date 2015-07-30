@@ -21,7 +21,7 @@ module.exports = function(app) {
         $http.post('/venue/create_venue', venue)
           .success(function(data) {
             console.log(data);
-            $cookies.put('eat', data.token)
+            $cookies.put('eat', data.token);
             callback(null, data.venue);
           })
           .error(function(data) {

@@ -1,24 +1,29 @@
 <section data-ng-controler="showsController" class="show-info-container">
 
-    <article data-ng-attr-id="{{show._id}}" data-ng-style="{'background-image':'url({{show.image}})'}">
-      <div class="show-info_top">
-        <h2 class="show-info_title">{{show.showTitle}}</h2>
-        <span class="show-info_absolute-corner">
-          <h2>{{show.date | date: 'EEE, M/dd'}}</h2>
-          <h2 class="show-info_if-all-ages" data-ng-show="show.age">All-Ages!</h2>
-        </span>
-      </div>
+    <article data-ng-attr-id="{{show._id}}">
+      <h1>Test Header</h1>
+      <div class="show-info_poster" data-ng-style="{'background-image':'url({{show.image}})'}"></div>
+      <h2 class="show-info_title">{{show.showTitle}}</h2>
+      <h2>{{show.date | date: 'EEE, M/dd'}}</h2>
+      <h2 class="show-info_if-all-ages" data-ng-show="show.age">All-Ages!</h2>
+      <h3>{{show.bands}}</h3>
+      <p>{{show.description}}</p>
+      <!-- data-ng-controler="venueController" -->
       <div>
-        <div class="show-info_description">
-          <h3>{{show.bands}}</h3>
-          <p>{{show.description}}</p>
-        </div>
-        <h4 class="show-info_footer">
-          <span>{{show.time}},</span>
-          <span>${{show.cost}}</span>
-        </h4>
-      </div>
+        <h2>{{show.venue}}</h2>
+        <h2>{{venue.address}}</h2>
+        <h2>{{venue.name}}</h2>
+        <h2>{{venue.website}}</h2>
+      <div>
+      <h4>
+        <span>{{show.time}},</span>
+        <span>${{show.cost}}</span>
+        <a data-ng-href="{{show.social}}">Facebook Event</a><span>${{show.cost}}</span>
+
+      </h4>
+
     </article>
 
 </section>
+
 

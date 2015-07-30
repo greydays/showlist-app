@@ -17,7 +17,7 @@
     <header class="container">
       <h1 class="header_h1">Show List</h1>
       <nav class="flex-grow-right header_nav-links">
-        <section data-ng-controller="authController" data-ng-if="!auth.isSignedIn">
+        <section data-ng-controller="authController" data-ng-if="!isSignedIn()">
           <form data-ng-submit="authSubmit(venue)">
             <label for="login-username">Email</label>
             <input type="email" id="login-username" placeholder="example@email.com" data-ng-model="venue.email" autofocus>
@@ -26,7 +26,7 @@
             <button type="submit">Log in</button>
           </form>
         </section>
-        <a href="#/shows" data-ng-if="auth.isSignedIn" data-ng-click="signOut()">Log Out</a>
+        <a href="#/shows" data-ng-if="isSignedIn()" data-ng-click="signOut()">Log Out</a>
 
       </nav>
     </header>

@@ -3,6 +3,7 @@
 module.exports = function(app) {
   app.controller('showsController', ['$scope', '$http', 'ShowsRESTResource', 'copy', function($scope, $http, resource, copy) {
     var Show = resource('new-show');
+    var oneShow = resource('show-view'); //***for getting one show?
     $scope.errors = [];
     $scope.show = [];
     //set up get request to backend
@@ -39,6 +40,19 @@ module.exports = function(app) {
       $http.delete('/show/shows/'  + id).success(function(){
         getShow();
       });
+    };
+
+//***for linking out from show cards to complete show info
+    $scope.getOneShow = function(show) {
+      $http.get('/:venue/shows/:show').success(function(response){
+        $scope.show = response;
+      });
+    };
+
+    $scope.linkOut = function(id) {
+      console.log(id);
+      $location.path('/show/show-view');
+
     };
 
   }]);

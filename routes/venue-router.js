@@ -43,8 +43,11 @@ module.exports = function(router) {
     });
   })
 
+  router.route('/edit-venue')
+
   .put(eatAuth, function(req, res) {
-    var name = req.params.venue;
+    console.log('reached put route');
+    var name = req.venue.userName;
     var newVenueInfo = req.body;
     Venue.update({userName: name}, newVenueInfo, function(err, venue) {
       if (err) {

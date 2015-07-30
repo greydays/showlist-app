@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('showsController', ['$scope', '$http', '$location', 'RESTResource', 'copy', function($scope, $http, $location, resource, copy) {
+  app.controller('showsController', ['$scope', '$http', 'ShowsRESTResource', 'copy', function($scope, $http, resource, copy) {
     var Show = resource('new-show');
     $scope.errors = [];
     $scope.show = [];

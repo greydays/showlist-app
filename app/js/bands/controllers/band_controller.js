@@ -2,7 +2,7 @@
 
 module.exports = function(app) {
   app.controller('bandController', ['$scope', 'RESTResource', 'copy', function($scope, resource, copy) {
-    var Band = resource('band');
+    var Band = resource('bands');
     $scope.errors = [];
     $scope.band = [];
 
@@ -13,7 +13,7 @@ module.exports = function(app) {
       });
     };
 
-    $scope.createnewBand = function(band) {
+    $scope.submitForm = function(band) {
       var newBand = copy(band);
       band.bandBody = '';
       $scope.band.push(newBand);

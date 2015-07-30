@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var Venue = require('../models/Venue');
 var Show = require('../models/show')
+var Band = require('../models/band')
 var eatAuth = require('../lib/eat-auth')(process.env.APP_SECRET);
 // var validator = require('validator')
 
@@ -193,6 +194,19 @@ module.exports = function(router) {
         });
       }
      }
+    })
+  })
+
+router.route('/bands')
+  .post(function(req,res) {
+    console.log(req.body)
+    var band = new Band(req.body);
+    band.save(function(err,data) {
+      if(err) {
+        console.log(err)
+        res.status(500).json(err)
+      }
+      res.json({msg: 'band saved'})
     })
   })
 };

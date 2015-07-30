@@ -24,6 +24,7 @@ require('./shows/directives/show_form_directive')(showlistApp);
 require('./shows/directives/show-card_directive')(showlistApp);
 require('./auth/directives/auth_form_directive')(showlistApp);
 require('./venues/directives/venue_form_directive')(showlistApp);
+require('./bands/directives/band_form_directives')(showlistApp);
 
 showlistApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -49,11 +50,12 @@ showlistApp.config(['$routeProvider', function($routeProvider) {
     })
     .when('/new-band', {
       templateUrl: 'templates/artists/new_artist_form.html',
-      controller: 'band-controller'
+      controller: 'bandController'
     })
     .when('/', {
       redirectTo: '/shows'
     })
+
     // .otherwise({
     //   redirectTo: '/login'
     // });

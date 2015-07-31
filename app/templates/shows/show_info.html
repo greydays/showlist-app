@@ -1,6 +1,7 @@
 <section data-ng-controller="showsController" data-ng-init="getShow()" class="show-info-container">
-  <article data-ng-attr-id="{{show._id}}">
+  <article data-ng-attr-id="{{show._id}}" class="show-fullview">
     <img class="show-fullview_poster" data-ng-src="{{show.image}}" />
+
     <div data-ng-controller="authController">
       <button data-ng-if="isSignedIn" data-ng-click="onEdit(show)">Edit</button>
       <button data-ng-if="isSignedIn" data-ng-click="delete(show._id)">Delete</button>
@@ -20,7 +21,7 @@
     <h4>
       <span>{{show.time}},</span>
       <span>${{show.cost}}</span>
-      <a data-ng-href="{{show.social}}">Facebook Event</a><span>${{show.cost}}</span>
+      <span data-ng-if="show.social"><a data-ng-href="{{show.social}}">Facebook Event</a></span>
     </h4>
   </article>
 </section>

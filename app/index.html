@@ -15,7 +15,9 @@
   </head>
   <body data-ng-app="showlistApp">
     <header class="container">
-      <h1 class="header_h1">Show List</h1>
+      <a href="#/shows">
+        <h1 class="header_h1" alt="listage"></h1>
+      </a>
       <section data-ng-controller="authController" class="flex-grow-right header_login">
         <form data-ng-submit="authSubmit(venue)" data-ng-if="!isSignedIn">
           <label for="login-username">Email</label>
@@ -47,7 +49,6 @@
             <a href="#/new-band" data-ng-if="isSignedIn">New Band</a>
           </li>
         </ul>
-        <h3>Sort Options</h3>
 
       </section>
       <div class="main_right" data-ng-view></div>

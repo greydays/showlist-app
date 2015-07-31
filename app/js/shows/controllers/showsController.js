@@ -6,23 +6,21 @@ module.exports = function(app) {
     var OneShow = resource('shows'); //***for getting one show?
     $scope.errors = [];
     $scope.show = [];
-    
+
     $scope.getAllShows = function() {
       $http.get('/show/shows').success(function(response){
         $scope.shows = response;
       });
     };
 
-//***for linking out from show cards to complete show info
-    $scope.getOneShow = function(show) {
-      $http.get('/:venue/shows/:show').success(function(response){
-        $scope.show = response;
-      });
-    };
-
     $scope.getShow = function() {
-      $http.get('/show/' + show._id).success(function(response) {
+      console.log('reached get show')
+      var url = $location.path();
+      url = url.split('/');
+      var id = url[url.length - 1];
+      $http.get('/show/' + id).success(function(response) {
         $scope.show = response;
+        console.log(response);
       });
     };
 
@@ -46,16 +44,16 @@ module.exports = function(app) {
     };
 
     $scope.toggleEdit = function(show) {
-      console.log('toggle edit');
       if(show.editing) {
+        console.log('true edit');
         show.showBody = show.showBodyBackup;
         show.showBodyBackup = undefined;
         show.editing = false;
       } else {
-        console.log(show.showBody);
-        console.log(show.showBodyBackup);
+        console.log(show);
         show.showBodyBackup = show.showBody;
         show.editing = true;
+        $location.path('/edit-show/' + show._id);
       }
     };
 
@@ -68,7 +66,7 @@ module.exports = function(app) {
 
     $scope.linkOut = function(id) {
       console.log(id);
-      $location.path('/show/show-view');
+      $location.path('/show/' + id);
     };
 
   }]);

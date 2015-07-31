@@ -29,7 +29,6 @@ module.exports = function(app) {
      $location.path('/shows');
     }
 
-    getVenue();
 
     $scope.createnewVenue = function(venue) {
       var newVenue = copy(venue);

@@ -1,5 +1,5 @@
 <section data-ng-controller="showsController" data-ng-init="getShow()">
-  <form class="show-form" data-ng-if="show.editing" data-ng-submit="submitForm(show)">
+  <form class="show-form" data-ng-attr-id="{{show._id}}" data-ng-submit="submitForm(show)">
     <ul>
       <li>
         <label for="show-title">Show Title/Heading</label>
@@ -7,7 +7,7 @@
       </li>
       <li>
         <label for="show-date">Date</label>
-        <input type="date" id="show-date" placeholder="{{show.date}}" data-ng-model="show.date">
+        <input type="date" id="show-date">
       </li>
       <li>
         <label for="show-venue">Venue</label>
@@ -42,7 +42,7 @@
         <input type="text" id="show-social" placeholder="{{show.social}}" data-ng-model="show.social">
       </li>
       <li>
-        <button data-ng-click="toggleEdit(show)">Cancel</button>
+        <button data-ng-click="offEdit(show)">Cancel</button>
         <button data-ng-click="saveShow(show)">Update Show</button>
       </li>
     </ul>

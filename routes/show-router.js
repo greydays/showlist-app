@@ -43,4 +43,17 @@ module.exports = function(router) {
 			}
 		});
 	});
+
+	router.delete('/shows/:show', function(req,res) {
+		var showId = req.params.show;
+		console.log(showId);
+		Show.findOne({_id: showId}, function(err,doc) {
+			if (err){
+				res.status(500).json(err)
+			}
+			doc.remove();
+			res.json({msg: 'document was removed'});
+		})
+	})
+
 };

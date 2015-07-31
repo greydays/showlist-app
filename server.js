@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 process.env.APP_SECRET = process.env.APP_SECRET || 'changethis';
 
-app.use(express.static(__dirname + '/app'));
+app.use(express.static(__dirname + '/public'));
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost');
 

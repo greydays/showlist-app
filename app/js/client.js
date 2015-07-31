@@ -37,6 +37,10 @@ showlistApp.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'templates/shows/show_info.html',
       controller: 'showsController'
     })
+    .when('/edit-show/:_id', {
+      templateUrl: 'templates/shows/edit_show_form.html',
+      controller: 'showsController'
+    })
     .when('/login', {
       templateUrl: 'templates/auth/login_form.html',
       controller: 'authController'

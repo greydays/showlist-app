@@ -7,7 +7,7 @@ module.exports = function(app) {
     $scope.errors = [];
     $scope.venue = [];
 
-    var getVenue = function() {
+    $scope.getVenue = function() {
       console.log('reached venue controller get venue');
       Venue.get(function(err, data) {
         if (err) return $scope.errors.push({msg: 'error retrieving venue'});
@@ -27,8 +27,6 @@ module.exports = function(app) {
      })
      $location.path('/shows');
     }
-
-    getVenue();
 
     $scope.createnewVenue = function(venue) {
       var newVenue = copy(venue);

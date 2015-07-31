@@ -4,7 +4,7 @@
   <button class="close-button" data-ng-click="show.clicked = false">X</button>
   <span data>
     <button>Edit</button>
-    <button>Delete</button>
+    <button ng-click="delete(show._id)">Delete</button>
   </span>
     <h2 class="show-info_title">{{show.showTitle}}</h2>
     <h2>{{show.date | date: 'EEE, M/dd'}}</h2>

@@ -130,7 +130,20 @@ module.exports = function(router) {
   });
 
 
-  router.route('/:venue/shows/:show')
+  router.route('/shows/:show')
+
+  .put(eatAuth, function(req,res) {
+    var showData = req.body;
+    var showRequest = req.params.show;
+    console.log(showRequest);
+    Show.update({_id: showRequest}, showData, function(err, doc) {
+      if (err) {
+        console.log(err);
+        res.status(500).json(err);
+      }
+      res.json(doc);
+    });
+  })
 
   .get(function(req,res) {
     var name = req.params.venue;
@@ -151,33 +164,6 @@ module.exports = function(router) {
       }
      }
       res.json(showArray);
-    });
-  })
-
-  .patch(eatAuth, function(req,res) {
-    var showData = req.body;
-    var name = req.params.venue;
-    var showRequest = req.params.show;
-    var showArray = [];
-    Venue.findOne({userName: name})
-    .populate('shows')
-    .exec(function(err,doc) {
-    if(err) {
-      res.status(500).json(err);
-    }
-    if(!doc) {
-      res.status(404).json({msg: 'Show not found'})
-    }
-     for(var i = 0; i < doc.shows.length; i ++) {
-      if(doc.shows[i].showTitle === showRequest) {
-        Show.findOneAndUpdate({name: showRequest}, showData, function(err,doc) {
-          if(err) {
-            res.status(500).json(err)
-          }
-          res.json(doc);
-        });
-      }
-     }
     });
   })
 

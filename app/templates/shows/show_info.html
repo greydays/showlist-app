@@ -1,8 +1,8 @@
 <section data-ng-controller="showsController" data-ng-init="getShow()" class="show-info-container">
-  <article data-ng-if="!show.editing" data-ng-attr-id="{{show._id}}">
+  <article data-ng-attr-id="{{show._id}}">
     <img class="show-fullview_poster" data-ng-src="{{show.image}}" />
     <div data-ng-controller="authController">
-      <button data-ng-if="isSignedIn" data-ng-click="toggleEdit(show)">Edit</button>
+      <button data-ng-if="isSignedIn" data-ng-click="onEdit(show)">Edit</button>
       <button data-ng-if="isSignedIn">Delete</button>
     </div>
     <h2 class="show-info_title">{{show.showTitle}}</h2>

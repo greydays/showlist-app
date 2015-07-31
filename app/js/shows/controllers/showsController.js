@@ -5,7 +5,7 @@ module.exports = function(app) {
     var Show = resource('new-show');
     var OneShow = resource('shows'); //***for getting one show?
     $scope.errors = [];
-    $scope.show = [];
+    $scope.shows = [];
 
     $scope.getAllShows = function() {
       $http.get('/show/shows').success(function(response){
@@ -28,11 +28,11 @@ module.exports = function(app) {
       console.log('show', show);
       var newShow = copy(show);
       show.showBody = '';
-      $scope.show.push(newShow);
+      $scope.shows.push(newShow);
       Show.create(newShow, function(err, data) {
         if (err) return $scope.errors.push({msg: 'could not save show: ' + newShow.showBody});
         console.log('show create data', data)
-        $scope.show.splice($scope.show.indexOf(newShow), 1, data);
+        $scope.shows.splice($scope.shows.indexOf(newShow), 1, data);
       });
     };
 
@@ -43,19 +43,14 @@ module.exports = function(app) {
       });
     };
 
-    $scope.toggleEdit = function(show) {
-      if(show.editing) {
-        console.log('true edit');
-        show.showBody = show.showBodyBackup;
-        show.showBodyBackup = undefined;
-        show.editing = false;
-      } else {
-        console.log(show);
-        show.showBodyBackup = show.showBody;
-        show.editing = true;
-        $location.path('/edit-show/' + show._id);
-      }
+    $scope.onEdit = function(show) {
+      console.log(show);
+      $location.path('/edit-show/' + show._id);
     };
+
+    $scope.offEdit = function(show) {
+      $location.path('/show/' + show._id);
+    }
 
     $scope.destroy = function(id) {
       console.log(id)

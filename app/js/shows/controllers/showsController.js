@@ -52,6 +52,10 @@ module.exports = function(app) {
       $location.path('/show/' + show._id);
     }
 
+    $scope.returnHome = function() {
+      $location.path('/shows');
+    }
+
     $scope.delete = function(id) {
       console.log(id);
       $http.delete('/show/shows/'  + id).success(function(err, data){
@@ -60,6 +64,7 @@ module.exports = function(app) {
           console.log(err)
         }
         console.log(data);
+        $location.path('/shows');
       });
     };
 

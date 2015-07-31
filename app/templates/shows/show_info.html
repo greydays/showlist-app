@@ -3,7 +3,7 @@
     <img class="show-fullview_poster" data-ng-src="{{show.image}}" />
     <div data-ng-controller="authController">
       <button data-ng-if="isSignedIn" data-ng-click="onEdit(show)">Edit</button>
-      <button data-ng-if="isSignedIn" ng-click="delete(show._id)">Delete</button>
+      <button data-ng-if="isSignedIn" data-ng-click="delete(show._id)">Delete</button>
     </div>
     <h2 class="show-info_title">{{show.showTitle}}</h2>
     <h2>{{show.date | date: 'EEE, M/dd'}}</h2>

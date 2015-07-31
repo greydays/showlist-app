@@ -33,6 +33,7 @@ module.exports = function(app) {
         if (err) return $scope.errors.push({msg: 'could not save show: ' + newShow.showBody});
         console.log('show create data', data)
         $scope.shows.splice($scope.shows.indexOf(newShow), 1, data);
+        $location.path('/shows');
       });
     };
 

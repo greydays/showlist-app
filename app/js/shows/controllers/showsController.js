@@ -52,10 +52,14 @@ module.exports = function(app) {
       $location.path('/show/' + show._id);
     }
 
-    $scope.destroy = function(id) {
-      console.log(id)
-      $http.delete('/show/shows/'  + id).success(function(){
-        $scope.getAllShows();
+    $scope.delete = function(id) {
+      console.log(id);
+      $http.delete('/show/shows/'  + id).success(function(err, data){
+        $scope.getAllShows(id);
+        if(err) {
+          console.log(err)
+        }
+        console.log(data);
       });
     };
 
@@ -65,5 +69,7 @@ module.exports = function(app) {
     };
 
   }]);
+
+   
 };
 

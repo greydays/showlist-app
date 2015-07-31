@@ -1,7 +1,6 @@
 <section data-ng-controller="showsController" data-ng-init="getAllShows()" class="show-view-container">
-
-    <article data-ng-repeat="show in shows | orderBy: '-date' : !reverse" class="show-card" data-ng-attr-id="{{show._id}}" data-ng-style="{'background-image':'url({{show.image}})'}">
-      <a href="#/show" data-ng-click="storeShow(show)">
+  <article data-ng-repeat="show in shows | orderBy: '-date' : !reverse"  data-ng-attr-id="{{show._id}}" >
+    <div class="show-card" data-ng-click="linkOut(show._id)" data-ng-style="{'background-image':'url({{show.image}})'}">
         <div class="show-card_top">
           <h2 class="show-card_title">{{show.showTitle}}</h2>
           <span class="show-card_absolute-corner">
@@ -19,28 +18,6 @@
             <span>${{show.cost}}</span>
           </h4>
         </div>
-      </a>
-    </article>
-
-    <article data-ng-init="getShow()" data-ng-attr-id="{{show._id}}" data-ng-style="{'background-image':'url({{show.image}})'}">
-      <div class="show-info_top">
-        <h2 class="show-info_title">{{show.showTitle}}</h2>
-        <span class="show-info_absolute-corner">
-          <h2>{{show.date | date: 'EEE, M/dd'}}</h2>
-          <h2 class="show-info_if-all-ages" data-ng-show="show.age">All-Ages!</h2>
-        </span>
-      </div>
-      <div>
-        <div class="show-info_description">
-          <h3>{{show.bands}}</h3>
-          <p>{{show.description}}</p>
-        </div>
-        <h4 class="show-info_footer">
-          <span>{{show.time}},</span>
-          <span>${{show.cost}}</span>
-        </h4>
-      </div>
-    </article>
-
+    </div>
+  </article>
 </section>
-

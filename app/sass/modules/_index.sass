@@ -7,11 +7,12 @@ header
   margin: 0 0 0 0.5em
   width: 8em
 
-.header_nav-links
+.header_login
   margin: 0 1em
   width: 9em
   a
     margin: 0 0.25em
+    @include anchor-default
   input, button
     color: black
 
@@ -25,6 +26,8 @@ header
   list-style: none
   line-height: 1.5em
   margin: 0 0 2em 0
+  a
+    @include anchor-default
 
 //show list cards
 .show-card

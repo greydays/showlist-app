@@ -60,8 +60,8 @@ showlistApp.config(['$routeProvider', function($routeProvider) {
     .when('/', {
       redirectTo: '/shows'
     })
+    .otherwise({
+      redirectTo: '/shows'
+    });
 
-    // .otherwise({
-    //   redirectTo: '/login'
-    // });
 }]);

@@ -5,13 +5,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>The Showlist</title>
     <meta name="description" content="a place to find out about live music evewnts and shows">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <!-- Place favicon.ico in the root directory -->
-
     <link rel="stylesheet" href="css/application.css">
-    <!-- <script src="js/vendor/modernizr-2.8.3.min.js"></script> -->
   </head>
   <body data-ng-app="showlistApp">
     <header>
@@ -33,7 +27,6 @@
     </header>
     <main class="main-container" data-ng-init="getAll()">
       <section data-ng-controller="authController" class="left-sidebar">
-        <h3>Site Navigation</h3>
         <ul class="left-sidebar_ul">
           <li>
             <a href="#/shows">Upcoming Shows</a>

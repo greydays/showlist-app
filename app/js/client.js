@@ -23,6 +23,7 @@ require('./bands/controllers/band_controller')(showlistApp);
 //directives
 require('./shows/directives/show_form_directive')(showlistApp);
 require('./shows/directives/show-card_directive')(showlistApp);
+require('./shows/directives/show_edit_directive')(showlistApp);
 require('./auth/directives/auth_form_directive')(showlistApp);
 require('./venues/directives/venue_form_directive')(showlistApp);
 require('./bands/directives/band_form_directives')(showlistApp);
@@ -35,6 +36,10 @@ showlistApp.config(['$routeProvider', function($routeProvider) {
     })
     .when('/show/:_id', {
       templateUrl: 'templates/shows/show_info.html',
+      controller: 'showsController'
+    })
+    .when('/edit-show/:_id', {
+      templateUrl: 'templates/shows/edit_show_form.html',
       controller: 'showsController'
     })
     .when('/login', {

@@ -101,7 +101,7 @@ module.exports = function(router) {
   router.route('/new-show')
   .post(eatAuth, function(req, res) {
     var name = req.venue.userName;
-    var show = new Show(req.body)
+    var show = new Show(req.body);
     show.venue = req.venue._id;
     console.log(show)
     show.save(function(err,data) {

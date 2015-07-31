@@ -68,5 +68,4 @@ showlistApp.config(['$routeProvider', function($routeProvider) {
     // .otherwise({
     //   redirectTo: '/shows'
     // });
-
 }]);

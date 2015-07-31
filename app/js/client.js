@@ -33,7 +33,7 @@ showlistApp.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'templates/shows/shows_view.html',
       controller: 'showsController'
     })
-    .when('/show', {
+    .when('/show/:_id', {
       templateUrl: 'templates/shows/show_info.html',
       controller: 'showsController'
     })
@@ -60,8 +60,8 @@ showlistApp.config(['$routeProvider', function($routeProvider) {
     .when('/', {
       redirectTo: '/shows'
     })
-    .otherwise({
-      redirectTo: '/shows'
-    });
+    // .otherwise({
+    //   redirectTo: '/shows'
+    // });
 
 }]);

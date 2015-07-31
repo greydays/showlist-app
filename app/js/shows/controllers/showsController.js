@@ -6,7 +6,7 @@ module.exports = function(app) {
     var oneShow = resource('show-view'); //***for getting one show?
     $scope.errors = [];
     $scope.show = [];
-    
+
     $scope.getAllShows = function() {
       $http.get('/show/shows').success(function(response){
         $scope.shows = response;
@@ -14,12 +14,12 @@ module.exports = function(app) {
     };
 
     $scope.getShow = function() {
-      console.log($scope.show);
-      // console.log(show);
-      // $http.get('/show/' + show._id).success(function(response) {
-      //   $scope.show = response;
-      // });
-      // $location.path('/show/' + show._id);
+      var url = $location.path();
+      url = url.split('/');
+      var id = url[url.length - 1];
+      $http.get('/show/' + id).success(function(response) {
+        $scope.show = response;
+      });
     };
 
     $scope.storeShow = function(show) {
@@ -56,8 +56,7 @@ module.exports = function(app) {
 
     $scope.linkOut = function(id) {
       console.log(id);
-      $location.path('/show/show-view');
-
+      $location.path('/show/' + id);
     };
 
   }]);

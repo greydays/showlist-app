@@ -1,27 +1,31 @@
 <section data-ng-controller="showsController" data-ng-init="getShow()" class="show-info-container">
-  <article data-ng-attr-id="{{show._id}}" class="show-fullview">
-    <img class="show-fullview_poster" data-ng-src="{{show.image}}" />
-
+  <article data-ng-attr-id="{{show._id}}" class="show-info">
+    <img class="show-info_poster" data-ng-src="{{show.image}}" />
+    <div class="container">
+      <h2 class="show-info_title">{{show.showTitle}}</h2>
+      <h2 class="show-info_date">{{show.date | date: 'EEE, M/dd'}}</h2>
+    </div>
+    <h2 class="show-info_if-all-ages" data-ng-show="show.age">All-Ages!</h2>
+    <h3 class="show-info_bands">{{show.bands}}</h3>
+    <p class="show-info_description">{{show.description}}</p>
+    <!-- <div data-ng-controler="venueController"> -->
+      <h2>{{show.venue}}</h2>
+      <!-- <h2>{{show.venue.address}}</h2>
+      <h2>{{show.venue.name}}</h2>
+      <h2>{{show.venue.website}}</h2>
+    <div> -->
+    <h4 class="show-info_time-cost-social">
+      <span>{{show.time}},</span>
+      <span>${{show.cost}}</span>
+      <span data-ng-if="show.social">
+        <a data-ng-href="{{show.social}}">
+          <span class="icon-facebook2"></span>
+        </a>
+      </span>
+    </h4>
     <div data-ng-controller="authController">
       <button data-ng-if="isSignedIn" data-ng-click="onEdit(show)">Edit</button>
       <button data-ng-if="isSignedIn" data-ng-click="delete(show._id)">Delete</button>
     </div>
-    <h2 class="show-info_title">{{show.showTitle}}</h2>
-    <h2>{{show.date | date: 'EEE, M/dd'}}</h2>
-    <h2 class="show-info_if-all-ages" data-ng-show="show.age">All-Ages!</h2>
-    <h3>{{show.bands}}</h3>
-    <p>{{show.description}}</p>
-    <!-- data-ng-controler="venueController" -->
-    <div>
-      <h2>{{show.venue}}</h2>
-      <h2>{{show.venue.address}}</h2>
-      <h2>{{show.venue.name}}</h2>
-      <h2>{{show.venue.website}}</h2>
-    <div>
-    <h4>
-      <span>{{show.time}},</span>
-      <span>${{show.cost}}</span>
-      <span data-ng-if="show.social"><a data-ng-href="{{show.social}}">Facebook Event</a></span>
-    </h4>
   </article>
 </section>

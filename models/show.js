@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var showSchema = new Schema({
   showTitle: String,
   date: Date,
-  venue: {type: Schema.Types.ObjectId, ref: 'Venue'},
+  venue: String,
   bands: String, //{type: Schema.Types.ObjectId, ref: 'Bands'}, will update later
   description: String,
   cost: Number,

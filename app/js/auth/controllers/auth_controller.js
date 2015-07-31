@@ -16,7 +16,7 @@ module.exports = function(app) {
             return $scope.errors.push({msg: 'could not create venue'});
           }
           $location.path('/venue/venue-view');
-        })
+        });
       } else {
         auth.signIn(venue, function(err, data) {
           if(err) {

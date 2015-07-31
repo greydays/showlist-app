@@ -10,12 +10,10 @@ var validator = require('validator');
 
 module.exports = function(router) {
   router.use(bodyParser.json());
-
+  
+  // creates new venue/venue user
   router.post('/new-Venue',  function(req, res) {
-    console.log(req.body);
     var venue = new Venue(req.body);
-    console.log(req.body.password)
-    console.log(req.body.email)
     var userName = req.body.userName;
     if (/\s/.test(userName)) {
       res.status(405).json({msg: 'No spaces allowed in user name'})
@@ -28,13 +26,11 @@ module.exports = function(router) {
         res.status(500).json(err)
       }
       res.json(data);
-    })
+    });
   });
 
-  router.route('/venue-view')
-
-  .get(eatAuth, function(req, res) {
-    console.log('hit get route');
+  // displays the venue
+  router.get('/venue-view', eatAuth, function(req, res) {
     var name = req.venue.userName;
     Venue.findOne({userName: name}, function(err, venue) {
       if (err) {
@@ -46,12 +42,10 @@ module.exports = function(router) {
         res.status(404).json({msg: 'Unable to locate ' + venueName});
       }
     });
-  })
+  });
 
-  router.route('/edit-venue')
-
-  .put(eatAuth, function(req, res) {
-    console.log('reached put route');
+  // edits the venue's information
+  router.put('/edit-venue', eatAuth, function(req, res) {
     var name = req.venue.userName;
     var newVenueInfo = req.body;
     Venue.update({userName: name}, newVenueInfo, function(err, venue) {
@@ -64,46 +58,13 @@ module.exports = function(router) {
         res.status(404).json({msg: 'Unable to locate ' + venueName});
       }
     });
-  })
-
-  .delete(eatAuth, function(req, res) {
-    var name = req.params.venue;
-    Venue.findOne({userName: name}, function(err, venue) {
-      if (err) {
-        return res.status(500).json({msg: err});
-      }
-      if (venue) {
-        venue.remove();
-        res.json({msg: venue.name + ' was deleted'});
-      } else {
-        res.status(404).json({msg: 'Unable to locate ' + venue.name});
-      }
-    });
   });
 
-  router.route('/:venue/shows')
-
-  .get(function(req,res) {
-    var name = req.params.venue;
-    Venue.findOne({userName: name})
-    .populate('shows')
-    .exec(function(err,doc) {
-    if(err) {
-      res.status(500).json(err);
-    }
-    if (!doc) {
-      res.status(404).json({msg: 'Venue not found'})
-    }
-      res.json(doc);
-    });
-  })
-
-  router.route('/new-show')
-  .post(eatAuth, function(req, res) {
+  // creates a new show
+  router.post('/new-show', eatAuth, function(req, res) {
     var name = req.venue.userName;
     var show = new Show(req.body);
-    show.venue = req.venue._id;
-    console.log(show)
+    show.venue = req.venue.name;
     show.save(function(err,data) {
       if (err) {
         res.status(500).json(err)
@@ -124,14 +85,28 @@ module.exports = function(router) {
             res.status(500).json(err)
           }
           res.json(data)
-        })
-      })
-    })
+        });
+      });
+    });
   });
 
+  router.route('/:venue/shows')
+  .get(function(req,res) {
+    var name = req.params.venue;
+    Venue.findOne({userName: name})
+    .populate('shows')
+    .exec(function(err,doc) {
+    if(err) {
+      res.status(500).json(err);
+    }
+    if (!doc) {
+      res.status(404).json({msg: 'Venue not found'})
+    }
+      res.json(doc);
+    });
+  });
 
   router.route('/shows/:show')
-
   .put(eatAuth, function(req,res) {
     var showData = req.body;
     var showRequest = req.params.show;
@@ -144,7 +119,6 @@ module.exports = function(router) {
       res.json(doc);
     });
   })
-
   .get(function(req,res) {
     var name = req.params.venue;
     var showRequest = req.params.show;
@@ -166,7 +140,6 @@ module.exports = function(router) {
       res.json(showArray);
     });
   })
-
   .delete(eatAuth, function(req,res) {
     var name = req.params.venue;
     var showRequest = req.params.show;
@@ -188,9 +161,10 @@ module.exports = function(router) {
       }
      }
     })
-  })
+  });
 
-router.route('/bands')
+  // creates a new band user
+  router.route('/bands')
   .post(function(req,res) {
     console.log(req.body)
     var band = new Band(req.body);
@@ -200,6 +174,6 @@ router.route('/bands')
         res.status(500).json(err)
       }
       res.json({msg: 'band saved'})
-    })
-  })
+    });
+  });
 };

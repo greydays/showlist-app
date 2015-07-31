@@ -1,7 +1,8 @@
 //header
 body
-  background-image: url("http://diyconspiracy.net/wp-content/uploads/2014/02/Trialbig1.jpg")
-  background-size: auto 100%
+  background-image: url("../images/trial2.jpg")
+  background-size: cover
+  background-repeat: no-repeat
 
 main
   background-color: rgba(10,10,10,0.3)
@@ -16,16 +17,27 @@ header
   height: 1.6em
   color: white
   background-image: url("../images/listage.svg")
-  background-size: 100%
+  background-size: contain
+  background-repeat: no-repeat
 
 .header_login
   margin: 0 1em
   width: 9em
+  font-size: 0.75em
   a
     margin: 0 0.25em
     @include anchor-default
+  input
+    color: black
+    @include default-button-input
 
-  input, button
+.header_button
+  background-color: black
+  color: white
+  @include default-button-input
+  height: 1.55em
+  &:hover
+    background-color: red
     color: black
 
 // left sidebar
@@ -81,16 +93,21 @@ header
   padding: 0.25em
 
 //full view for shows
-.show-fullview
-  width: 100%
+.show-info
+  max-width: 50em
   margin: 1em
   color: white
   background-color: rgba(10,10,10,0.3)
+  line-height: 2em
 
-.show-fullview_poster
+.show-info_poster
   max-width: 12em
   max-height: 12em
   float: right
+
+.show-info_time-cost-social
+  span
+    margin: 0 1em 0 0
 
 //forms
 input, label, textarea, button
@@ -109,11 +126,11 @@ input[type=text], .show-cost_span, textarea
   @include flex-align-default
 
 .show-form
-  width: 80%
+  max-width: 40em
   box-sizing: border-box
-  margin: 1em auto
+  margin: 1em
   text-align: left
-  background-color: $form-color
+  background-color: rgba(210,210,210,0.9)
   ul
     list-style: none
   li
@@ -125,7 +142,8 @@ input[type=text], .show-cost_span, textarea
 
 //venue card
 .venue-card
-  width: 80%
+  max-width: 40em
+  margin: 1em
   background-color: rgba(10,10,10,0.6)
   background-size: auto 100%
   color: white

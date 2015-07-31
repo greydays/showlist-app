@@ -1,6 +1,4 @@
 body
-  max-width: 60em
-  margin: 0 auto
   height: 100%
   position: relative
   align-content: stretch
@@ -8,6 +6,7 @@ body
 
 header
   height: 3em
+  width: 100%
   position: absolute
   top: 0
 
@@ -31,12 +30,16 @@ header
   align-content: center
   align-items: center
 
+@mixin default-button-input
+  height: 1.25em
+  border-radius: 0.25em
+  border: none
+
 .main_right
-  width: 300px
   flex-grow: 1
   flex-shrink: 0
   flex-basis: 200px
-  overflow: scroll
+  overflow: auto
 
 .container
   @include flex-row-nowrap
@@ -47,6 +50,9 @@ header
   flex-grow: 1
   flex-shrink: 0
   flex-basis: 200px
+
+.header_content
+  max-width: 60em
 
 .main-container
   height: 100%

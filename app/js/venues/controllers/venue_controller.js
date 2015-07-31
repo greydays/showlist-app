@@ -8,7 +8,6 @@ module.exports = function(app) {
     $scope.venue = [];
 
     $scope.getVenue = function() {
-      console.log('reached venue controller get venue');
       Venue.get(function(err, data) {
         if (err) return $scope.errors.push({msg: 'error retrieving venue'});
         $scope.venue = data;
@@ -16,17 +15,16 @@ module.exports = function(app) {
     };
 
     $scope.submitForm = function(venue) {
-     console.log('venue', venue);
-     var newVenue = copy(venue);
-     venue.venueBody = '';
-     $scope.venue.push(newVenue);
-     CreateVenue.create(newVenue, function(err,data) {
-      if (err) return $scope.errors.push({msg: 'could not save venue'})
-        console.log('venue create data', data)
-      $scope.venue.splice($scope.venue.indexOf(newVenue), 1, data);
-     })
-     $location.path('/shows');
-    }
+      var newVenue = copy(venue);
+      venue.venueBody = '';
+      $scope.venue.push(newVenue);
+      CreateVenue.create(newVenue, function(err,data) {
+        if (err) return $scope.errors.push({msg: 'could not save venue'})
+          console.log('venue create data', data)
+        $scope.venue.splice($scope.venue.indexOf(newVenue), 1, data);
+      });
+      $location.path('/shows');
+    };
 
     $scope.createnewVenue = function(venue) {
       var newVenue = copy(venue);
@@ -70,4 +68,4 @@ module.exports = function(app) {
       $scope.getAll();
     };
   }]);
-}
+};

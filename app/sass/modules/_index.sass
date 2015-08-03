@@ -1,14 +1,12 @@
-//header
+
 body
   background-image: url("../images/trial2.jpg")
   background-size: cover
   background-repeat: no-repeat
 
-main
-  background-color: rgba(10,10,10,0.3)
-
+//header
 header
-  background-color: rgba(2,2,40,0.7)
+  background-color: $dark-background-color
   color: $header-font
 
 .header_h1
@@ -40,13 +38,17 @@ header
     background-color: red
     color: black
 
-// left sidebar
+//main
+.main-container
+  background-color: $main-background-color
+
+  // left sidebar
 .left-sidebar
   width: 12em
   padding: 1em
   color: white
   text-shadow: 1px 1px 2px black
-  background-color: rgba(2,2,40,0.7)
+  background-color: $dark-background-color
 
 .left-sidebar_ul
   list-style: none
@@ -64,7 +66,7 @@ header
   background-size: 100%
 
 .show-card_title
-  background-color: rgba(2,2,40,0.7)
+  background-color: $dark-background-color
   padding: 0.1em 0.25em 0.2em 0.25em
 
 .show-card_top
@@ -78,7 +80,7 @@ header
   bottom: 0.5em
   right: 0
   padding: 0.25em
-  background-color: rgba(2,2,40,0.7)
+  background-color: $dark-background-color
   h2
     font-size: 1em
 
@@ -91,7 +93,7 @@ header
   padding: 0.25
 
 .show-card_footer
-  background-color: rgba(2,2,40,0.7)
+  background-color: $dark-background-color
   color: white
   padding: 0.25em
 
@@ -100,7 +102,7 @@ header
   max-width: 50em
   margin: 1em
   color: white
-  background-color: rgba(10,10,10,0.3)
+  background-color: $main-background-color
   line-height: 2em
   a
     @include anchor-default
@@ -127,15 +129,14 @@ input[type=text], .show-cost_span, textarea
 
   //new show form
 .show-view-container
-  @include flex-row-wrap
-  @include flex-align-default
+  @include flex-container(row, wrap, flex-start, flex-start, flex-start)
 
 .show-form
   max-width: 40em
   box-sizing: border-box
   margin: 1em
   text-align: left
-  background-color: rgba(210,210,210,0.9)
+  background-color: $form-color
   ul
     list-style: none
   li
@@ -149,7 +150,7 @@ input[type=text], .show-cost_span, textarea
 .venue-card
   max-width: 40em
   margin: 1em
-  background-color: rgba(10,10,10,0.6)
+  background-color: $venue-card-bgcolor
   background-size: auto 100%
   color: white
   text-shadow: 1px 1px 2px black

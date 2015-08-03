@@ -1,18 +1,43 @@
-body
-  height: 100%
-  position: relative
-  align-content: stretch
-  align-items: stretch
-  -webkit-align-content: stretch
-  -webkit-align-items: stretch
-
+@mixin flex-container($fDirection, $fWrap, $fJustifyContent, $fAlignContent, $fAlignItems)
+  display: flex
   display: -webkit-flex
-  -webkit-flex-direction: row
-  -webkit-flex-flow: row wrap
-  -webkit-justify-content: center
-  justify-content: center
-  align-content: flex-start
-  align-items: flex-start
+  display: -ms-flex
+  flex-direction: $fDirection
+  -webkit-flex-direction: $fDirection
+  -ms-flex-direction: $fDirection
+  flex-wrap: $fWrap
+  -webkit-flex-flow: $fDirection $fWrap
+  -ms-flex-flow: $fDirection $fWrap
+  justify-content: $fJustifyContent
+  -webkit-justify-content: $fJustifyContent
+  -ms-justify-content: $fJustifyContent
+  align-content: $fAlignContent
+  -webkit-align-content: $fAlignContent
+  -ms-align-content: $fAlignContent
+  align-items: $fAlignItems
+  -webkit-align-items: $fAlignItems
+  -ms-align-items: $fAlignItems
+
+@mixin flex-box($fGrow, $fShrink, $fBasis)
+  flex-grow: $fGrow;
+  -webkit-flex-grow: $fGrow;
+  -ms-flex-grow: $fGrow;
+  flex-shrink: $fShrink;
+  -webkit-flex-shrink: $fShrink;
+  -ms-flex-shrink: $fShrink;
+  flex-basis: $fBasis;
+  -webkit-flex-basis: $fBasis;
+  -ms-flex-basis: $fBasis;
+
+html, body
+  height: 100%
+
+main
+  width: 100%
+
+body
+  position: relative
+  @include flex-container(row, wrap, flex-start, stretch, stretch)
 
 header
   height: 3em
@@ -20,79 +45,27 @@ header
   position: absolute
   top: 0
 
-@mixin flex-row-nowrap
-  display: flex
-  flex-direction: row
-  flex-wrap: nowrap
-  display: -webkit-flex
-  -webkit-flex-direction: row
-  -webkit-flex-flow: row nowrap
-
-@mixin flex-row-wrap
-  display: flex
-  flex-direction: row
-  flex-wrap: wrap
-  display: -webkit-flex
-  -webkit-flex-direction: row
-  -webkit-flex-flow: row wrap
-
-@mixin flex-align-default
-  justify-content: flex-start
-  align-content: flex-start
-  align-items: flex-start
-  -webkit-justify-content: flex-start
-  -webkit-align-content: flex-start
-  -webkit-align-items: flex-start
-
-@mixin flex-align-center-spaced
-  justify-content: space-between
-  align-content: center
-  align-items: center
-  -webkit-justify-content: center-spaced
-  -webkit-align-content: center
-  -webkit-align-items: center
-
-
 @mixin default-button-input
   height: 1.25em
   border-radius: 0.25em
   border: none
 
 .main_right
-  flex-grow: 1
-  flex-shrink: 0
-  flex-basis: 200px
-  -webkit-flex-grow: 1
-  -webkit-flex-shrink: 0
-  -webkit-flex-basis: 200px
-
+  @include flex-box(1, 0, 12.5em)
   overflow: auto
-
-.container
-  @include flex-row-nowrap
-  @include flex-align-center-spaced
 
 .flex-grow-right
   text-align: right
-  flex-grow: 1
-  flex-shrink: 0
-  flex-basis: 200px
-  -webkit-flex-grow: 1
-  -webkit-flex-shrink: 0
-  -webkit-flex-basis: 200px
+  @include flex-box(1, 0, 12.5em)
+
 
 .header_content
   max-width: 60em
+  @include flex-container(row, nowrap, space-between, center, center)
 
 .main-container
   height: 100%
   padding-top: 3em
   overflow: hidden
-  @include flex-row-nowrap
-  justify-content: flex-start
-  align-content: stretch
-  align-items: stretch
-  -webkit-justify-content: flex-start
-  -webkit-align-content: stretch
-  -webkit-align-items: stretch
+  @include flex-container(row, wrap, flex-start, stretch, stretch)
 

@@ -1,8 +1,9 @@
 
 body
-  background-image: url("../images/trial2.jpg")
-  background-size: cover
-  background-repeat: no-repeat
+  @media (min-width: $minWidth-mobile)
+    background-image: url("../images/trial2.jpg")
+    background-size: cover
+    background-repeat: no-repeat
 
 //header
 header
@@ -64,6 +65,9 @@ header
   margin: 0.5em
   overflow: hidden
   background-size: 100%
+  @media (min-width: $maxWidth-mobile)
+    width: 95%
+    margin: auto
 
 .show-card_title
   background-color: $dark-background-color
@@ -106,6 +110,9 @@ header
   line-height: 2em
   a
     @include anchor-default
+  @media (min-width: $maxWidth-mobile)
+    width: 95%
+    margin: auto
 
 .show-info_poster
   max-width: 12em

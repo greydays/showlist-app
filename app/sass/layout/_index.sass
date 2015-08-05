@@ -36,7 +36,8 @@ $minWidth-tablet: 37.5625em
   -ms-flex-basis: $fBasis;
 
 html, body
-  height: 100%
+  @media(min-width: $minWidth-mobile)
+    height: 100%
 
 main
   width: 100%
@@ -46,10 +47,11 @@ body
   @include flex-container(row, wrap, flex-start, stretch, stretch)
 
 header
-  height: 3em
   width: 100%
-  position: absolute
-  top: 0
+  @media(min-width: $minWidth-mobile)
+    height: 3em
+    position: absolute
+    top: 0
 
 @mixin default-button-input
   height: 1.25em
@@ -70,8 +72,9 @@ header
   @include flex-container(row, nowrap, space-between, center, center)
 
 .main-container
-  height: 100%
-  padding-top: 3em
-  overflow: hidden
-  @include flex-container(row, wrap, flex-start, stretch, stretch)
+  @media (min-width: $minWidth-mobile)
+    height: 100%
+    padding-top: 3em
+    overflow: hidden
+    @include flex-container(row, wrap, flex-start, stretch, stretch)
 

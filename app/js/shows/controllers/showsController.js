@@ -9,7 +9,17 @@ module.exports = function(app) {
 
     $scope.getAllShows = function() {
       $http.get('/show/shows').success(function(response){
-        $scope.shows = response;
+        var today = new Date;
+        var arrShows = [];
+        function dateSort(allShows) {
+          for (var i = 0; i < allShows.length; i++) {
+            if (allShows[i].date >= today.toISOString()) {
+              arrShows.push(allShows[i])
+            }
+          }
+          return arrShows;
+        }
+        $scope.shows = dateSort(response);
       });
     };
 
@@ -67,6 +77,6 @@ module.exports = function(app) {
     $scope.linkOut = function(id) {
       $location.path('/show/' + id);
     };
-  }]);   
+  }]);
 };
 

@@ -1,22 +1,28 @@
 
 body
-  background-image: url("../images/trial2.jpg")
-  background-size: cover
-  background-repeat: no-repeat
+  @media (min-width: $minWidth-mobile)
+    background-image: url("../images/trial2.jpg")
+    background-size: cover
+    background-repeat: no-repeat
 
 //header
 header
   background-color: $dark-background-color
   color: $header-font
+  @media (max-width: $maxWidth-mobile)
+    background-color: black
 
 .header_h1
   margin: 0 0 0 0.5em
-  width: 7em
-  height: 1.6em
   color: white
   background-image: url("../images/listage.svg")
   background-size: contain
   background-repeat: no-repeat
+  width: 7em
+  height: 1.6em
+  @media (max-width: $maxWidth-mobile)
+    width: 5em
+    height: 1.143em
 
 .header_login
   margin: 0 1em
@@ -28,6 +34,8 @@ header
   input
     color: black
     @include default-button-input
+  @media(max-width: $maxWidth-mobile)
+    display: none
 
 .header_button
   background-color: black
@@ -41,6 +49,8 @@ header
 //main
 .main-container
   background-color: $main-background-color
+  @media(max-width: $maxWidth-mobile)
+    background-color: black
 
   // left sidebar
 .left-sidebar
@@ -49,6 +59,8 @@ header
   color: white
   text-shadow: 1px 1px 2px black
   background-color: $dark-background-color
+  @media(max-width: $maxWidth-mobile)
+    display: none
 
 .left-sidebar_ul
   list-style: none
@@ -59,11 +71,18 @@ header
 
 //show list cards
 .show-card
+  @media (max-width: $maxWidth-mobile)
+    width: 20em
+    margin: 0.5em auto
+  @media (min-width: $minWidth-mobile)
+    width: 22em
+    margin: 0.5em
   position: relative
-  width: 22em
-  margin: 0.5em
   overflow: hidden
   background-size: 100%
+  background-repeat: no-repeat
+  background-color: black
+
 
 .show-card_title
   background-color: $dark-background-color
@@ -106,6 +125,9 @@ header
   line-height: 2em
   a
     @include anchor-default
+  @media (max-width: $maxWidth-mobile)
+    width: 95%
+    margin: auto
 
 .show-info_poster
   max-width: 12em
@@ -130,6 +152,10 @@ input[type=text], .show-cost_span, textarea
   //new show form
 .show-view-container
   @include flex-container(row, wrap, flex-start, flex-start, flex-start)
+  @media (max-width: $maxWidth-mobile)
+    justify-content: space-around
+    -webkit-justify-content: space-around
+    -ms-justify-content: space-around
 
 .show-form
   max-width: 40em
